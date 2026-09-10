@@ -602,14 +602,18 @@
             return isNaN(val) || val < 0 ? 0 : val;
         }
 
-        function calculateSingleVisualPrice(carType, price) {
+        // ZMIENIONA FUNKCJA: Wylicza cenę 1 menu wizualek OD WARTOŚCI FULL TUNE
+        function calculateSingleVisualPrice(carType, ftCost) {
             if (carType === 'limited' || carType === 'heli') {
                 return 150000;
             }
+
+            const price = Math.round(ftCost);
+
             if (price <= 100000) return 22000;
             if (price <= 200000) return 25500;
             if (price <= 400000) return 28000;
-            if (price <= 800000) return 32000;
+            if (price <= 800000) return 32000;   // DLA 522 500 $ WPADNIE DOKŁADNIE TUTAJ (32 000 $)
             if (price <= 1000000) return 40000;
             if (price <= 1500000) return 50000;
             if (price <= 2000000) return 60000;
@@ -634,20 +638,20 @@
                 ftLabelText.innerText = 'Full Tune Mechaniczny (5.5 mln $)';
             }
 
-            // 1. FT - Poprawione naliczanie kosztu dla limitki/heli vs salonu
-            const isFtChecked = document.getElementById('check-ft').checked;
+            // 1. FT
             let ftCost = 0;
-            if (isFtChecked) {
-                if (carType === 'limited' || carType === 'heli') {
-                    ftCost = 5500000;
-                } else {
-                    ftCost = baseCarPrice * 0.55;
-                }
+            if (carType === 'limited' || carType === 'heli') {
+                ftCost = 5500000;
+            } else {
+                ftCost = baseCarPrice * 0.55;
             }
+
+            const isFtChecked = document.getElementById('check-ft').checked;
+            const activeFtCost = isFtChecked ? ftCost : 0;
             document.getElementById('ft-val').innerText = fmt(ftCost);
 
-            // 2. Visual
-            const singleVisPrice = calculateSingleVisualPrice(carType, baseCarPrice);
+            // 2. Visual - przeliczany od wartości ftCost (a nie wyjściowej ceny auta)
+            const singleVisPrice = calculateSingleVisualPrice(carType, ftCost);
             const qtyVis = getVal('qty-vis');
             const totalVisCost = singleVisPrice * qtyVis;
 
@@ -710,7 +714,6 @@
             document.getElementById('v8-price-display').innerText = fmt(unitV8);
             document.getElementById('v10-price-display').innerText = fmt(unitV10);
 
-            // Generator badge ze zniżką przy silnikach
             if (activeEngineDiscount > 0) {
                 const discPercentText = `ZNIŻKA -${Math.round(activeEngineDiscount * 100)}%`;
                 document.getElementById('v6-badge-tag').innerHTML = `<span class="badge-tag badge-discount">${discPercentText}</span>`;
@@ -742,7 +745,7 @@
             const paidPacks = pack - freePacks;
             const packCost = paidPacks * 5000;
 
-            const discountableBase = ftCost + totalVisCost
+            const discountableBase = activeFtCost + totalVisCost
                 + (brakes * 1500000)
                 + (drift * 150000)
                 + (wash * washUnitPrice)
