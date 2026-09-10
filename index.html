@@ -47,7 +47,7 @@
             position: relative;
         }
 
-        /* --- NOWY, ŚWIEŻY I PROFESJONALNY PANEL BOCZNY --- */
+        /* --- PANEL BOCZNY --- */
         .sidebar-panel {
             position: fixed;
             left: 0;
@@ -339,6 +339,12 @@
             box-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
         }
 
+        /* Klasa błędu dla ceny salonowej */
+        .input-error {
+            border-color: var(--neon-red) !important;
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.4) !important;
+        }
+
         .checkbox-card {
             display: flex;
             align-items: center;
@@ -392,17 +398,6 @@
             border-left-color: var(--amber-main);
         }
 
-        .item-row::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(to bottom, transparent, rgba(255, 107, 0, 0.3), transparent);
-            opacity: 0.5;
-        }
-
         .item-details {
             display: flex;
             flex-direction: column;
@@ -431,8 +426,37 @@
             text-align: right;
         }
 
+        /* Kontrolki ilości z przyciskami +/- */
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .qty-btn {
+            background: #1c2029;
+            border: 1px solid var(--panel-border);
+            color: var(--text-main);
+            width: 28px;
+            height: 38px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            background: var(--amber-main);
+            border-color: var(--amber-main);
+            color: #fff;
+        }
+
         .qty-input {
-            width: 75px;
+            width: 55px;
             text-align: center;
             padding: 6px !important;
             font-family: 'Share Tech Mono', monospace;
@@ -463,6 +487,26 @@
             color: var(--amber-main);
             background: rgba(255, 107, 0, 0.08);
             border: 1px solid var(--amber-main);
+        }
+
+        /* Przycisk kopiowania faktury */
+        .btn-copy {
+            background: rgba(255, 107, 0, 0.15);
+            border: 1px solid var(--amber-main);
+            color: var(--amber-main);
+            padding: 3px 8px;
+            font-size: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 6px;
+            transition: all 0.2s;
+            font-family: 'Share Tech Mono', monospace;
+            vertical-align: middle;
+        }
+
+        .btn-copy:hover {
+            background: var(--amber-main);
+            color: #fff;
         }
 
         .footer-summary {
@@ -546,11 +590,23 @@
             color: #fff;
             box-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
         }
+
+        .btn-action {
+            background: rgba(0, 255, 102, 0.15);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        .btn-action:hover {
+            background: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+        }
     </style>
 </head>
 <body>
 
-    <!-- NOWOCZESNY, WYSUWANY PANEL BOCZNY -->
+    <!-- PANEL BOCZNY -->
     <div class="sidebar-panel" id="analysis-sidebar">
         <button class="sidebar-toggle-btn" id="sidebar-toggle">
             <span>ANALIZA</span>
@@ -670,7 +726,11 @@
                         <span id="vis-badge-tag"></span>
                     </div>
                     <span class="item-price" id="vis-val">0 $</span>
-                    <input type="number" class="qty-input" id="qty-vis" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-vis', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-vis" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-vis', 1)">+</button>
+                    </div>
                 </div>
             </div>
 
@@ -734,7 +794,11 @@
                         <span class="tag-subtext">Zarobek: 100 000 $ / szt (Gotówka)</span>
                     </div>
                     <span class="item-price">2 500 000 $</span>
-                    <input type="number" class="qty-input" id="qty-nitro" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-nitro', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-nitro" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-nitro', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -743,7 +807,11 @@
                         <span class="tag-subtext">Zarobek: 300 000 $ / szt (Gotówka)</span>
                     </div>
                     <span class="item-price">8 000 000 $</span>
-                    <input type="number" class="qty-input" id="qty-susp" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-susp', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-susp" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-susp', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -752,7 +820,11 @@
                         <span id="brakes-badge-tag"></span>
                     </div>
                     <span class="item-price">1 500 000 $</span>
-                    <input type="number" class="qty-input" id="qty-brakes" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-brakes', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-brakes" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-brakes', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -761,7 +833,11 @@
                         <span id="drift-badge-tag"></span>
                     </div>
                     <span class="item-price">150 000 $</span>
-                    <input type="number" class="qty-input" id="qty-drift" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-drift', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-drift" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-drift', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -770,7 +846,11 @@
                         <span id="v6-badge-tag"></span>
                     </div>
                     <span class="item-price" id="v6-price-display">5 000 000 $</span>
-                    <input type="number" class="qty-input" id="qty-v6" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-v6', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-v6" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-v6', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -779,7 +859,11 @@
                         <span id="v8-badge-tag"></span>
                     </div>
                     <span class="item-price" id="v8-price-display">7 500 000 $</span>
-                    <input type="number" class="qty-input" id="qty-v8" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-v8', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-v8" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-v8', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -788,7 +872,11 @@
                         <span id="v10-badge-tag"></span>
                     </div>
                     <span class="item-price" id="v10-price-display">10 000 000 $</span>
-                    <input type="number" class="qty-input" id="qty-v10" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-v10', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-v10" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-v10', 1)">+</button>
+                    </div>
                 </div>
             </div>
 
@@ -802,7 +890,11 @@
                         <span id="wash-free-tag"></span>
                     </div>
                     <span class="item-price" id="wash-price-display">3 000 $</span>
-                    <input type="number" class="qty-input" id="qty-wash" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-wash', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-wash" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-wash', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -811,7 +903,11 @@
                         <span id="rep-free-tag"></span>
                     </div>
                     <span class="item-price" id="rep-price-display">5 000 $</span>
-                    <input type="number" class="qty-input" id="qty-rep-in" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-rep-in', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-rep-in" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-rep-in', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -820,7 +916,11 @@
                         <span id="rep-out-badge-tag"></span>
                     </div>
                     <span class="item-price">7 500 $</span>
-                    <input type="number" class="qty-input" id="qty-rep-out" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-rep-out', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-rep-out" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-rep-out', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -829,7 +929,11 @@
                         <span id="kit-badge-tag"></span>
                     </div>
                     <span class="item-price">2 000 $</span>
-                    <input type="number" class="qty-input" id="qty-kit" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-kit', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-kit" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-kit', 1)">+</button>
+                    </div>
                 </div>
 
                 <div class="item-row">
@@ -839,8 +943,23 @@
                         <span id="pack-badge-tag"></span>
                     </div>
                     <span class="item-price">5 000 $</span>
-                    <input type="number" class="qty-input" id="qty-pack" value="0" min="0">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-pack', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-pack" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-pack', 1)">+</button>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- 5. HISTORIA ZLECEŃ -->
+        <div class="card" style="margin-bottom: 30px;">
+            <div class="card-title">
+                <span>📜 Historia Ostatnich Zleceń</span>
+                <button class="btn btn-action" style="padding: 4px 12px; font-size: 14px;" id="btn-save-history">💾 Zapisz bieżące zlecenie</button>
+            </div>
+            <div id="history-container" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="color: var(--text-dim); font-size: 13px; text-align: center; padding: 10px;">Brak zapisanych zleceń w historii.</div>
             </div>
         </div>
     </div>
@@ -859,7 +978,10 @@
             </div>
 
             <div class="stat-box">
-                <span class="label">Do Zapłaty (Faktura)</span>
+                <span class="label">
+                    Do Zapłaty (Faktura) 
+                    <button class="btn-copy" id="btn-copy-invoice" title="Kopiuj kwotę do gry">📋 Kopiuj</button>
+                </span>
                 <span class="value final" id="res-final">0 $</span>
             </div>
 
@@ -868,13 +990,16 @@
                 <span class="value profit" id="res-pocket">0 $</span>
             </div>
 
-            <button class="btn btn-reset" id="btn-reset">Resetuj</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-reset" id="btn-reset">Resetuj</button>
+            </div>
         </div>
     </div>
 
     <script>
         const sidebar = document.getElementById('analysis-sidebar');
         const toggleBtn = document.getElementById('sidebar-toggle');
+        let currentFinalNumeric = 0;
 
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
@@ -890,6 +1015,115 @@
             const val = parseFloat(el.value);
             return isNaN(val) || val < 0 ? 0 : val;
         }
+
+        function adjustQty(id, delta) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            let val = parseInt(el.value) || 0;
+            val = Math.max(0, val + delta);
+            el.value = val;
+            updateAll();
+            saveState();
+        }
+
+        // --- LOCAL STORAGE & HISTORIA ---
+        function saveState() {
+            const state = {
+                carType: document.getElementById('car-type').value,
+                rawPrice: document.getElementById('raw-price').value,
+                checkFt: document.getElementById('check-ft').checked,
+                rankSelect: document.getElementById('rank-select').value,
+                companySelect: document.getElementById('company-select').value,
+                ftCouponSelect: document.getElementById('ft-coupon-select').value,
+            };
+            const qtys = {};
+            document.querySelectorAll('.qty-input').forEach(input => {
+                qtys[input.id] = input.value;
+            });
+            state.qtys = qtys;
+            localStorage.setItem('lsc_calc_state', JSON.stringify(state));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('lsc_calc_state');
+            if (!saved) return;
+            try {
+                const state = JSON.parse(saved);
+                if (state.carType) document.getElementById('car-type').value = state.carType;
+                if (state.rawPrice !== undefined) document.getElementById('raw-price').value = state.rawPrice;
+                if (state.checkFt !== undefined) document.getElementById('check-ft').checked = state.checkFt;
+                if (state.rankSelect) document.getElementById('rank-select').value = state.rankSelect;
+                if (state.companySelect) document.getElementById('company-select').value = state.companySelect;
+                if (state.ftCouponSelect) document.getElementById('ft-coupon-select').value = state.ftCouponSelect;
+                if (state.qtys) {
+                    for (const [id, val] of Object.entries(state.qtys)) {
+                        const el = document.getElementById(id);
+                        if (el) el.value = val;
+                    }
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        function getHistory() {
+            try {
+                const h = localStorage.getItem('lsc_history');
+                return h ? JSON.parse(h) : [];
+            } catch(e) { return []; }
+        }
+
+        function saveCurrentOrder() {
+            const finalInvoice = document.getElementById('res-final').innerText;
+            const profit = document.getElementById('res-pocket').innerText;
+            const carTypeSelect = document.getElementById('car-type');
+            const carType = carTypeSelect.options[carTypeSelect.selectedIndex].text;
+            const dateStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+            const order = {
+                date: dateStr,
+                car: carType,
+                invoice: finalInvoice,
+                profit: profit
+            };
+
+            let history = getHistory();
+            history.unshift(order);
+            if (history.length > 3) history = history.slice(0, 3);
+            localStorage.setItem('lsc_history', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('history-container');
+            const history = getHistory();
+            if (history.length === 0) {
+                container.innerHTML = `<div style="color: var(--text-dim); font-size: 13px; text-align: center; padding: 10px;">Brak zapisanych zleceń w historii.</div>`;
+                return;
+            }
+
+            container.innerHTML = history.map((item, idx) => `
+                <div class="item-row" style="background: #0b0d10;">
+                    <div class="item-details">
+                        <span class="item-name">Zlecenie #${idx + 1} (${item.date})</span>
+                        <span class="tag-subtext">Pojazd: ${item.car}</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; color: var(--amber-light);">Faktura: ${item.invoice}</div>
+                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--neon-green);">Zarobek: ${item.profit}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('btn-save-history').addEventListener('click', saveCurrentOrder);
+
+        // Kopiowanie kwoty do faktury
+        document.getElementById('btn-copy-invoice').addEventListener('click', () => {
+            navigator.clipboard.writeText(currentFinalNumeric).then(() => {
+                const btn = document.getElementById('btn-copy-invoice');
+                btn.innerText = '✅ Skopiowano!';
+                setTimeout(() => { btn.innerText = '📋 Kopiuj'; }, 1500);
+            });
+        });
 
         function calculateSingleVisualPrice(carType, ftCost) {
             if (carType === 'limited' || carType === 'heli') {
@@ -913,6 +1147,7 @@
         function updateAll() {
             const carType = document.getElementById('car-type').value;
             const rawPriceGroup = document.getElementById('raw-price-group');
+            const rawPriceInput = document.getElementById('raw-price');
             const ftLabelText = document.getElementById('ft-label-text');
             let baseCarPrice = 0;
 
@@ -920,10 +1155,18 @@
                 rawPriceGroup.style.display = 'flex';
                 baseCarPrice = getVal('raw-price');
                 ftLabelText.innerText = 'Full Tune Mechaniczny (55% wartości)';
+                
+                // Walidacja ceny salonowej
+                if (baseCarPrice <= 0) {
+                    rawPriceInput.classList.add('input-error');
+                } else {
+                    rawPriceInput.classList.remove('input-error');
+                }
             } else {
                 rawPriceGroup.style.display = 'none';
                 baseCarPrice = 5500000;
                 ftLabelText.innerText = 'Full Tune Mechaniczny (5.5 mln $)';
+                rawPriceInput.classList.remove('input-error');
             }
 
             let ftCost = 0;
@@ -1069,6 +1312,8 @@
             const discountVal = (totalVisCost + (brakes * 1500000) + (drift * 150050)) * activeMainDiscount;
 
             const finalInvoice = discountableBase + finalFtCost + enginesTotalCost + cashOnlyTotal;
+            currentFinalNumeric = Math.round(finalInvoice);
+
             const rawTotal = totalVisCost + activeFtCost + (brakes * 1500000) + (drift * 150050) + (v6 * baseV6) + (v8 * baseV8) + (v10 * baseV10) + (wash * 3000) + (repIn * 5000) + (repOut * 7500) + (kit * 2000) + packCost + cashOnlyTotal;
 
             const totalDiscountSum = discountVal + ftDiscountVal + ((v6 * baseV6 + v8 * baseV8 + v10 * baseV10) - enginesTotalCost);
@@ -1095,6 +1340,8 @@
             document.getElementById('res-disc').innerText = fmt(totalDiscountSum);
             document.getElementById('res-final').innerText = fmt(finalInvoice);
             document.getElementById('res-pocket').innerText = fmt(totalProfit);
+
+            saveState();
         }
 
         document.getElementById('rank-select').addEventListener('change', (e) => {
@@ -1117,8 +1364,10 @@
         });
 
         document.getElementById('btn-reset').addEventListener('click', () => {
+            localStorage.removeItem('lsc_calc_state');
             document.getElementById('car-type').value = 'standard';
             document.getElementById('raw-price').value = '';
+            document.getElementById('raw-price').classList.remove('input-error');
             document.getElementById('check-ft').checked = false;
             document.querySelectorAll('.qty-input').forEach(i => i.value = 0);
             document.getElementById('rank-select').value = '0';
@@ -1127,6 +1376,9 @@
             updateAll();
         });
 
+        // Inicjalizacja po załadowaniu
+        loadState();
+        renderHistory();
         updateAll();
     </script>
 </body>
