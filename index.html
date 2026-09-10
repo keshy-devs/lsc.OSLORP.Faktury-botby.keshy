@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSLORP • Los Santos Customs</title>
+    <style>
+        :root {
+            --bg-body: #07050d;
+            --bg-card: rgba(19, 14, 34, 0.75);
+            --bg-card-hover: rgba(27, 20, 48, 0.9);
+            --bg-input: #150f28;
+            --accent-purple: #b056ff;
+            --accent-purple-bright: #c77dff;
+            --accent-purple-glow: rgba(176, 86, 255, 0.4);
+            --accent-green: #00f5d4;
+            --accent-orange: #ff9e00;
+            --accent-red: #ff2a54;
+            --accent-blue: #00b4d8;
+            --text-main: #f8f9fa;
+            --text-muted: #a097ba;
+            --border: rgba(176, 86, 255, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(circle at 50% -10%, #3c1661 0%, transparent 60%),
+                radial-gradient(circle at 10% 40%, rgba(123, 44, 191, 0.15) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            padding: 20px;
+            padding-bottom: 220px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 30px;
+            padding: 24px 30px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            background: linear-gradient(135deg, rgba(30, 16, 58, 0.8) 0%, rgba(13, 9, 25, 0.9) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px var(--accent-purple-glow);
+            backdrop-filter: blur(12px);
+        }
+
+        .header-logo {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            object-fit: contain;
+            background-color: #0d081a;
+            border: 2px solid var(--accent-purple-bright);
+            box-shadow: 0 0 20px var(--accent-purple-glow);
+            padding: 6px;
+        }
+
+        .header-text h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 12px var(--accent-purple-glow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-text h1 span {
+            color: var(--accent-purple-bright);
+        }
+
+        .header-text p {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .card:hover {
+            border-color: rgba(176, 86, 255, 0.4);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(176, 86, 255, 0.15);
+        }
+
+        .card h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--accent-purple-bright);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dealer-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            background: rgba(10, 7, 20, 0.6);
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .input-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1 1 200px;
+        }
+
+        .input-block label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .input-block input, .input-block select {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .input-block input:focus, .input-block select:focus {
+            border-color: var(--accent-purple-bright);
+            box-shadow: 0 0 12px var(--accent-purple-glow);
+        }
+
+        .dealer-checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1 1 250px;
+            justify-content: center;
+        }
+
+        .check-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .check-row input {
+            accent-color: var(--accent-purple-bright);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .check-row span {
+            color: var(--accent-purple-bright);
+            font-weight: 700;
+        }
+
+        .product-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(12, 9, 24, 0.6);
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.2s ease;
+        }
+
+        .item-row:hover {
+            background-color: var(--bg-card-hover);
+            border-color: rgba(176, 86, 255, 0.3);
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            flex: 2;
+        }
+
+        .item-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .profit-badge {
+            font-size: 11px;
+            color: var(--accent-orange);
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .cash-only-badge {
+            font-size: 11px;
+            color: var(--accent-red);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 3px;
+        }
+
+        .item-price {
+            color: var(--accent-purple-bright);
+            font-weight: 800;
+            font-size: 15px;
+            flex: 1;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .qty-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            width: 75px;
+            text-align: center;
+            font-weight: 700;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .qty-box:focus {
+            border-color: var(--accent-purple-bright);
+            box-shadow: 0 0 10px var(--accent-purple-glow);
+        }
+
+        .discounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(12, 8, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid var(--accent-purple-bright);
+            padding: 18px 35px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            z-index: 1000;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.9);
+        }
+
+        .summary-group {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .data-box {
+            text-align: right;
+        }
+
+        .data-box .lbl {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 700;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-box .val {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text-main);
+        }
+
+        .data-box .val.final {
+            color: var(--accent-purple-bright);
+            text-shadow: 0 0 12px var(--accent-purple-glow);
+        }
+
+        .data-box .val.profit {
+            color: var(--accent-orange);
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #ff2a54 0%, #b80024 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 42, 84, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 42, 84, 0.5);
+        }
+
+        .active-rule-info {
+            font-size: 12px;
+            color: var(--accent-blue);
+            background: rgba(0, 180, 216, 0.08);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 15px;
+            display: none;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <img id="lsc-logo" 
+                 src="https://raw.githubusercontent.com/tastyign/gta-logos/main/lsc.png" 
+                 onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23150f28\' stroke=\'%23c77dff\' stroke-width=\'4\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23c77dff\' font-weight=\'bold\' font-size=\'22\' font-family=\'sans-serif\'>LSC</text></svg>';" 
+                 alt="Los Santos Customs Logo" 
+                 class="header-logo">
+            <div class="header-text">
+                <h1>OSLORP <span>• Los Santos Customs</span></h1>
+                <p>System Wirtualny Sklep & Kalkulator Umów Warsztatowych</p>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- WYCENA POJAZDU -->
+            <div class="card">
+                <h2>🚗 Wycena Pojazdu z Salonu / Limitowanego</h2>
+                <div class="dealer-flex">
+                    <div class="input-block">
+                        <label for="car-type">Typ Pojazdu</label>
+                        <select id="car-type" onchange="liveCalculateAll()">
+                            <option value="standard">Standardowy (CarDealer)</option>
+                            <option value="limited">Auto Limitowane (5.5M)</option>
+                            <option value="heli">Helikopter (5.5M)</option>
+                        </select>
+                    </div>
+                    <div class="input-block" id="raw-price-block">
+                        <label for="car-raw-val">Cena z salonu ($)</label>
+                        <input type="number" id="car-raw-val" placeholder="np. 500000" min="0" oninput="liveCalculateAll()">
+                    </div>
+                    <div class="dealer-checkboxes">
+                        <label class="check-row">
+                            <input type="checkbox" id="check-base" onchange="liveCalculateAll()">
+                            <span id="cd-base-label">Dodaj Full Tuning (55%):</span> <span id="cd-base-text">0 $</span>
+                        </label>
+                        <label class="check-row">
+                            <input type="checkbox" id="check-visual" onchange="liveCalculateAll()">
+                            Dodaj Tuning Wizualny: <span id="cd-visual-text">0 $</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KATALOG CZĘŚCI I USŁUG -->
+            <div class="card">
+                <h2>🔧 Tuning Mechaniczny i Części</h2>
+                <div class="product-list-container">
+                    
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">Podtlenek (Nitro)</span>
+                            <span class="profit-badge">+100 000 $ do kieszeni / szt. (Brak zniżek)</span>
+                        </div>
+                        <div class="item-price">2 500 000 $</div>
+                        <input type="number" class="qty-box" id="qty-nitro" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">Hamulce Ceramiczne</span>
+                            <span class="profit-badge">+5% prowizji na fakturę</span>
+                        </div>
+                        <div class="item-price">1 500 000 $</div>
+                        <input type="number" class="qty-box" id="qty-brakes" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">Tuning Driftu</span>
+                            <span class="profit-badge">+5% prowizji na fakturę</span>
+                        </div>
+                        <div class="item-price">150 000 $</div>
+                        <input type="number" class="qty-box" id="qty-drift" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">Regulowane Zawieszenie</span>
+                            <span class="cash-only-badge">⚠️ Płatność tylko gotówką!</span>
+                            <span class="profit-badge">+300 000 $ do kieszeni / szt.</span>
+                        </div>
+                        <div class="item-price">8 000 000 $</div>
+                        <input type="number" class="qty-box" id="qty-suspension" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">Silnik V6 3.0L</span>
+                            <span class="profit-badge">+5% prowizji na fakturę</span>
+                        </div>
+                        <div class="item-price">5 000 000 $</div>
+                        <input type="number" class="qty-box" id="qty-v6" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">Silnik V8 4.4L</span>
+                            <span class="profit-badge">+5% prowizji na fakturę</span>
+                        </div>
+                        <div class="item-price">7 500 000 $</div>
+                        <input type="number" class="qty-box" id="qty-v8" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">Silnik V10 6.0L</span>
+                            <span class="profit-badge">+5% prowizji na fakturę</span>
+                        </div>
+                        <div class="item-price">10 000 000 $</div>
+                        <input type="number" class="qty-box" id="qty-v10" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SERWIS -->
+            <div class="card">
+                <h2>🧰 Czynności Serwisowe</h2>
+                <div class="product-list-container">
+                    
+                    <div class="item-row">
+                        <div class="item-info"><span class="item-name">Mycie</span></div>
+                        <div class="item-price">3 000 $</div>
+                        <input type="number" class="qty-box" id="qty-wash" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info"><span class="item-name">Naprawa na warsztacie</span></div>
+                        <div class="item-price">5 000 $</div>
+                        <input type="number" class="qty-box" id="qty-repair-inside" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info"><span class="item-name">Naprawa poza warsztatem</span></div>
+                        <div class="item-price">7 500 $</div>
+                        <input type="number" class="qty-box" id="qty-repair-outside" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info"><span class="item-name">Zestaw reperacyjny (Sztuka)</span></div>
+                        <div class="item-price">2 000 $</div>
+                        <input type="number" class="qty-box" id="qty-rep-kit" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">Sprzedaż zestawu naprawczego</span>
+                            <span class="profit-badge">Promocja: Kup 10 szt. = 1 szt. Gratis!</span>
+                        </div>
+                        <div class="item-price">5 000 $</div>
+                        <input type="number" class="qty-box" id="qty-rep-pack" value="0" min="0" oninput="liveCalculateAll()">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PANEL ZNIŻEK I UMÓW -->
+            <div class="card">
+                <h2>🏷️ Panel Zniżek i Umów Partnerów</h2>
+                <div class="discounts-grid">
+                    
+                    <!-- ZNIŻKI PRACOWNIKÓW LSC -->
+                    <div class="input-block">
+                        <label for="rank-select">Zniżka Pracownicza LSC</label>
+                        <select id="rank-select" onchange="onLSCSelectChange()">
+                            <option value="0">Brak zniżki (Klient)</option>
+                            <option value="0.60">Szef Mechanika (-60%)</option>
+                            <option value="0.60">Zastępca Szefa (-60%)</option>
+                            <option value="0.60">Asystent Szefa (-60%)</option>
+                            <option value="0.60">Kierownik (-60%)</option>
+                            <option value="0.56">Inżynier (-56%)</option>
+                            <option value="0.55">Majster (-55%)</option>
+                            <option value="0.55">Fachowiec (-55%)</option>
+                            <option value="0.50">Starszy Mechanik (-50%)</option>
+                            <option value="0.45">Mechanik (-45%)</option>
+                            <option value="0.45">Młodszy Mechanik (-45%)</option>
+                            <option value="0.40">Praktykant / Zniżka (-40%)</option>
+                        </select>
+                    </div>
+
+                    <!-- ZNIŻKI FIRM / UMÓW -->
+                    <div class="input-block">
+                        <label for="company-select">Zniżki Firmowe / Frakcyjne</label>
+                        <select id="company-select" onchange="onCompanySelectChange()">
+                            <option value="none">Brak umowy</option>
+                            <option value="ems_worker">EMS - Pracownik</option>
+                            <option value="ems_boss">EMS - Zarząd</option>
+                            <option value="lspd_worker">LSPD - Pracownik</option>
+                            <option value="lspd_boss">LSPD - Zarząd</option>
+                            <option value="uwu_worker">UwU Cafe - Pracownik</option>
+                            <option value="uwu_boss">UwU Cafe - Zarząd</option>
+                            <option value="doj_worker">DOJ - Pracownik</option>
+                            <option value="doj_boss">DOJ - Zarząd</option>
+                            <option value="tropical_worker">Tropical Drinks - Pracownik</option>
+                            <option value="tropical_boss">Tropical Drinks - Zarząd</option>
+                            <option value="ssc">SSC (Sandy Shores Customs)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div id="rule-info-box" class="active-rule-info"></div>
+            </div>
+
+        </div>
+
+        <!-- PODSUMOWANIE -->
+        <div class="footer-bar">
+            <div class="summary-group">
+                <div class="data-box">
+                    <span class="lbl">Suma Bez Zniżki</span>
+                    <span class="val" id="total-raw">0 $</span>
+                </div>
+                <div class="data-box">
+                    <span class="lbl">Zarobek do kieszeni</span>
+                    <span class="val profit" id="pocket-profit">0 $</span>
+                </div>
+                <div class="data-box">
+                    <span class="lbl">Do zapłaty po zniżce</span>
+                    <span class="val final" id="total-final">0 $</span>
+                </div>
+                <button class="action-btn" onclick="resetAll()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getVisualPrice(carPrice) {
+            if (carPrice <= 100000) return 22000;
+            if (carPrice <= 200000) return 25500;
+            if (carPrice <= 400000) return 28000;
+            if (carPrice <= 800000) return 32000;
+            if (carPrice <= 1000000) return 40000;
+            if (carPrice <= 1500000) return 50000;
+            if (carPrice <= 2000000) return 60000;
+            if (carPrice <= 2500000) return 65000;
+            if (carPrice <= 3000000) return 70000;
+            return 75000;
+        }
+
+        function onLSCSelectChange() {
+            if (document.getElementById('rank-select').value !== "0") {
+                document.getElementById('company-select').value = "none";
+            }
+            liveCalculateAll();
+        }
+
+        function onCompanySelectChange() {
+            if (document.getElementById('company-select').value !== "none") {
+                document.getElementById('rank-select').value = "0";
+            }
+            liveCalculateAll();
+        }
+
+        function liveCalculateAll() {
+            let carType = document.getElementById('car-type').value;
+            let rawCarInput = parseFloat(document.getElementById('car-raw-val').value) || 0;
+            let rawPriceBlock = document.getElementById('raw-price-block');
+
+            let carBaseCost = 0;
+            let carVisualCost = 0;
+
+            if (carType === 'standard') {
+                rawPriceBlock.style.display = 'flex';
+                carBaseCost = rawCarInput * 0.55;
+                carVisualCost = rawCarInput > 0 ? getVisualPrice(rawCarInput) : 0;
+            } else {
+                rawPriceBlock.style.display = 'none';
+                carBaseCost = 5500000;
+                carVisualCost = 150000;
+            }
+
+            let baseLabel = document.getElementById('cd-base-label');
+            if (carType === 'standard') {
+                baseLabel.innerText = "Dodaj Full Tuning (55%):";
+            } else {
+                baseLabel.innerText = "Dodaj Full Tuning:";
+            }
+            document.getElementById('cd-base-text').innerText = carBaseCost.toLocaleString('pl-PL') + ' $';
+            document.getElementById('cd-visual-text').innerText = carVisualCost.toLocaleString('pl-PL') + ' $';
+
+            let carTotal = 0;
+            if (document.getElementById('check-base').checked) carTotal += carBaseCost;
+            if (document.getElementById('check-visual').checked) carTotal += carVisualCost;
+
+            let nitroQty = parseInt(document.getElementById('qty-nitro').value) || 0;
+            let brakesQty = parseInt(document.getElementById('qty-brakes').value) || 0;
+            let driftQty = parseInt(document.getElementById('qty-drift').value) || 0;
+            let suspensionQty = parseInt(document.getElementById('qty-suspension').value) || 0;
+            
+            let v6Qty = parseInt(document.getElementById('qty-v6').value) || 0;
+            let v8Qty = parseInt(document.getElementById('qty-v8').value) || 0;
+            let v10Qty = parseInt(document.getElementById('qty-v10').value) || 0;
+
+            let washQty = parseInt(document.getElementById('qty-wash').value) || 0;
+            let repairInsideQty = parseInt(document.getElementById('qty-repair-inside').value) || 0;
+            let repairOutsideQty = parseInt(document.getElementById('qty-repair-outside').value) || 0;
+            let repKitQty = parseInt(document.getElementById('qty-rep-kit').value) || 0;
+            let repPackQty = parseInt(document.getElementById('qty-rep-pack').value) || 0;
+
+            let paidRepPacks = Math.floor(repPackQty / 10) * 9 + (repPackQty % 10);
+
+            let nitroTotal = nitroQty * 2500000;
+            let brakesTotal = brakesQty * 1500000;
+            let driftTotal = driftQty * 150000;
+            let suspensionTotal = suspensionQty * 8000000;
+            
+            let enginesTotal = (v6Qty * 5000000) + (v8Qty * 7500000) + (v10Qty * 10000000);
+            let washTotal = washQty * 3000;
+            let repairTotal = (repairInsideQty * 5000) + (repairOutsideQty * 7500);
+            let kitsTotal = (repKitQty * 2000) + (paidRepPacks * 5000);
+
+            let grandTotalRaw = carTotal + nitroTotal + brakesTotal + driftTotal + suspensionTotal + enginesTotal + washTotal + repairTotal + kitsTotal;
+
+            let grandTotalFinal = 0;
+            let lscDiscount = parseFloat(document.getElementById('rank-select').value) || 0;
+            let companyOption = document.getElementById('company-select').value;
+            let infoBox = document.getElementById('rule-info-box');
+
+            let invoiceBaseFinal = 0; // Kwota faktury, od której naliczamy 5% prowizji
+
+            if (companyOption !== "none") {
+                infoBox.style.display = 'block';
+                
+                let washFinal = washTotal;
+                let repairFinal = repairTotal;
+                let enginesFinal = enginesTotal;
+                let nitroFinal = nitroTotal;
+                let restTotal = carTotal + brakesTotal + driftTotal + suspensionTotal + kitsTotal;
+                let restFinal = restTotal;
+
+                if (companyOption === 'ems_worker') {
+                    infoBox.innerHTML = '<strong>Zasady umowy EMS (Pracownik):</strong><br>• Darmowe mycie i naprawy<br>• Darmowe wizualki w pojazdach frakcyjnych<br>• -10% na silniki (V6/V8/V10)<br>• -25% na pozostały asortyment (oprócz Nitro)';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = enginesTotal * 0.90;
+                    restFinal = restTotal * 0.75;
+                } else if (companyOption === 'ems_boss') {
+                    infoBox.innerHTML = '<strong>Zasady umowy EMS (Zarząd):</strong><br>• Darmowe mycie i naprawy<br>• Darmowe wizualki w pojazdach frakcyjnych<br>• -15% na silniki (V6/V8/V10)<br>• -35% na pozostały asortyment (oprócz Nitro)';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = enginesTotal * 0.85;
+                    restFinal = restTotal * 0.65;
+                } else if (companyOption === 'lspd_worker') {
+                    infoBox.innerHTML = '<strong>Zasady umowy LSPD (Pracownik):</strong><br>• Darmowe mycie, naprawy i wizualki w pojazdach frakcyjnych<br>• -25% na FT (Full Tune) i wizualizacje pojazdów prywatnych';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = enginesTotal * 0.75;
+                    restFinal = restTotal * 0.75;
+                } else if (companyOption === 'lspd_boss') {
+                    infoBox.innerHTML = '<strong>Zasady umowy LSPD (Zarząd):</strong><br>• Darmowe mycie, naprawy i wizualki w pojazdach frakcyjnych<br>• -35% na FT (Full Tune) i wizualizacje pojazdów prywatnych';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = enginesTotal * 0.65;
+                    restFinal = restTotal * 0.65;
+                } else if (companyOption === 'uwu_worker') {
+                    infoBox.innerHTML = '<strong>Zasady umowy UwU Cafe (Pracownik):</strong><br>• Darmowe mycie i naprawy<br>• -5% na silniki V10<br>• -15% na pozostały asortyment (oprócz Nitro)';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = (v6Qty * 5000000) + (v8Qty * 7500000) + (v10Qty * 10000000 * 0.95);
+                    restFinal = restTotal * 0.85;
+                } else if (companyOption === 'uwu_boss') {
+                    infoBox.innerHTML = '<strong>Zasady umowy UwU Cafe (Zarząd):</strong><br>• Darmowe mycie i naprawy<br>• -10% na silniki V10<br>• -25% na pozostały asortyment (oprócz Nitro)';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = (v6Qty * 5000000) + (v8Qty * 7500000) + (v10Qty * 10000000 * 0.90);
+                    restFinal = restTotal * 0.75;
+                } else if (companyOption === 'doj_worker') {
+                    infoBox.innerHTML = '<strong>Zasady umowy DOJ (Pracownik):</strong><br>• Darmowe mycie i naprawy<br>• -9% na silniki (V6/V8/V10)<br>• -25% na pozostały asortyment (oprócz Nitro)';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = enginesTotal * 0.91;
+                    restFinal = restTotal * 0.75;
+                } else if (companyOption === 'doj_boss') {
+                    infoBox.innerHTML = '<strong>Zasady umowy DOJ (Zarząd):</strong><br>• Darmowe mycie i naprawy<br>• -16% na silniki (V6/V8/V10)<br>• -35% na pozostały asortyment (oprócz Nitro)';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = enginesTotal * 0.84;
+                    restFinal = restTotal * 0.65;
+                } else if (companyOption === 'tropical_worker') {
+                    infoBox.innerHTML = '<strong>Zasady umowy Tropical Drinks (Pracownik):</strong><br>• Darmowe mycie i naprawy<br>• -5% na silniki (V6/V8/V10)<br>• -15% na pozostały asortyment (oprócz Nitro)';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = enginesTotal * 0.95;
+                    restFinal = restTotal * 0.85;
+                } else if (companyOption === 'tropical_boss') {
+                    infoBox.innerHTML = '<strong>Zasady umowy Tropical Drinks (Zarząd):</strong><br>• Darmowe mycie i naprawy<br>• -10% na silniki (V6/V8/V10)<br>• -20% na pozostały asortyment (oprócz Nitro)';
+                    washFinal = 0; repairFinal = 0;
+                    enginesFinal = enginesTotal * 0.90;
+                    restFinal = restTotal * 0.80;
+                } else if (companyOption === 'ssc') {
+                    infoBox.innerHTML = '<strong>Zasady umowy SSC (Sandy Shores Customs):</strong><br>• Darmowe mycie i naprawa samochodów';
+                    washFinal = 0; repairFinal = 0;
+                }
+
+                grandTotalFinal = washFinal + repairFinal + enginesFinal + nitroFinal + restFinal;
+                
+                // Do prowizji 5% wliczamy wszystko poza Nitro i Zawieszeniem
+                let restNoSuspensionFinal = (carTotal + brakesTotal + driftTotal + kitsTotal) * (restFinal / (restTotal || 1));
+                invoiceBaseFinal = washFinal + repairFinal + enginesFinal + restNoSuspensionFinal;
+
+            } else {
+                infoBox.style.display = 'none';
+                let discountableAmount = grandTotalRaw - nitroTotal;
+                grandTotalFinal = (discountableAmount * (1 - lscDiscount)) + nitroTotal;
+
+                let invoiceBaseRaw = grandTotalRaw - nitroTotal - suspensionTotal;
+                invoiceBaseFinal = invoiceBaseRaw * (1 - lscDiscount);
+            }
+
+            // Prowizja 5% z reszty zakupów na fakturę + stałe premie za Nitro i Zawieszenie
+            let commission5percent = invoiceBaseFinal * 0.05;
+            let pocketProfit = (nitroQty * 100000) + (suspensionQty * 300000) + commission5percent;
+
+            document.getElementById('total-raw').innerText = Math.round(grandTotalRaw).toLocaleString('pl-PL') + ' $';
+            document.getElementById('pocket-profit').innerText = Math.round(pocketProfit).toLocaleString('pl-PL') + ' $';
+            document.getElementById('total-final').innerText = Math.round(grandTotalFinal).toLocaleString('pl-PL') + ' $';
+        }
+
+        function resetAll() {
+            document.getElementById('car-type').value = 'standard';
+            document.getElementById('car-raw-val').value = '';
+            document.getElementById('check-base').checked = false;
+            document.getElementById('check-visual').checked = false;
+            
+            let inputs = document.querySelectorAll('.qty-box');
+            inputs.forEach(input => input.value = '0');
+
+            document.getElementById('rank-select').value = '0';
+            document.getElementById('company-select').value = 'none';
+            liveCalculateAll();
+        }
+
+        liveCalculateAll();
+    </script>
+</body>
+</html>
