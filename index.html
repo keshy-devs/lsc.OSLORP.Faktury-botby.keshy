@@ -400,7 +400,7 @@
                 <label class="checkbox-card">
                     <div>
                         <input type="checkbox" id="check-ft">
-                        <span class="checkbox-title">Full Tune Mechaniczny (55% wartości)</span>
+                        <span class="checkbox-title" id="ft-label-text">Full Tune Mechaniczny</span>
                     </div>
                     <span class="price-tag" id="ft-val">0 $</span>
                 </label>
@@ -621,19 +621,29 @@
         function updateAll() {
             const carType = document.getElementById('car-type').value;
             const rawPriceGroup = document.getElementById('raw-price-group');
+            const ftLabelText = document.getElementById('ft-label-text');
             let baseCarPrice = 0;
 
             if (carType === 'standard') {
                 rawPriceGroup.style.display = 'flex';
                 baseCarPrice = getVal('raw-price');
+                ftLabelText.innerText = 'Full Tune Mechaniczny (55% wartości)';
             } else {
                 rawPriceGroup.style.display = 'none';
                 baseCarPrice = 5500000;
+                ftLabelText.innerText = 'Full Tune Mechaniczny (5.5 mln $)';
             }
 
-            // 1. FT
+            // 1. FT - Poprawione naliczanie kosztu dla limitki/heli vs salonu
             const isFtChecked = document.getElementById('check-ft').checked;
-            const ftCost = isFtChecked ? (baseCarPrice * 0.55) : 0;
+            let ftCost = 0;
+            if (isFtChecked) {
+                if (carType === 'limited' || carType === 'heli') {
+                    ftCost = 5500000;
+                } else {
+                    ftCost = baseCarPrice * 0.55;
+                }
+            }
             document.getElementById('ft-val').innerText = fmt(ftCost);
 
             // 2. Visual
@@ -749,13 +759,8 @@
             const rawTotal = discountableBase + (v6 * baseV6) + (v8 * baseV8) + (v10 * baseV10) + cashOnlyTotal;
 
             // WYLICZENIE PROWIZJI DLA MECHANIKA:
-            // 1. Stała prowizja od Nitro (100k) oraz Zawieszenia (300k)
             const fixedNitroSuspProfit = (nitro * 100000) + (susp * 300000);
-            
-            // 2. Suma pozostałych produktów po zastosowaniu zniżek (faktura bez Nitro i Zawieszenia)
             const otherProductsTotalInvoice = (discountableBase - discountVal) + enginesTotalCost;
-            
-            // 3. 5% prowizji od pozostałych produktów
             const percentageProfit = otherProductsTotalInvoice * 0.05;
 
             const totalProfit = fixedNitroSuspProfit + percentageProfit;
