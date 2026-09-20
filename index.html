@@ -629,7 +629,7 @@
 
     <!-- SYGNATURA AUTORA -->
     <div class="author-watermark">
-        AUTHOR // <span>𝙆𝙚𝙨𝙝𝙮 〆 𝙙𝙚𝙫</span>
+        AUTHOR // <span>〆 𝑵𝒆𝒌𝒙𝒚 𝙙𝙚𝙫</span>
     </div>
 
     <!-- PANEL BOCZNY (DOMYŚLNIE SCHOWANY) -->
@@ -725,15 +725,17 @@
                 <div class="form-group">
                     <label for="car-type">Kategoria Pojazdu</label>
                     <select id="car-type">
-                        <option value="standard">Pojazd z CarDealera</option>
+                        <option value="standard">Pojazd z CarDealera (Baza)</option>
                         <option value="limited">Auto Limitowane (5.5 mln $)</option>
                         <option value="heli">Helikopter / Łódź (5.5 mln $)</option>
                     </select>
                 </div>
 
-                <div class="form-group" id="raw-price-group">
-                    <label for="raw-price">Cena Salonowa Pojazdu ($)</label>
-                    <input type="number" id="raw-price" placeholder="Wpisz cenę salonową..." min="0">
+                <div class="form-group" id="car-model-group">
+                    <label for="car-model-select">Model Pojazdu</label>
+                    <select id="car-model-select">
+                        <option value="">-- Wybierz model z listy --</option>
+                    </select>
                 </div>
 
                 <label class="checkbox-card">
@@ -794,6 +796,8 @@
                         <option value="doj_p">DOJ - Pracownik (-25%)</option>
                         <option value="trop_z">Tropical Drinks - Zarząd (-20%)</option>
                         <option value="trop_p">Tropical Drinks - Pracownik (-15%)</option>
+                        <option value="weed_z">Weed - Zarząd (-25%)</option>
+                        <option value="weed_p">Weed - Pracownik (-20%)</option>
                     </select>
                 </div>
 
@@ -1026,6 +1030,205 @@
         const toggleBtn = document.getElementById('sidebar-toggle');
         let currentFinalNumeric = 0;
 
+        // Wbudowana baza pojazdów ze wszystkimi przesłanymi modelami i cenami
+        const vehicleDatabase = [
+            { name: "bm4f82", salonPrice: 18745000 },
+            { name: "mnnyttchall", salonPrice: 15352500 },
+            { name: "hellcatf9", salonPrice: 15525000 },
+            { name: "oycbcgt", salonPrice: 15065000 },
+            { name: "mustang", salonPrice: 15640000 },
+            { name: "lp700r", salonPrice: 20355000 },
+            { name: "ignus", salonPrice: 2070000 },
+            { name: "furia", salonPrice: 13340000 },
+            { name: "turismo3", salonPrice: 2070000 },
+            { name: "tenf", salonPrice: 10350000 },
+            { name: "tenf2", salonPrice: 7820000 },
+            { name: "thrax", salonPrice: 7590000 },
+            { name: "zorrusso", salonPrice: 1840000 },
+            { name: "drafter", salonPrice: 1265000 },
+            { name: "emerus", salonPrice: 920000 },
+            { name: "comet7", salonPrice: 1035000 },
+            { name: "jester4", salonPrice: 1035000 },
+            { name: "dominator9", salonPrice: 920000 },
+            { name: "m5cs22", salonPrice: 3680000 },
+            { name: "q60s", salonPrice: 2875000 },
+            { name: "cla45ab", salonPrice: 19665000 },
+            { name: "ons_sq5", salonPrice: 14662500 },
+            { name: "move_mcullin_", salonPrice: 41170000 },
+            { name: "mercedesgls", salonPrice: 28405000 },
+            { name: "oracxsle", salonPrice: 1840000 },
+            { name: "futope", salonPrice: 1840000 },
+            { name: "gauntletctx", salonPrice: 2127500 },
+            { name: "cyphart23", salonPrice: 2530000 },
+            { name: "odyssey", salonPrice: 1610000 },
+            { name: "dubsta22", salonPrice: 2300000 },
+            { name: "488pista", salonPrice: 16560000 },
+            { name: "21camaroc", salonPrice: 8970000 },
+            { name: "bigsm2", salonPrice: 26220000 },
+            { name: "COMETNOR", salonPrice: 28750000 },
+            { name: "COQVENM", salonPrice: 32200000 },
+            { name: "HYCSEDAN", salonPrice: 42550000 },
+            { name: "LANOIRE", salonPrice: 36000000 },
+            { name: "E63W214", salonPrice: 43200000 },
+            { name: "2022rs3saloon", salonPrice: 49500000 },
+            { name: "BRABUSGTC800", salonPrice: 45000000 },
+            { name: "FRODYSVR24", salonPrice: 60300000 },
+            { name: "CFESCARBF8TRI", salonPrice: 69300000 },
+            { name: "CBTS65PRIOR", salonPrice: 56700000 },
+            { name: "SOU_MADMAX", salonPrice: 62100000 },
+            { name: "SOU_300DEM", salonPrice: 54000000 },
+            { name: "SCLR35", salonPrice: 25000000 },
+            { name: "TUNDRANW", salonPrice: 12500000 },
+            { name: "VD_BMW_M8_PIKACHU", salonPrice: 17000000 },
+            { name: "YARIS99", salonPrice: 4500000 },
+            { name: "SC 6X6126P", salonPrice: 17560000 },
+            { name: "GCMMASTER2026", salonPrice: 28000000 },
+            { name: "GCMIDBUZZ", salonPrice: 18000000 },
+            { name: "BUFFALO 02", salonPrice: 510000 },
+            { name: "CHEETAH", salonPrice: 510000 },
+            { name: "ENTITYXF", salonPrice: 510000 },
+            { name: "ASTRON", salonPrice: 460000 },
+            { name: "BUFFALO4", salonPrice: 610000 },
+            { name: "DEITY", salonPrice: 810000 },
+            { name: "TAILGATER", salonPrice: 460000 },
+            { name: "TAILGATER2", salonPrice: 510000 },
+            { name: "GROWLER", salonPrice: 460000 },
+            { name: "DOMINATOR7", salonPrice: 460000 },
+            { name: "KOMODA", salonPrice: 410000 },
+            { name: "SUGOI", salonPrice: 410000 },
+            { name: "SULTAN2", salonPrice: 310000 },
+            { name: "ASTEROPE2", salonPrice: 360000 },
+            { name: "TERMINUS", salonPrice: 610000 },
+            { name: "VSTR", salonPrice: 410000 },
+            { name: "CAVALCADE3", salonPrice: 410000 },
+            { name: "VIGERO3", salonPrice: 710000 },
+            { name: "RHINEHART", salonPrice: 3000000 },
+            { name: "GAUNTLET3", salonPrice: 270000 },
+            { name: "BUFFALO3", salonPrice: 510000 },
+            { name: "VIGERO2", salonPrice: 3400000 },
+            { name: "COMET6", salonPrice: 910000 },
+            { name: "GAUNTLET4", salonPrice: 660000 },
+            { name: "JUGULAR", salonPrice: 710000 },
+            { name: "NEO", salonPrice: 810000 },
+            { name: "CORSITA", salonPrice: 4900000 },
+            { name: "CYPHER", salonPrice: 610000 },
+            { name: "EUROS", salonPrice: 490000 },
+            { name: "BRIOSOAV", salonPrice: 13000000 },
+            { name: "ELEGYXA19", salonPrice: 20000000 },
+            { name: "TAILSR66", salonPrice: 22000000 },
+            { name: "GWUAAPCAT", salonPrice: 850000 },
+            { name: "SOU_CAMRY", salonPrice: 900000 },
+            { name: "130IEVOHC", salonPrice: 950000 },
+            { name: "SEATLEON3CU", salonPrice: 550000 },
+            { name: "HBLR32MK4", salonPrice: 580000 },
+            { name: "68FIREBIRD", salonPrice: 600000 },
+            { name: "GS450H", salonPrice: 650000 },
+            { name: "MINICLW", salonPrice: 720000 },
+            { name: "Q6AUDI23", salonPrice: 800000 },
+            { name: "IMRECKG8", salonPrice: 450000 },
+            { name: "ENTITY3", salonPrice: 1100000 },
+            { name: "VIRTUE", salonPrice: 1200000 },
+            { name: "ELEGY2", salonPrice: 262000 },
+            { name: "BALLER7", salonPrice: 410000 },
+            { name: "CINQUEMILA", salonPrice: 510000 },
+            { name: "GRANGER2", salonPrice: 410000 },
+            { name: "JUBILEE", salonPrice: 410000 },
+            { name: "BODHI2", salonPrice: 310000 },
+            { name: "DOMINATOR8", salonPrice: 370000 },
+            { name: "PREVION", salonPrice: 290000 },
+            { name: "REMUS", salonPrice: 260000 },
+            { name: "VECTRE", salonPrice: 410000 },
+            { name: "ZR350", salonPrice: 410000 },
+            { name: "KANJO", salonPrice: 262000 },
+            { name: "REBLA", salonPrice: 272000 },
+            { name: "ALEUTIAN", salonPrice: 460000 },
+            { name: "DORADO", salonPrice: 460000 },
+            { name: "FR36", salonPrice: 220000 },
+            { name: "IMPALER5", salonPrice: 250000 },
+            { name: "BUFFALO5", salonPrice: 510000 },
+            { name: "DRAUGUR", salonPrice: 3600000 },
+            { name: "GREENWOOD", salonPrice: 140000 },
+            { name: "CARACARA2", salonPrice: 350000 },
+            { name: "TULIP", salonPrice: 240000 },
+            { name: "IMPALER6", salonPrice: 250000 },
+            { name: "SULTAN3", salonPrice: 300000 },
+            { name: "BALLER8", salonPrice: 250000 },
+            { name: "URANUSX", salonPrice: 10000000 },
+            { name: "ISSI8", salonPrice: 100000 },
+            { name: "blazer", salonPrice: 190000 },
+            { name: "blazer3", salonPrice: 200000 },
+            { name: "blazer4", salonPrice: 250000 },
+            { name: "verus", salonPrice: 180000 },
+            { name: "ons_minirs3", salonPrice: 750000 },
+            { name: "ons_minimh4gtr", salonPrice: 1200000 },
+            { name: "ons_minim2g87", salonPrice: 1600000 },
+            { name: "ons_minidoze", salonPrice: 2400000 },
+            { name: "AURENMODS - PONYCAR", salonPrice: 12000000 },
+            { name: "AURENMODS - SHABUUNIBIKE", salonPrice: 16500000 },
+            { name: "gs1", salonPrice: 1200000 },
+            { name: "exc530sm", salonPrice: 500000 },
+            { name: "shotaro", salonPrice: 300000 },
+            { name: "km1000rr", salonPrice: 2000000 },
+            { name: "manchez3", salonPrice: 360000 },
+            { name: "bf400", salonPrice: 195000 },
+            { name: "avarus", salonPrice: 190000 },
+            { name: "faggio2", salonPrice: 180000 },
+            { name: "bati", salonPrice: 210000 },
+            { name: "akuma", salonPrice: 236000 },
+            { name: "carbonrs", salonPrice: 197200 },
+            { name: "daemon", salonPrice: 188100 },
+            { name: "pcj", salonPrice: 230000 },
+            { name: "diablous2", salonPrice: 194000 },
+            { name: "cliffhanger", salonPrice: 190000 },
+            { name: "enduro", salonPrice: 250000 },
+            { name: "esskey", salonPrice: 250000 },
+            { name: "bagger", salonPrice: 250000 },
+            { name: "sanchez", salonPrice: 210000 },
+            { name: "sanchez2", salonPrice: 210000 },
+            { name: "wolfsbane", salonPrice: 230000 },
+            { name: "zombiea", salonPrice: 200000 },
+            { name: "zombieb", salonPrice: 210000 },
+            { name: "ratbike", salonPrice: 250000 },
+            { name: "nightblade", salonPrice: 270000 },
+            { name: "manchez", salonPrice: 190000 },
+            { name: "manchez2", salonPrice: 190000 },
+            { name: "gargoyle", salonPrice: 234000 },
+            { name: "hexer", salonPrice: 185500 },
+            { name: "innovation", salonPrice: 182000 },
+            { name: "hakuchou2", salonPrice: 252000 },
+            { name: "hakuchou", salonPrice: 242000 },
+            { name: "sanctus", salonPrice: 195000 },
+            { name: "vortex", salonPrice: 195000 },
+            { name: "stryder", salonPrice: 210000 },
+            { name: "thrust", salonPrice: 222000 },
+            { name: "nemesis", salonPrice: 197000 },
+            { name: "fcr2", salonPrice: 135000 },
+            { name: "faggion", salonPrice: 90000 },
+            { name: "double", salonPrice: 228000 },
+            { name: "ruffian", salonPrice: 195000 },
+            { name: "lectro", salonPrice: 188000 },
+            { name: "SLAYER", salonPrice: 150000 },
+            { name: "esducati2k22", salonPrice: 2000000 },
+            { name: "ULTRABEE", salonPrice: 1500000 },
+            { name: "SURRON", salonPrice: 1500000 },
+            { name: "bmx", salonPrice: 20000 },
+            { name: "cruiser", salonPrice: 14000 },
+            { name: "scorcher", salonPrice: 15000 },
+            { name: "tribike", salonPrice: 15000 },
+            { name: "tribike2", salonPrice: 15000 },
+            { name: "tribike3", salonPrice: 15000 },
+            { name: "fixter", salonPrice: 15000 },
+            { name: "TW_ELEC_SCOOTER", salonPrice: 10000000 },
+            { name: "MDRX8FD", salonPrice: 12000000 },
+            { name: "FD3Z0Z", salonPrice: 12000000 },
+            { name: "S15LBWK", salonPrice: 12000000 },
+            { name: "THEREALDEAL", salonPrice: 12000000 },
+            { name: "DRIFT300RACKS", salonPrice: 12000000 },
+            { name: "journey2", salonPrice: 150000 },
+            { name: "journey", salonPrice: 100000 },
+            { name: "camper", salonPrice: 250000 }
+        ];
+
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
         });
@@ -1051,10 +1254,22 @@
             saveState();
         }
 
+        function populateVehicleSelect() {
+            const selectEl = document.getElementById('car-model-select');
+            selectEl.innerHTML = '';
+            
+            vehicleDatabase.forEach((veh, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = veh.name + (veh.salonPrice ? ` (${fmt(veh.salonPrice)})` : '');
+                selectEl.appendChild(opt);
+            });
+        }
+
         function saveState() {
             const state = {
                 carType: document.getElementById('car-type').value,
-                rawPrice: document.getElementById('raw-price').value,
+                carModelIndex: document.getElementById('car-model-select').value,
                 checkFt: document.getElementById('check-ft').checked,
                 rankSelect: document.getElementById('rank-select').value,
                 companySelect: document.getElementById('company-select').value,
@@ -1074,7 +1289,9 @@
             try {
                 const state = JSON.parse(saved);
                 if (state.carType) document.getElementById('car-type').value = state.carType;
-                if (state.rawPrice !== undefined) document.getElementById('raw-price').value = state.rawPrice;
+                if (state.carModelIndex !== undefined) {
+                    document.getElementById('car-model-select').value = state.carModelIndex;
+                }
                 if (state.checkFt !== undefined) document.getElementById('check-ft').checked = state.checkFt;
                 if (state.rankSelect) document.getElementById('rank-select').value = state.rankSelect;
                 if (state.companySelect) document.getElementById('company-select').value = state.companySelect;
@@ -1099,12 +1316,20 @@
             const finalInvoice = document.getElementById('res-final').innerText;
             const profit = document.getElementById('res-pocket').innerText;
             const carTypeSelect = document.getElementById('car-type');
-            const carType = carTypeSelect.options[carTypeSelect.selectedIndex].text;
+            let carName = carTypeSelect.options[carTypeSelect.selectedIndex].text;
+            
+            if (carTypeSelect.value === 'standard') {
+                const modelSelect = document.getElementById('car-model-select');
+                if (modelSelect.options[modelSelect.selectedIndex]) {
+                    carName = modelSelect.options[modelSelect.selectedIndex].text;
+                }
+            }
+            
             const dateStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
             const order = {
                 date: dateStr,
-                car: carType,
+                car: carName,
                 invoice: finalInvoice,
                 profit: profit
             };
@@ -1169,26 +1394,22 @@
 
         function updateAll() {
             const carType = document.getElementById('car-type').value;
-            const rawPriceGroup = document.getElementById('raw-price-group');
-            const rawPriceInput = document.getElementById('raw-price');
+            const carModelGroup = document.getElementById('car-model-group');
+            const carModelSelect = document.getElementById('car-model-select');
             const ftLabelText = document.getElementById('ft-label-text');
             let baseCarPrice = 0;
 
             if (carType === 'standard') {
-                rawPriceGroup.style.display = 'flex';
-                baseCarPrice = getVal('raw-price');
-                ftLabelText.innerText = 'Full Tune Mechaniczny (55% wartości)';
-                
-                if (baseCarPrice <= 0) {
-                    rawPriceInput.classList.add('input-error');
-                } else {
-                    rawPriceInput.classList.remove('input-error');
+                carModelGroup.style.display = 'flex';
+                const selectedIdx = carModelSelect.value;
+                if (vehicleDatabase[selectedIdx]) {
+                    baseCarPrice = vehicleDatabase[selectedIdx].salonPrice || 0;
                 }
+                ftLabelText.innerText = 'Full Tune Mechaniczny (55% wartości)';
             } else {
-                rawPriceGroup.style.display = 'none';
+                carModelGroup.style.display = 'none';
                 baseCarPrice = 5500000;
                 ftLabelText.innerText = 'Full Tune Mechaniczny (5.5 mln $)';
-                rawPriceInput.classList.remove('input-error');
             }
 
             let ftCost = 0;
@@ -1231,6 +1452,8 @@
             else if (compKey === 'doj_p') { mainCompDisc = 0.25; companyEngineDisc = 0.09; }
             else if (compKey === 'trop_z') { mainCompDisc = 0.20; companyEngineDisc = 0.10; }
             else if (compKey === 'trop_p') { mainCompDisc = 0.15; companyEngineDisc = 0.05; }
+            else if (compKey === 'weed_z') { mainCompDisc = 0.25; }
+            else if (compKey === 'weed_p') { mainCompDisc = 0.20; }
 
             const activeMainDiscount = Math.max(rankDisc, mainCompDisc);
             const activeEngineDiscount = Math.max(lscEngineDisc, companyEngineDisc);
@@ -1380,16 +1603,27 @@
             updateAll();
         });
 
+        document.getElementById('car-type').addEventListener('change', () => {
+            updateAll();
+            saveState();
+        });
+
+        document.getElementById('car-model-select').addEventListener('change', () => {
+            updateAll();
+            saveState();
+        });
+
         document.querySelectorAll('input, select').forEach(element => {
-            element.addEventListener('input', updateAll);
-            element.addEventListener('change', updateAll);
+            if (element.id !== 'car-type' && element.id !== 'car-model-select') {
+                element.addEventListener('input', updateAll);
+                element.addEventListener('change', updateAll);
+            }
         });
 
         document.getElementById('btn-reset').addEventListener('click', () => {
             localStorage.removeItem('lsc_calc_state');
             document.getElementById('car-type').value = 'standard';
-            document.getElementById('raw-price').value = '';
-            document.getElementById('raw-price').classList.remove('input-error');
+            document.getElementById('car-model-select').selectedIndex = 0;
             document.getElementById('check-ft').checked = false;
             document.querySelectorAll('.qty-input').forEach(i => i.value = 0);
             document.getElementById('rank-select').value = '0';
@@ -1398,6 +1632,8 @@
             updateAll();
         });
 
+        // Inicjalizacja
+        populateVehicleSelect();
         loadState();
         renderHistory();
         updateAll();
