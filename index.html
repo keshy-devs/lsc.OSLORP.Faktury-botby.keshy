@@ -336,6 +336,7 @@
             flex-direction: column;
             gap: 6px;
             margin-bottom: 14px;
+            position: relative;
         }
 
         .form-group label {
@@ -346,7 +347,7 @@
             letter-spacing: 1px;
         }
 
-        input[type="number"], select {
+        input[type="text"], input[type="number"], select {
             background: var(--input-bg);
             border: 1px solid var(--panel-border);
             color: var(--text-main);
@@ -358,7 +359,7 @@
             transition: border-color 0.2s;
         }
 
-        input[type="number"]:focus, select:focus {
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
             border-color: var(--amber-main);
             box-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
         }
@@ -366,6 +367,45 @@
         .input-error {
             border-color: var(--neon-red) !important;
             box-shadow: 0 0 10px rgba(255, 51, 51, 0.4) !important;
+        }
+
+        /* --- AUTOCOMPLETE SUGGESTIONS BOX --- */
+        .suggestions-box {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #0b0d10;
+            border: 1px solid var(--panel-border);
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            border-radius: 0 0 3px 3px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        }
+
+        .suggestion-item {
+            padding: 10px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: background 0.2s;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .suggestion-item:hover {
+            background: rgba(255, 107, 0, 0.15);
+            color: var(--amber-light);
+        }
+
+        .suggestion-item span {
+            color: var(--amber-light);
+            font-size: 12px;
         }
 
         .checkbox-card {
@@ -725,17 +765,16 @@
                 <div class="form-group">
                     <label for="car-type">Kategoria Pojazdu</label>
                     <select id="car-type">
-                        <option value="standard">Pojazd z CarDealera (Baza)</option>
+                        <option value="standard">Pojazd z CarDealera (Wpisz model)</option>
                         <option value="limited">Auto Limitowane (5.5 mln $)</option>
                         <option value="heli">Helikopter / Łódź (5.5 mln $)</option>
                     </select>
                 </div>
 
                 <div class="form-group" id="car-model-group">
-                    <label for="car-model-select">Model Pojazdu</label>
-                    <select id="car-model-select">
-                        <option value="">-- Wybierz model z listy --</option>
-                    </select>
+                    <label for="car-model-input">Model Pojazdu</label>
+                    <input type="text" id="car-model-input" placeholder="Zacznij wpisywać model np. sultan, elegy..." autocomplete="off">
+                    <div id="car-suggestions" class="suggestions-box"></div>
                 </div>
 
                 <label class="checkbox-card">
@@ -1029,8 +1068,9 @@
         const sidebar = document.getElementById('analysis-sidebar');
         const toggleBtn = document.getElementById('sidebar-toggle');
         let currentFinalNumeric = 0;
+        let selectedVehicle = null;
 
-        // Wbudowana baza pojazdów ze wszystkimi przesłanymi modelami i cenami
+        // Baza pojazdów
         const vehicleDatabase = [
             { name: "bm4f82", salonPrice: 18745000 },
             { name: "mnnyttchall", salonPrice: 15352500 },
@@ -1254,22 +1294,75 @@
             saveState();
         }
 
-        function populateVehicleSelect() {
-            const selectEl = document.getElementById('car-model-select');
-            selectEl.innerHTML = '';
-            
-            vehicleDatabase.forEach((veh, index) => {
-                const opt = document.createElement('option');
-                opt.value = index;
-                opt.textContent = veh.name + (veh.salonPrice ? ` (${fmt(veh.salonPrice)})` : '');
-                selectEl.appendChild(opt);
+        // System wyszukiwania z podpowiedziami (Autocomplete)
+        function setupAutocomplete() {
+            const input = document.getElementById('car-model-input');
+            const suggestionsBox = document.getElementById('car-suggestions');
+
+            input.addEventListener('input', () => {
+                const query = input.value.toLowerCase().trim();
+                if (!query) {
+                    selectedVehicle = null;
+                    suggestionsBox.style.display = 'none';
+                    updateAll();
+                    saveState();
+                    return;
+                }
+
+                // Filtruje pasujące pojazdy (zawierające wpisany ciąg znaków)
+                const matches = vehicleDatabase.filter(v => v.name.toLowerCase().includes(query));
+
+                if (matches.length > 0) {
+                    suggestionsBox.innerHTML = matches.map(m => `
+                        <div class="suggestion-item" data-name="${m.name}">
+                            ${m.name} <span>${fmt(m.salonPrice)}</span>
+                        </div>
+                    `).join('');
+                    suggestionsBox.style.display = 'block';
+
+                    // Sprawdź czy jest dokładne trafienie
+                    const exact = matches.find(m => m.name.toLowerCase() === query);
+                    if (exact) {
+                        selectedVehicle = exact;
+                    } else {
+                        selectedVehicle = null;
+                    }
+                } else {
+                    suggestionsBox.innerHTML = `<div class="suggestion-item" style="color: var(--neon-red); cursor: default;">Brak pojazdu w bazie. Sprawdź pisownię.</div>`;
+                    suggestionsBox.style.display = 'block';
+                    selectedVehicle = null;
+                }
+                updateAll();
+                saveState();
+            });
+
+            suggestionsBox.addEventListener('click', (e) => {
+                const item = e.target.closest('.suggestion-item');
+                if (!item || !item.dataset.name) return;
+                const vehName = item.dataset.name;
+                const found = vehicleDatabase.find(v => v.name === vehName);
+                if (found) {
+                    selectedVehicle = found;
+                    input.value = found.name;
+                    suggestionsBox.style.display = 'none';
+                    updateAll();
+                    saveState();
+                }
+            });
+
+            // Ukrywanie podpowiedzi po kliknięciu poza pole
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#car-model-group')) {
+                    suggestionsBox.style.display = 'none';
+                }
             });
         }
 
         function saveState() {
             const state = {
                 carType: document.getElementById('car-type').value,
-                carModelIndex: document.getElementById('car-model-select').value,
+                carModelText: document.getElementById('car-model-input').value,
+                selectedVehicleName: selectedVehicle ? selectedVehicle.name : null,
                 checkFt: document.getElementById('check-ft').checked,
                 rankSelect: document.getElementById('rank-select').value,
                 companySelect: document.getElementById('company-select').value,
@@ -1289,8 +1382,11 @@
             try {
                 const state = JSON.parse(saved);
                 if (state.carType) document.getElementById('car-type').value = state.carType;
-                if (state.carModelIndex !== undefined) {
-                    document.getElementById('car-model-select').value = state.carModelIndex;
+                if (state.carModelText) {
+                    document.getElementById('car-model-input').value = state.carModelText;
+                }
+                if (state.selectedVehicleName) {
+                    selectedVehicle = vehicleDatabase.find(v => v.name === state.selectedVehicleName) || null;
                 }
                 if (state.checkFt !== undefined) document.getElementById('check-ft').checked = state.checkFt;
                 if (state.rankSelect) document.getElementById('rank-select').value = state.rankSelect;
@@ -1319,10 +1415,8 @@
             let carName = carTypeSelect.options[carTypeSelect.selectedIndex].text;
             
             if (carTypeSelect.value === 'standard') {
-                const modelSelect = document.getElementById('car-model-select');
-                if (modelSelect.options[modelSelect.selectedIndex]) {
-                    carName = modelSelect.options[modelSelect.selectedIndex].text;
-                }
+                const modelInputVal = document.getElementById('car-model-input').value.trim();
+                carName = modelInputVal ? modelInputVal : 'Nie wybrano modelu';
             }
             
             const dateStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -1395,21 +1489,29 @@
         function updateAll() {
             const carType = document.getElementById('car-type').value;
             const carModelGroup = document.getElementById('car-model-group');
-            const carModelSelect = document.getElementById('car-model-select');
+            const carModelInput = document.getElementById('car-model-input');
             const ftLabelText = document.getElementById('ft-label-text');
             let baseCarPrice = 0;
 
             if (carType === 'standard') {
                 carModelGroup.style.display = 'flex';
-                const selectedIdx = carModelSelect.value;
-                if (vehicleDatabase[selectedIdx]) {
-                    baseCarPrice = vehicleDatabase[selectedIdx].salonPrice || 0;
+                if (selectedVehicle) {
+                    baseCarPrice = selectedVehicle.salonPrice || 0;
+                    carModelInput.classList.remove('input-error');
+                } else {
+                    baseCarPrice = 0;
+                    if (carModelInput.value.trim() !== '') {
+                        carModelInput.classList.add('input-error');
+                    } else {
+                        carModelInput.classList.remove('input-error');
+                    }
                 }
                 ftLabelText.innerText = 'Full Tune Mechaniczny (55% wartości)';
             } else {
                 carModelGroup.style.display = 'none';
                 baseCarPrice = 5500000;
                 ftLabelText.innerText = 'Full Tune Mechaniczny (5.5 mln $)';
+                carModelInput.classList.remove('input-error');
             }
 
             let ftCost = 0;
@@ -1564,7 +1666,9 @@
             const totalDiscountSum = discountVal + ftDiscountVal + ((v6 * baseV6 + v8 * baseV8 + v10 * baseV10) - enginesTotalCost);
 
             const fixedNitroSuspProfit = (nitro * 100000) + (susp * 300000);
-            const otherProductsTotalInvoice = discountableBase + enginesTotalCost;
+            
+            // POPRAWKA: Prowizja 5% uwzględnia teraz również finalną cenę Full Tune!
+            const otherProductsTotalInvoice = discountableBase + finalFtCost + enginesTotalCost;
             const percentageProfit = otherProductsTotalInvoice * 0.05;
 
             const totalProfit = fixedNitroSuspProfit + percentageProfit;
@@ -1608,13 +1712,8 @@
             saveState();
         });
 
-        document.getElementById('car-model-select').addEventListener('change', () => {
-            updateAll();
-            saveState();
-        });
-
         document.querySelectorAll('input, select').forEach(element => {
-            if (element.id !== 'car-type' && element.id !== 'car-model-select') {
+            if (element.id !== 'car-type' && element.id !== 'car-model-input') {
                 element.addEventListener('input', updateAll);
                 element.addEventListener('change', updateAll);
             }
@@ -1623,7 +1722,9 @@
         document.getElementById('btn-reset').addEventListener('click', () => {
             localStorage.removeItem('lsc_calc_state');
             document.getElementById('car-type').value = 'standard';
-            document.getElementById('car-model-select').selectedIndex = 0;
+            document.getElementById('car-model-input').value = '';
+            selectedVehicle = null;
+            document.getElementById('car-model-input').classList.remove('input-error');
             document.getElementById('check-ft').checked = false;
             document.querySelectorAll('.qty-input').forEach(i => i.value = 0);
             document.getElementById('rank-select').value = '0';
@@ -1633,7 +1734,7 @@
         });
 
         // Inicjalizacja
-        populateVehicleSelect();
+        setupAutocomplete();
         loadState();
         renderHistory();
         updateAll();
