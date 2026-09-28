@@ -859,9 +859,9 @@
                 <div class="item-row">
                     <div class="item-details">
                         <span class="item-name">Nitro (Podtlenek)</span>
-                        <span class="tag-subtext">Zarobek: 100 000 $ / szt (Gotówka)</span>
+                        <span class="tag-subtext">Zarobek: 475 000 $ / szt (Gotówka)</span>
                     </div>
-                    <span class="item-price">2 500 000 $</span>
+                    <span class="item-price">2 875 000 $</span>
                     <div class="qty-control">
                         <button type="button" class="qty-btn" onclick="adjustQty('qty-nitro', -1)">-</button>
                         <input type="number" class="qty-input" id="qty-nitro" value="0" min="0">
@@ -1643,7 +1643,9 @@
                 + packCost;
 
             const enginesTotalCost = (v6 * unitV6) + (v8 * unitV8) + (v10 * unitV10);
-            const cashOnlyTotal = (nitro * 2500000) + (susp * 8000000);
+            
+            // Cena Nitro: 2 875 000 $
+            const cashOnlyTotal = (nitro * 2875000) + (susp * 8000000);
 
             let ftDiscountVal = 0;
             let ftEffectiveDiscountRate = 0;
@@ -1665,9 +1667,9 @@
 
             const totalDiscountSum = discountVal + ftDiscountVal + ((v6 * baseV6 + v8 * baseV8 + v10 * baseV10) - enginesTotalCost);
 
-            const fixedNitroSuspProfit = (nitro * 100000) + (susp * 300000);
+            // Poprawny zarobek dla Nitro: 475 000 $ za sztukę (oraz 300 000 $ za zawieszenie)
+            const fixedNitroSuspProfit = (nitro * 475000) + (susp * 300000);
             
-            // POPRAWKA: Prowizja 5% uwzględnia teraz również finalną cenę Full Tune!
             const otherProductsTotalInvoice = discountableBase + finalFtCost + enginesTotalCost;
             const percentageProfit = otherProductsTotalInvoice * 0.05;
 
