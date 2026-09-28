@@ -1309,7 +1309,6 @@
                     return;
                 }
 
-                // Filtruje pasujące pojazdy (zawierające wpisany ciąg znaków)
                 const matches = vehicleDatabase.filter(v => v.name.toLowerCase().includes(query));
 
                 if (matches.length > 0) {
@@ -1320,7 +1319,6 @@
                     `).join('');
                     suggestionsBox.style.display = 'block';
 
-                    // Sprawdź czy jest dokładne trafienie
                     const exact = matches.find(m => m.name.toLowerCase() === query);
                     if (exact) {
                         selectedVehicle = exact;
@@ -1350,7 +1348,6 @@
                 }
             });
 
-            // Ukrywanie podpowiedzi po kliknięciu poza pole
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('#car-model-group')) {
                     suggestionsBox.style.display = 'none';
@@ -1644,7 +1641,6 @@
 
             const enginesTotalCost = (v6 * unitV6) + (v8 * unitV8) + (v10 * unitV10);
             
-            // Cena Nitro: 2 875 000 $
             const cashOnlyTotal = (nitro * 2875000) + (susp * 8000000);
 
             let ftDiscountVal = 0;
@@ -1667,7 +1663,6 @@
 
             const totalDiscountSum = discountVal + ftDiscountVal + ((v6 * baseV6 + v8 * baseV8 + v10 * baseV10) - enginesTotalCost);
 
-            // Poprawny zarobek dla Nitro: 475 000 $ za sztukę (oraz 300 000 $ za zawieszenie)
             const fixedNitroSuspProfit = (nitro * 475000) + (susp * 300000);
             
             const otherProductsTotalInvoice = discountableBase + finalFtCost + enginesTotalCost;
