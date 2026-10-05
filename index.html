@@ -824,19 +824,21 @@
                     <label for="company-select">Umowa Partnera</label>
                     <select id="company-select">
                         <option value="none">Brak umowy</option>
-                        <option value="ssc">SSC - Sandy Shores Customs (Naprawa/Mycie Free)</option>
-                        <option value="ems_z">EMS - Zarząd (-35%)</option>
-                        <option value="ems_p">EMS - Pracownik (-25%)</option>
-                        <option value="lspd_z">LSPD - Zarząd (-35%)</option>
-                        <option value="lspd_p">LSPD - Pracownik (-25%)</option>
-                        <option value="uwu_z">UwU Cafe - Zarząd (-25%)</option>
-                        <option value="uwu_p">UwU Cafe - Pracownik (-15%)</option>
-                        <option value="doj_z">DOJ - Zarząd (-35%)</option>
-                        <option value="doj_p">DOJ - Pracownik (-25%)</option>
-                        <option value="trop_z">Tropical Drinks - Zarząd (-20%)</option>
-                        <option value="trop_p">Tropical Drinks - Pracownik (-15%)</option>
-                        <option value="weed_z">Weed - Zarząd (-25%)</option>
-                        <option value="weed_p">Weed - Pracownik (-20%)</option>
+                        <optgroup label="Frakcje">
+                            <option value="doj_z">DOJ - Zarząd (-35%)</option>
+                            <option value="doj_p">DOJ - Pracownik (-25%)</option>
+                            <option value="ssc">SSC - Sandy Shores Customs (Naprawa/Mycie Free)</option>
+                            <option value="ems_z">EMS - Zarząd (-35%)</option>
+                            <option value="ems_p">EMS - Pracownik (-25%)</option>
+                            <option value="lspd_z">LSPD - Zarząd (-35%)</option>
+                            <option value="lspd_p">LSPD - Pracownik (-25%)</option>
+                        </optgroup>
+                        <optgroup label="Firmy">
+                            <option value="weed_z">Weed Shop Puff Puff - Zarząd (-20%)</option>
+                            <option value="weed_p">Weed Shop Puff Puff - Pracownik (-15%)</option>
+                            <option value="uwu_z">UwU Cafe - Zarząd (-25%)</option>
+                            <option value="uwu_p">UwU Cafe - Pracownik (-15%)</option>
+                        </optgroup>
                     </select>
                 </div>
 
@@ -1549,10 +1551,8 @@
             else if (compKey === 'uwu_p') { mainCompDisc = 0.15; companyEngineDisc = 0.05; }
             else if (compKey === 'doj_z') { mainCompDisc = 0.35; companyEngineDisc = 0.16; }
             else if (compKey === 'doj_p') { mainCompDisc = 0.25; companyEngineDisc = 0.09; }
-            else if (compKey === 'trop_z') { mainCompDisc = 0.20; companyEngineDisc = 0.10; }
-            else if (compKey === 'trop_p') { mainCompDisc = 0.15; companyEngineDisc = 0.05; }
-            else if (compKey === 'weed_z') { mainCompDisc = 0.25; }
-            else if (compKey === 'weed_p') { mainCompDisc = 0.20; }
+            else if (compKey === 'weed_z') { mainCompDisc = 0.20; }
+            else if (compKey === 'weed_p') { mainCompDisc = 0.15; }
 
             const activeMainDiscount = Math.max(rankDisc, mainCompDisc);
             const activeEngineDiscount = Math.max(lscEngineDisc, companyEngineDisc);
