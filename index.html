@@ -1548,36 +1548,7 @@
             document.getElementById('vis-single-info').innerText = `Stawka za 1 menu: ${fmt(singleVisPrice)}`;
             document.getElementById('vis-val').innerText = fmt(totalVisCost);
 
-            const rankSelect = document.getElementById('rank-select');
-            const rankDisc = parseFloat(rankSelect.value) || 0;
-            const selectedRankOption = rankSelect.options[rankSelect.selectedIndex];
-            const lscEngineDisc = parseFloat(selectedRankOption.getAttribute('data-engine-disc')) || 0;
-
-            const compKey = document.getElementById('company-select').value;
-            const ftCouponDisc = parseFloat(document.getElementById('ft-coupon-select').value) || 0;
-
-            let mainCompDisc = 0;
-            let companyEngineDisc = 0;
-
-            if (compKey === 'ssc') { mainCompDisc = 0; }
-            else if (compKey === 'ems_z') { mainCompDisc = 0.35; companyEngineDisc = 0.15; }
-            else if (compKey === 'ems_p') { mainCompDisc = 0.25; companyEngineDisc = 0.10; }
-            else if (compKey === 'lspd_z') { mainCompDisc = 0.35; }
-            else if (compKey === 'lspd_p') { mainCompDisc = 0.25; }
-            else if (compKey === 'uwu_z') { mainCompDisc = 0.25; companyEngineDisc = 0.10; }
-            else if (compKey === 'uwu_p') { mainCompDisc = 0.15; companyEngineDisc = 0.05; }
-            else if (compKey === 'doj_z') { mainCompDisc = 0.35; companyEngineDisc = 0.16; }
-            else if (compKey === 'doj_p') { mainCompDisc = 0.25; companyEngineDisc = 0.09; }
-            else if (compKey === 'weed_z') { mainCompDisc = 0.20; }
-            else if (compKey === 'weed_p') { mainCompDisc = 0.15; }
-
-            const activeMainDiscount = Math.max(rankDisc, mainCompDisc);
-            const activeEngineDiscount = Math.max(lscEngineDisc, companyEngineDisc);
-
-            const hasFreeWashAndRepair = (rankDisc > 0 || compKey !== 'none');
-
-            const washUnitPrice = hasFreeWashAndRepair ? 0 : 3000;
-            const repInUnitPrice = hasFreeWashAndRepair ? 0 : 5000;
+            <script>
 
             if (hasFreeWashAndRepair) {
                 document.getElementById('wash-price-display').innerText = '0 $';
