@@ -672,7 +672,7 @@
         AUTHOR // <span>〆 𝑵𝒆𝒌𝒙𝒚 𝙙𝙚𝙫</span>
     </div>
 
-    <!-- PANEL BOCZNY (DOMYŚLNIE SCHOWANY) -->
+    <!-- PANEL BOCZNY -->
     <div class="sidebar-panel collapsed" id="analysis-sidebar">
         <button class="sidebar-toggle-btn" id="sidebar-toggle">
             <span>ANALIZA</span>
@@ -805,39 +805,39 @@
             <div class="card">
                 <div class="card-title">🛡️ 2. Zniżki i Rabaty</div>
 
-               <div class="form-group">
-    <label for="rank-select">Ranga Mechanika (Zniżka LSC)</label>
-    <select id="rank-select">
-        <option value="0">Brak zniżki (0%)</option>
-        <option value="0.20" data-engine-disc="0.20">Zarząd (-20% | Silniki -20%)</option>
-        <option value="0.15" data-engine-disc="0.15">Inżynier (-15% | Silniki -15%)</option>
-        <option value="0.15" data-engine-disc="0.15">Majster (-15% | Silniki -15%)</option>
-        <option value="0.10" data-engine-disc="0.15">Fachowiec (-10% | Silniki -15%)</option>
-        <option value="0.10" data-engine-disc="0.15">Starszy Mechanik (-10% | Silniki -15%)</option>
-        <option value="0.05" data-engine-disc="0.15">Mechanik (-5% | Silniki -15%)</option>
-        <option value="0.05" data-engine-disc="0.15">Młodszy Mechanik (-5% | Silniki -15%)</option>
-        <option value="0.00" data-engine-disc="0.15">Praktykant (Brak | Silniki -15%)</option>
-    </select>
-</div>
+                <div class="form-group">
+                    <label for="rank-select">Ranga Mechanika (Zniżka LSC)</label>
+                    <select id="rank-select">
+                        <option value="0">Brak zniżki (0%)</option>
+                        <option value="0.20" data-engine-disc="0.20">Zarząd (-20% | Silniki -20%)</option>
+                        <option value="0.15" data-engine-disc="0.15">Inżynier (-15% | Silniki -15%)</option>
+                        <option value="0.15" data-engine-disc="0.15">Majster (-15% | Silniki -15%)</option>
+                        <option value="0.10" data-engine-disc="0.15">Fachowiec (-10% | Silniki -15%)</option>
+                        <option value="0.10" data-engine-disc="0.15">Starszy Mechanik (-10% | Silniki -15%)</option>
+                        <option value="0.05" data-engine-disc="0.15">Mechanik (-5% | Silniki -15%)</option>
+                        <option value="0.05" data-engine-disc="0.15">Młodszy Mechanik (-5% | Silniki -15%)</option>
+                        <option value="0.00" data-engine-disc="0.15">Praktykant (Brak | Silniki -15%)</option>
+                    </select>
+                </div>
 
                 <div class="form-group">
                     <label for="company-select">Umowa Partnera</label>
                     <select id="company-select">
                         <option value="none">Brak umowy</option>
                         <optgroup label="Frakcje">
-                            <option value="doj_z">DOJ - Zarząd (-35%)</option>
-                            <option value="doj_p">DOJ - Pracownik (-25%)</option>
+                            <option value="doj_z">DOJ - Zarząd (-35% | Silniki -15%)</option>
+                            <option value="doj_p">DOJ - Pracownik (-25% | Silniki -10%)</option>
                             <option value="ssc">SSC - Sandy Shores Customs (Naprawa/Mycie Free)</option>
-                            <option value="ems_z">EMS - Zarząd (-35%)</option>
-                            <option value="ems_p">EMS - Pracownik (-25%)</option>
-                            <option value="lspd_z">LSPD - Zarząd (-35%)</option>
-                            <option value="lspd_p">LSPD - Pracownik (-25%)</option>
+                            <option value="ems_z">EMS - Zarząd (-35% | Silniki -15%)</option>
+                            <option value="ems_p">EMS - Pracownik (-25% | Silniki -10%)</option>
+                            <option value="lspd_z">LSPD - Zarząd (-35% | Silniki -15%)</option>
+                            <option value="lspd_p">LSPD - Pracownik (-25% | Silniki -10%)</option>
                         </optgroup>
                         <optgroup label="Firmy">
                             <option value="weed_z">Weed Shop Puff Puff - Zarząd (-20%)</option>
                             <option value="weed_p">Weed Shop Puff Puff - Pracownik (-15%)</option>
-                            <option value="uwu_z">UwU Cafe - Zarząd (-25%)</option>
-                            <option value="uwu_p">UwU Cafe - Pracownik (-15%)</option>
+                            <option value="uwu_z">UwU Cafe - Zarząd (-25% | Silniki -10%)</option>
+                            <option value="uwu_p">UwU Cafe - Pracownik (-15% | Silniki -5%)</option>
                         </optgroup>
                     </select>
                 </div>
@@ -1269,7 +1269,6 @@
             { name: "journey2", salonPrice: 150000 },
             { name: "journey", salonPrice: 100000 },
             { name: "camper", salonPrice: 250000 },
-            // Nowe pojazdy dodane do bazy:
             { name: "ADPGT1", salonPrice: 35500000 },
             { name: "RMOD_TENF", salonPrice: 25000000 },
             { name: "GSTNAZZARO1", salonPrice: 23500000 },
@@ -1313,7 +1312,6 @@
             saveState();
         }
 
-        // System wyszukiwania z podpowiedziami (Autocomplete)
         function setupAutocomplete() {
             const input = document.getElementById('car-model-input');
             const suggestionsBox = document.getElementById('car-suggestions');
@@ -1548,7 +1546,37 @@
             document.getElementById('vis-single-info').innerText = `Stawka za 1 menu: ${fmt(singleVisPrice)}`;
             document.getElementById('vis-val').innerText = fmt(totalVisCost);
 
-            <script>
+            const rankSelect = document.getElementById('rank-select');
+            const rankDisc = parseFloat(rankSelect.value) || 0;
+            const isLscEmployee = rankSelect.selectedIndex > 0; 
+            const selectedRankOption = rankSelect.options[rankSelect.selectedIndex];
+            const lscEngineDisc = parseFloat(selectedRankOption.getAttribute('data-engine-disc')) || 0;
+
+            const compKey = document.getElementById('company-select').value;
+            const ftCouponDisc = parseFloat(document.getElementById('ft-coupon-select').value) || 0;
+
+            let mainCompDisc = 0;
+            let companyEngineDisc = 0;
+
+            if (compKey === 'ssc') { mainCompDisc = 0; }
+            else if (compKey === 'ems_z') { mainCompDisc = 0.35; companyEngineDisc = 0.15; }
+            else if (compKey === 'ems_p') { mainCompDisc = 0.25; companyEngineDisc = 0.10; }
+            else if (compKey === 'lspd_z') { mainCompDisc = 0.35; companyEngineDisc = 0.15; }
+            else if (compKey === 'lspd_p') { mainCompDisc = 0.25; companyEngineDisc = 0.10; }
+            else if (compKey === 'doj_z') { mainCompDisc = 0.35; companyEngineDisc = 0.15; }
+            else if (compKey === 'doj_p') { mainCompDisc = 0.25; companyEngineDisc = 0.10; }
+            else if (compKey === 'uwu_z') { mainCompDisc = 0.25; companyEngineDisc = 0.10; }
+            else if (compKey === 'uwu_p') { mainCompDisc = 0.15; companyEngineDisc = 0.05; }
+            else if (compKey === 'weed_z') { mainCompDisc = 0.20; }
+            else if (compKey === 'weed_p') { mainCompDisc = 0.15; }
+
+            const activeMainDiscount = Math.max(rankDisc, mainCompDisc);
+            const activeEngineDiscount = Math.max(lscEngineDisc, companyEngineDisc);
+
+            const hasFreeWashAndRepair = (isLscEmployee || compKey !== 'none');
+
+            const washUnitPrice = hasFreeWashAndRepair ? 0 : 3000;
+            const repInUnitPrice = hasFreeWashAndRepair ? 0 : 5000;
 
             if (hasFreeWashAndRepair) {
                 document.getElementById('wash-price-display').innerText = '0 $';
@@ -1679,7 +1707,7 @@
         }
 
         document.getElementById('rank-select').addEventListener('change', (e) => {
-            if (parseFloat(e.target.value) > 0) {
+            if (parseFloat(e.target.value) > 0 || e.target.selectedIndex > 0) {
                 document.getElementById('company-select').value = 'none';
             }
             updateAll();
