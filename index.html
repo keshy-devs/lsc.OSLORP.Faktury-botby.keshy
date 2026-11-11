@@ -1,26 +1,38 @@
+    [data-theme="light"] {
+        --bg-dark: #e4e9f0;
+        --panel-bg: rgba(255, 255, 255, 0.92);
+        --panel-border: rgba(255, 107, 0, 0.3);
+        --text-main: #1a1d24;
+        --text-dim: #505c75;
+        --input-bg: #f5f7fa;
+    }
+
     * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Chakra Petch', sans-serif;
         user-select: none;
     }
 
     body {
-        background-color: var(--bg-deep);
+        background-color: var(--bg-dark);
         background-image: 
-            radial-gradient(circle at 15% 15%, rgba(255, 122, 0, 0.06) 0%, transparent 40%),
-            radial-gradient(circle at 85% 85%, rgba(0, 230, 118, 0.03) 0%, transparent 40%),
-            linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-        background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            linear-gradient(rgba(255, 107, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 107, 0, 0.03) 1px, transparent 1px),
+            radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.1) 0%, transparent 50%),
+            url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1964&auto=format&fit=crop');
+        background-blend-mode: overlay;
+        background-size: 30px 30px, 30px 30px, 100% 100%, cover;
+        background-attachment: fixed;
         color: var(--text-main);
         padding: 20px 20px 180px 20px;
         min-height: 100vh;
+        transition: background 0.3s ease;
     }
 
     .container {
-        max-width: 1240px;
+        max-width: 1200px;
         margin: 0 auto;
         position: relative;
     }
@@ -30,128 +42,182 @@
         position: fixed;
         bottom: 15px;
         left: 20px;
-        background: rgba(12, 14, 20, 0.85);
-        backdrop-filter: blur(12px);
-        border: 1px solid var(--border-glass);
-        border-left: 3px solid var(--accent-orange);
+        background: rgba(15, 17, 21, 0.9);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--panel-border);
+        border-left: 3px solid var(--amber-main);
         padding: 8px 14px;
-        border-radius: 6px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 11px;
+        border-radius: 4px;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 12px;
         color: var(--text-dim);
         z-index: 101;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-        letter-spacing: 0.5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        letter-spacing: 1px;
     }
 
     .author-watermark span {
-        color: var(--accent-orange);
+        color: var(--amber-main);
         font-weight: 700;
+    }
+
+    /* --- THEME TOGGLE & TOASTS --- */
+    .theme-toggle-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        color: var(--amber-main);
+        padding: 8px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        z-index: 300;
+        font-family: 'Teko', sans-serif;
+        font-size: 16px;
+        letter-spacing: 1px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        transition: all 0.2s;
+    }
+    .theme-toggle-btn:hover {
+        background: var(--amber-main);
+        color: #fff;
+    }
+
+    .toast-container {
+        position: fixed;
+        top: 70px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+    }
+
+    .toast {
+        background: rgba(15, 17, 21, 0.95);
+        border: 1px solid var(--neon-green);
+        color: var(--text-main);
+        padding: 10px 16px;
+        border-radius: 4px;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 13px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+        animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeOut {
+        to { opacity: 0; transform: translateY(-10px); }
     }
 
     /* --- PANEL BOCZNY --- */
     .sidebar-panel {
         position: fixed;
         left: 0;
-        top: 260px;
-        width: 300px;
-        background: rgba(13, 16, 23, 0.92);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-top: 1px solid var(--border-glass);
-        border-right: 1px solid var(--border-glass);
-        border-bottom: 1px solid var(--border-glass);
-        border-radius: 0 10px 10px 0;
-        padding: 16px;
-        box-shadow: 15px 20px 45px rgba(0, 0, 0, 0.8);
+        top: 280px;
+        width: 290px;
+        background: var(--panel-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 1px solid var(--panel-border);
+        border-right: 1px solid var(--panel-border);
+        border-bottom: 1px solid var(--panel-border);
+        border-radius: 0 6px 6px 0;
+        padding: 14px;
+        box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.7);
         z-index: 200;
         transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .sidebar-panel.collapsed {
-        transform: translateX(-300px);
+        transform: translateX(-290px);
     }
 
     .sidebar-toggle-btn {
         position: absolute;
         right: -42px;
-        top: 18px;
-        background: linear-gradient(135deg, #171b26, #0e1118);
-        border: 1px solid var(--border-glass);
+        top: 15px;
+        background: linear-gradient(135deg, #181b22, #0f1115);
+        border: 1px solid var(--panel-border);
         border-left: none;
-        color: var(--accent-orange);
-        padding: 14px 8px;
-        border-radius: 0 8px 8px 0;
+        color: var(--amber-main);
+        padding: 12px 8px;
+        border-radius: 0 6px 6px 0;
         cursor: pointer;
-        font-weight: 700;
-        font-size: 12px;
-        letter-spacing: 1.5px;
+        font-family: 'Teko', sans-serif;
+        font-size: 16px;
+        letter-spacing: 2px;
         writing-mode: vertical-lr;
         text-orientation: mixed;
-        box-shadow: 6px 0 20px rgba(0, 0, 0, 0.5);
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
         transition: all 0.25s ease;
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 6px;
     }
 
     .sidebar-toggle-btn:hover {
-        background: var(--accent-orange);
+        background: var(--amber-main);
         color: #fff;
-        box-shadow: 6px 0 25px var(--accent-glow);
+        box-shadow: 5px 0 20px rgba(255, 107, 0, 0.4);
     }
 
     .sidebar-header-box {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 14px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        padding-bottom: 8px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 6px;
     }
 
     .sidebar-title {
-        font-weight: 800;
-        font-size: 14px;
-        letter-spacing: 0.5px;
-        color: #fff;
+        font-family: 'Teko', sans-serif;
+        font-size: 20px;
+        letter-spacing: 1px;
+        color: var(--text-main);
         text-transform: uppercase;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
     }
 
     .sidebar-badge {
-        font-size: 9px;
-        background: rgba(0, 230, 118, 0.1);
+        font-size: 8px;
+        background: rgba(0, 255, 102, 0.1);
         color: var(--neon-green);
-        border: 1px solid rgba(0, 230, 118, 0.3);
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 700;
+        border: 1px solid var(--neon-green);
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-family: 'Share Tech Mono', monospace;
+        letter-spacing: 1px;
     }
 
     .sidebar-section {
         margin-bottom: 10px;
-        background: rgba(7, 9, 13, 0.6);
+        background: rgba(11, 13, 16, 0.4);
         border: 1px solid rgba(255, 255, 255, 0.04);
-        padding: 10px 12px;
-        border-radius: 6px;
+        padding: 8px 10px;
+        border-radius: 4px;
         transition: border-color 0.2s;
     }
 
-    .sidebar-section:hover {
-        border-color: rgba(255, 122, 0, 0.25);
-    }
-
     .sidebar-section-title {
-        font-size: 10px;
+        font-size: 9px;
         font-weight: 700;
-        color: #ffaa33;
+        color: var(--amber-light);
         text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 8px;
+        letter-spacing: 1.2px;
+        margin-bottom: 6px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -160,8 +226,8 @@
     .sidebar-row {
         display: flex;
         justify-content: space-between;
-        font-size: 12px;
-        margin-bottom: 5px;
+        font-size: 11px;
+        margin-bottom: 4px;
     }
 
     .sidebar-row:last-child {
@@ -173,50 +239,48 @@
     }
 
     .sidebar-row span:last-child {
-        font-family: 'JetBrains Mono', monospace;
+        font-family: 'Share Tech Mono', monospace;
         font-weight: 700;
         color: var(--text-main);
     }
 
-    /* --- HEADER --- */
     header {
-        background: linear-gradient(135deg, rgba(22, 26, 36, 0.9), rgba(13, 16, 23, 0.95));
-        border: 1px solid var(--border-glass);
-        border-left: 5px solid var(--accent-orange);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(12px);
-        border-radius: 8px;
-        padding: 20px 28px;
+        background: linear-gradient(135deg, #1c2029 0%, #111318 100%);
+        border: 2px solid var(--panel-border);
+        border-left: 6px solid var(--amber-main);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+        padding: 16px 24px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 25px;
         position: relative;
         overflow: hidden;
-        gap: 20px;
+        gap: 15px;
     }
 
     header::after {
-        content: 'LSC // HD';
+        content: 'HEAVY DUTY';
         position: absolute;
-        right: -15px;
-        bottom: -20px;
-        font-weight: 800;
-        font-size: 80px;
-        color: rgba(255, 255, 255, 0.015);
-        letter-spacing: 2px;
+        right: -10px;
+        bottom: -15px;
+        font-family: 'Teko', sans-serif;
+        font-size: 70px;
+        color: rgba(255, 255, 255, 0.03);
+        letter-spacing: 5px;
         pointer-events: none;
     }
 
     .header-side-box {
-        background: var(--input-bg);
-        border: 1px solid var(--border-glass);
-        padding: 8px 16px;
-        border-radius: 6px;
+        background: #0b0d10;
+        border: 1px solid var(--panel-border);
+        padding: 6px 12px;
+        border-radius: 3px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        min-width: 140px;
+        min-width: 130px;
     }
 
     .header-side-box .hs-label {
@@ -228,11 +292,10 @@
     }
 
     .header-side-box .hs-val {
-        font-family: 'JetBrains Mono', monospace;
+        font-family: 'Share Tech Mono', monospace;
         font-size: 13px;
         color: var(--neon-green);
         font-weight: 700;
-        margin-top: 2px;
     }
 
     .brand-text {
@@ -241,22 +304,21 @@
     }
 
     .brand-text h1 {
-        font-weight: 800;
-        font-size: 26px;
-        letter-spacing: 1px;
-        color: #fff;
+        font-family: 'Teko', sans-serif;
+        font-size: 32px;
+        letter-spacing: 2px;
+        color: var(--amber-main);
         text-transform: uppercase;
-        line-height: 1.2;
-        text-shadow: 0 0 20px rgba(255, 122, 0, 0.3);
+        line-height: 1;
+        text-shadow: 0 0 8px rgba(255, 107, 0, 0.4);
     }
 
     .brand-text p {
-        color: var(--accent-orange);
+        color: var(--text-dim);
         font-size: 11px;
         font-weight: 700;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         text-transform: uppercase;
-        margin-top: 4px;
     }
 
     @media (max-width: 768px) {
@@ -275,34 +337,31 @@
         .grid-2 { grid-template-columns: 1fr; }
     }
 
-    /* --- CARDS --- */
     .card {
-        background: var(--bg-card);
-        backdrop-filter: blur(12px);
-        border: 1px solid var(--border-glass);
-        border-top: 3px solid var(--border-glass);
-        border-radius: 8px;
-        padding: 22px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-        transition: all 0.25s ease;
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-top: 3px solid var(--panel-border);
+        border-radius: 4px;
+        padding: 20px;
+        box-shadow: 0 6px 25px rgba(0,0,0,0.6);
+        transition: all 0.2s ease;
         position: relative;
     }
 
     .card:hover {
-        border-top-color: var(--accent-orange);
-        border-color: var(--border-hover);
-        box-shadow: 0 10px 35px var(--accent-glow);
+        border-top-color: var(--amber-main);
+        box-shadow: 0 6px 30px rgba(255, 107, 0, 0.15);
     }
 
     .card-title {
-        font-weight: 700;
-        font-size: 16px;
-        letter-spacing: 0.5px;
-        color: #fff;
-        margin-bottom: 18px;
+        font-family: 'Teko', sans-serif;
+        font-size: 22px;
+        letter-spacing: 1px;
+        color: var(--text-main);
+        margin-bottom: 16px;
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        padding-bottom: 8px;
+        border-bottom: 2px solid var(--panel-border);
+        padding-bottom: 4px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -310,16 +369,16 @@
 
     .card-title::after {
         content: '///';
-        color: var(--accent-orange);
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 12px;
+        color: var(--amber-main);
+        font-family: 'Chakra Petch', sans-serif;
+        font-size: 14px;
     }
 
     .form-group {
         display: flex;
         flex-direction: column;
         gap: 6px;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
         position: relative;
     }
 
@@ -328,67 +387,146 @@
         font-weight: 700;
         color: var(--text-dim);
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1px;
     }
 
     input[type="text"], input[type="number"], select {
         background: var(--input-bg);
-        border: 1px solid var(--border-glass);
+        border: 1px solid var(--panel-border);
         color: var(--text-main);
-        padding: 11px 14px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
+        padding: 10px 12px;
+        border-radius: 3px;
+        font-size: 15px;
+        font-weight: 700;
         outline: none;
-        transition: all 0.2s;
+        transition: border-color 0.2s;
     }
 
     input[type="text"]:focus, input[type="number"]:focus, select:focus {
-        border-color: var(--accent-orange);
-        box-shadow: 0 0 12px var(--accent-glow);
+        border-color: var(--amber-main);
+        box-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
     }
 
     .input-error {
         border-color: var(--neon-red) !important;
-        box-shadow: 0 0 12px rgba(255, 51, 102, 0.4) !important;
+        box-shadow: 0 0 10px rgba(255, 51, 51, 0.4) !important;
     }
 
-    /* --- AUTOCOMPLETE --- */
+    /* --- QUICK CHIPS --- */
+    .quick-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+
+    .chip {
+        background: #111318;
+        border: 1px solid var(--panel-border);
+        color: var(--text-dim);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .chip:hover, .chip.active {
+        background: rgba(255, 107, 0, 0.2);
+        border-color: var(--amber-main);
+        color: var(--amber-light);
+        box-shadow: 0 0 8px rgba(255, 107, 0, 0.3);
+    }
+
+    /* --- RADIO CARDS (KAFELKOWY WYBÓR Z IKONAMI) --- */
+    .radio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .radio-card {
+        background: #111318;
+        border: 1px solid var(--panel-border);
+        border-radius: 4px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+        min-height: 75px;
+    }
+
+    .radio-card:hover {
+        border-color: var(--amber-light);
+        background: rgba(255, 107, 0, 0.05);
+    }
+
+    .radio-card.selected {
+        background: rgba(255, 107, 0, 0.15);
+        border-color: var(--amber-main);
+        box-shadow: 0 0 12px rgba(255, 107, 0, 0.4);
+    }
+
+    .radio-card .rc-icon {
+        font-size: 20px;
+    }
+
+    .radio-card .rc-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-main);
+    }
+
+    .radio-card .rc-sub {
+        font-size: 9px;
+        color: var(--amber-light);
+        font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* --- AUTOCOMPLETE SUGGESTIONS BOX --- */
     .suggestions-box {
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
-        background: #0d1017;
-        border: 1px solid var(--border-glass);
+        background: #0b0d10;
+        border: 1px solid var(--panel-border);
         border-top: none;
-        max-height: 220px;
+        max-height: 200px;
         overflow-y: auto;
         z-index: 100;
         display: none;
-        border-radius: 0 0 6px 6px;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+        border-radius: 0 0 3px 3px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.8);
     }
 
     .suggestion-item {
-        padding: 11px 14px;
+        padding: 10px 12px;
         font-size: 13px;
         cursor: pointer;
         border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         transition: background 0.2s;
-        font-family: 'JetBrains Mono', monospace;
+        font-family: 'Share Tech Mono', monospace;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
     .suggestion-item:hover {
-        background: rgba(255, 122, 0, 0.15);
-        color: #ffaa33;
+        background: rgba(255, 107, 0, 0.15);
+        color: var(--amber-light);
     }
 
     .suggestion-item span {
-        color: #ffaa33;
+        color: var(--amber-light);
         font-size: 12px;
     }
 
@@ -396,59 +534,53 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(5, 6, 8, 0.6);
-        border: 1px solid var(--border-glass);
-        padding: 14px 16px;
-        border-radius: 6px;
-        margin-bottom: 14px;
+        background: #111318;
+        border: 1px solid var(--panel-border);
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 12px;
         cursor: pointer;
-        transition: border-color 0.2s;
-    }
-
-    .checkbox-card:hover {
-        border-color: rgba(255, 122, 0, 0.3);
     }
 
     .checkbox-card input[type="checkbox"] {
-        accent-color: var(--accent-orange);
+        accent-color: var(--amber-main);
         width: 18px;
         height: 18px;
         cursor: pointer;
     }
 
     .checkbox-title {
-        margin-left: 12px;
+        margin-left: 10px;
         font-size: 13px;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
     }
 
     .price-tag {
-        font-family: 'JetBrains Mono', monospace;
+        font-family: 'Share Tech Mono', monospace;
         font-weight: 700;
-        color: #ffaa33;
-        font-size: 15px;
+        color: var(--amber-light);
+        font-size: 16px;
     }
 
     .item-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 12px 14px;
-        background: rgba(5, 6, 8, 0.5);
-        border: 1px solid var(--border-glass);
-        border-left: 3px solid var(--border-glass);
-        border-radius: 6px;
-        margin-bottom: 10px;
-        gap: 12px;
-        transition: all 0.2s;
+        padding: 10px 12px;
+        background: #111318;
+        border: 1px solid var(--panel-border);
+        border-left: 3px solid var(--panel-border);
+        border-radius: 4px;
+        margin-bottom: 8px;
+        gap: 10px;
+        transition: border-color 0.2s;
         position: relative;
+        overflow: hidden;
     }
 
     .item-row:hover {
-        border-left-color: var(--accent-orange);
-        border-color: rgba(255, 255, 255, 0.12);
+        border-left-color: var(--amber-main);
     }
 
     .item-details {
@@ -467,15 +599,14 @@
     .tag-subtext {
         color: var(--text-dim);
         font-size: 11px;
-        font-weight: 500;
-        margin-top: 2px;
+        font-weight: 600;
     }
 
     .item-price {
-        font-family: 'JetBrains Mono', monospace;
+        font-family: 'Share Tech Mono', monospace;
         font-weight: 700;
-        color: #ffaa33;
-        font-size: 14px;
+        color: var(--amber-light);
+        font-size: 15px;
         min-width: 100px;
         text-align: right;
     }
@@ -483,16 +614,16 @@
     .qty-control {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 3px;
     }
 
     .qty-btn {
-        background: #171b26;
-        border: 1px solid var(--border-glass);
+        background: #1c2029;
+        border: 1px solid var(--panel-border);
         color: var(--text-main);
-        width: 30px;
-        height: 36px;
-        border-radius: 5px;
+        width: 28px;
+        height: 38px;
+        border-radius: 3px;
         cursor: pointer;
         font-weight: 700;
         font-size: 14px;
@@ -503,80 +634,79 @@
     }
 
     .qty-btn:hover {
-        background: var(--accent-orange);
-        border-color: var(--accent-orange);
+        background: var(--amber-main);
+        border-color: var(--amber-main);
         color: #fff;
     }
 
     .qty-input {
-        width: 50px;
+        width: 55px;
         text-align: center;
         padding: 6px !important;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 14px !important;
-        background: #020305 !important;
-        border-color: rgba(255, 255, 255, 0.1) !important;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 16px !important;
+        background: #000 !important;
+        border-color: #333 !important;
     }
 
     .badge-tag {
-        font-size: 9px;
+        font-size: 10px;
         font-weight: 700;
-        padding: 3px 7px;
-        border-radius: 4px;
-        margin-top: 5px;
+        padding: 2px 6px;
+        border-radius: 2px;
+        margin-top: 4px;
         display: inline-block;
         width: fit-content;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
         text-transform: uppercase;
     }
 
     .badge-free {
         color: var(--neon-green);
-        background: rgba(0, 230, 118, 0.1);
-        border: 1px solid rgba(0, 230, 118, 0.3);
+        background: rgba(0, 255, 102, 0.08);
+        border: 1px solid var(--neon-green);
     }
 
     .badge-discount {
-        color: var(--accent-orange);
-        background: rgba(255, 122, 0, 0.1);
-        border: 1px solid rgba(255, 122, 0, 0.3);
+        color: var(--amber-main);
+        background: rgba(255, 107, 0, 0.08);
+        border: 1px solid var(--amber-main);
     }
 
     .btn-copy {
-        background: rgba(255, 122, 0, 0.15);
-        border: 1px solid var(--accent-orange);
-        color: var(--accent-orange);
+        background: rgba(255, 107, 0, 0.15);
+        border: 1px solid var(--amber-main);
+        color: var(--amber-main);
         padding: 3px 8px;
         font-size: 10px;
-        border-radius: 4px;
+        border-radius: 3px;
         cursor: pointer;
-        margin-left: 8px;
+        margin-left: 6px;
         transition: all 0.2s;
-        font-family: 'JetBrains Mono', monospace;
+        font-family: 'Share Tech Mono', monospace;
         vertical-align: middle;
     }
 
     .btn-copy:hover {
-        background: var(--accent-orange);
+        background: var(--amber-main);
         color: #fff;
     }
 
-    /* --- FOOTER SUMMARY --- */
     .footer-summary {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        background: rgba(10, 12, 17, 0.95);
-        backdrop-filter: blur(16px);
-        border-top: 3px solid var(--accent-orange);
-        padding: 16px 25px;
+        background: rgba(15, 17, 21, 0.95);
+        backdrop-filter: blur(8px);
+        border-top: 3px solid var(--amber-main);
+        padding: 15px 25px;
         z-index: 100;
-        box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.8);
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
     }
 
     .summary-wrapper {
-        max-width: 1240px;
+        max-width: 1200px;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -588,11 +718,11 @@
     .stat-box {
         display: flex;
         flex-direction: column;
-        background: var(--input-bg);
-        padding: 10px 18px;
-        border: 1px solid var(--border-glass);
-        border-radius: 6px;
-        min-width: 170px;
+        background: #0b0d10;
+        padding: 8px 16px;
+        border: 1px solid var(--panel-border);
+        border-radius: 4px;
+        min-width: 160px;
     }
 
     .stat-box .label {
@@ -600,33 +730,32 @@
         font-weight: 700;
         color: var(--text-dim);
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1px;
     }
 
     .stat-box .value {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 18px;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 20px;
         font-weight: 700;
-        margin-top: 3px;
     }
 
     .stat-box .value.final {
-        font-size: 22px;
-        color: var(--accent-orange);
-        text-shadow: 0 0 12px var(--accent-glow);
+        font-size: 24px;
+        color: var(--amber-main);
+        text-shadow: 0 0 10px rgba(255, 107, 0, 0.4);
     }
 
     .stat-box .value.profit {
         color: var(--neon-green);
-        text-shadow: 0 0 12px rgba(0, 230, 118, 0.25);
+        text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
     }
 
     .btn {
         border: none;
-        padding: 12px 24px;
-        border-radius: 6px;
-        font-weight: 700;
-        font-size: 14px;
+        padding: 12px 20px;
+        border-radius: 3px;
+        font-family: 'Teko', sans-serif;
+        font-size: 18px;
         letter-spacing: 1px;
         text-transform: uppercase;
         cursor: pointer;
@@ -634,7 +763,7 @@
     }
 
     .btn-reset {
-        background: rgba(255, 51, 102, 0.12);
+        background: rgba(255, 51, 51, 0.15);
         border: 1px solid var(--neon-red);
         color: var(--neon-red);
     }
@@ -642,11 +771,11 @@
     .btn-reset:hover {
         background: var(--neon-red);
         color: #fff;
-        box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+        box-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
     }
 
     .btn-action {
-        background: rgba(0, 230, 118, 0.12);
+        background: rgba(0, 255, 102, 0.15);
         border: 1px solid var(--neon-green);
         color: var(--neon-green);
     }
@@ -654,14 +783,20 @@
     .btn-action:hover {
         background: var(--neon-green);
         color: #000;
-        box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+        box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
     }
 </style>
 
 
+<!-- PRZEŁĄCZNIK MOTYWÓW -->
+<button class="theme-toggle-btn" id="theme-toggle">🌙 Motyw</button>
+
+<!-- SYSTEM POWIADOMIEŃ TOAST -->
+<div class="toast-container" id="toast-container"></div>
+
 <!-- SYGNATURA AUTORA -->
 <div class="author-watermark">
-    AUTHOR // <span>〆 𝑵𝒆𝒌𝒙𝒚 𝙙𝙚𝙫</span>
+    LSC OSLORP // SYSTEM ZLECEŃ
 </div>
 
 <!-- PANEL BOCZNY -->
@@ -672,7 +807,7 @@
     
     <div class="sidebar-header-box">
         <div class="sidebar-title">📊 Podgląd Live</div>
-        <div class="sidebar-badge">ONLINE</div>
+        <div class="sidebar-badge">AKTYWNY</div>
     </div>
     
     <div class="sidebar-section">
@@ -717,7 +852,7 @@
         </div>
     </div>
 
-    <div class="sidebar-section" style="margin-bottom: 0; border-color: rgba(0, 230, 118, 0.2);">
+    <div class="sidebar-section" style="margin-bottom: 0; border-color: rgba(0, 255, 102, 0.2);">
         <div class="sidebar-section-title" style="color: var(--neon-green);">
             <span>Zarobek Mechanika</span>
             <span>💵</span>
@@ -745,7 +880,7 @@
         </div>
         <div class="header-side-box">
             <span class="hs-label">Tryb Pracy</span>
-            <span class="hs-val" style="color: #ffaa33;">STANDARD</span>
+            <span class="hs-val" style="color: var(--amber-light);">STANDARD</span>
         </div>
     </header>
 
@@ -778,7 +913,7 @@
             </label>
 
             <!-- MODYFIKACJE WIZUALNE -->
-            <div class="item-row" style="border-left-color: var(--accent-orange); margin-bottom: 0;">
+            <div class="item-row" style="border-left-color: var(--amber-main);">
                 <div class="item-details">
                     <span class="item-name">🎨 Modyfikacje Wizualne</span>
                     <span class="tag-subtext" id="vis-single-info">Stawka za 1 menu: 22 000 $</span>
@@ -797,18 +932,45 @@
         <div class="card">
             <div class="card-title">🛡️ 2. Zniżki i Rabaty</div>
 
+            <!-- QUICK CHIPS -->
+            <div class="quick-chips" id="quick-chips">
+                <div class="chip" data-rank="0" data-comp="none">Brak zniżki</div>
+                <div class="chip" data-rank="0.20" data-comp="none">Zarząd LSC (-20%)</div>
+                <div class="chip" data-rank="0.15" data-comp="none">Inżynier (-15%)</div>
+                <div class="chip" data-rank="0" data-comp="doj_z">DOJ Zarząd (-15%)</div>
+                <div class="chip" data-rank="0" data-comp="lspd_z">LSPD Zarząd (-15%)</div>
+            </div>
+
+            <!-- RADIO CARDS (Kafelkowy wybór z ikonami) -->
             <div class="form-group">
-                <label for="rank-select">Ranga Mechanika (Zniżka LSC)</label>
-                <select id="rank-select">
+                <label>Profil / Ranga Mechanika</label>
+                <div class="radio-grid" id="rank-radio-grid">
+                    <div class="radio-card selected" data-value="0" data-engine="0.15">
+                        <span class="rc-icon">👤</span>
+                        <span class="rc-label">Brak zniżki</span>
+                        <span class="rc-sub">0%</span>
+                    </div>
+                    <div class="radio-card" data-value="0.20" data-engine="0.20">
+                        <span class="rc-icon">👑</span>
+                        <span class="rc-label">Zarząd</span>
+                        <span class="rc-sub">-20%</span>
+                    </div>
+                    <div class="radio-card" data-value="0.15" data-engine="0.15">
+                        <span class="rc-icon">⚙️</span>
+                        <span class="rc-label">Inżynier</span>
+                        <span class="rc-sub">-15%</span>
+                    </div>
+                    <div class="radio-card" data-value="0.10" data-engine="0.15">
+                        <span class="rc-icon">🔧</span>
+                        <span class="rc-label">Fachowiec</span>
+                        <span class="rc-sub">-10%</span>
+                    </div>
+                </div>
+                <select id="rank-select" style="display: none;">
                     <option value="0">Brak zniżki (0%)</option>
                     <option value="0.20" data-engine-disc="0.20">Zarząd (-20% | Silniki -20%)</option>
                     <option value="0.15" data-engine-disc="0.15">Inżynier (-15% | Silniki -15%)</option>
-                    <option value="0.15" data-engine-disc="0.15">Majster (-15% | Silniki -15%)</option>
                     <option value="0.10" data-engine-disc="0.15">Fachowiec (-10% | Silniki -15%)</option>
-                    <option value="0.10" data-engine-disc="0.15">Starszy Mechanik (-10% | Silniki -15%)</option>
-                    <option value="0.05" data-engine-disc="0.15">Mechanik (-5% | Silniki -15%)</option>
-                    <option value="0.05" data-engine-disc="0.15">Młodszy Mechanik (-5% | Silniki -15%)</option>
-                    <option value="0.00" data-engine-disc="0.15">Praktykant (Brak | Silniki -15%)</option>
                 </select>
             </div>
 
@@ -834,7 +996,7 @@
                 </select>
             </div>
 
-            <div class="form-group" style="margin-top: 15px; border-top: 1px dashed rgba(255, 255, 255, 0.08); padding-top: 14px; margin-bottom: 0;">
+            <div class="form-group" style="margin-top: 15px; border-top: 1px dashed var(--panel-border); padding-top: 12px;">
                 <label for="ft-coupon-select">🎟️ Dodatkowy Bon na Full Tune</label>
                 <select id="ft-coupon-select">
                     <option value="0">Brak bonu</option>
@@ -928,7 +1090,7 @@
                 </div>
             </div>
 
-            <div class="item-row" style="margin-bottom: 0;">
+            <div class="item-row">
                 <div class="item-details">
                     <span class="item-name">Swap silnika V10</span>
                     <span id="v10-badge-tag"></span>
@@ -998,7 +1160,7 @@
                 </div>
             </div>
 
-            <div class="item-row" style="margin-bottom: 0;">
+            <div class="item-row">
                 <div class="item-details">
                     <span class="item-name">Pakiet Naprawczy (10+1 Gratis)</span>
                     <span class="tag-subtext">Co 11 sztuka gratis</span>
@@ -1018,7 +1180,10 @@
     <div class="card" style="margin-bottom: 30px;">
         <div class="card-title">
             <span>📜 Historia Ostatnich Zleceń</span>
-            <button class="btn btn-action" style="padding: 6px 14px; font-size: 12px;" id="btn-save-history">💾 Zapisz bieżące zlecenie</button>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn btn-action" style="padding: 4px 12px; font-size: 14px;" id="btn-save-history">💾 Zapisz bieżące</button>
+                <button class="btn btn-reset" style="padding: 4px 12px; font-size: 14px;" id="btn-clear-history">🗑️ Wyczyść</button>
+            </div>
         </div>
         <div id="history-container" style="display: flex; flex-direction: column; gap: 8px;">
             <div style="color: var(--text-dim); font-size: 13px; text-align: center; padding: 10px;">Brak zapisanych zleceń w historii.</div>
@@ -1036,7 +1201,7 @@
 
         <div class="stat-box">
             <span class="label">Rabat Ogólny / Bon</span>
-            <span class="value" id="res-disc" style="color: #ffaa33;">0 $</span>
+            <span class="value" id="res-disc" style="color: var(--amber-light);">0 $</span>
         </div>
 
         <div class="stat-box">
@@ -1064,6 +1229,31 @@
     let currentFinalNumeric = 0;
     let selectedVehicle = null;
 
+    // Toast notifications
+    function showToast(message) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<span>⚡</span> ${message}`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 3000);
+    }
+
+    // Theme Switcher
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+        if (document.documentElement.getAttribute('data-theme') === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+            themeToggle.innerText = '🌙 Motyw';
+            showToast('Przełączono na tryb Night City');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggle.innerText = '☀️ Motyw';
+            showToast('Przełączono na tryb jasny');
+        }
+    });
+
+    // Baza pojazdów
     const vehicleDatabase = [
         { name: "bm4f82", salonPrice: 18745000 },
         { name: "mnnyttchall", salonPrice: 15352500 },
@@ -1187,95 +1377,7 @@
         { name: "SULTAN3", salonPrice: 300000 },
         { name: "BALLER8", salonPrice: 250000 },
         { name: "URANUSX", salonPrice: 10000000 },
-        { name: "ISSI8", salonPrice: 100000 },
-        { name: "blazer", salonPrice: 190000 },
-        { name: "blazer3", salonPrice: 200000 },
-        { name: "blazer4", salonPrice: 250000 },
-        { name: "verus", salonPrice: 180000 },
-        { name: "ons_minirs3", salonPrice: 750000 },
-        { name: "ons_minimh4gtr", salonPrice: 1200000 },
-        { name: "ons_minim2g87", salonPrice: 1600000 },
-        { name: "ons_minidoze", salonPrice: 2400000 },
-        { name: "AURENMODS - PONYCAR", salonPrice: 12000000 },
-        { name: "AURENMODS - SHABUUNIBIKE", salonPrice: 16500000 },
-        { name: "gs1", salonPrice: 1200000 },
-        { name: "exc530sm", salonPrice: 500000 },
-        { name: "shotaro", salonPrice: 300000 },
-        { name: "km1000rr", salonPrice: 2000000 },
-        { name: "manchez3", salonPrice: 360000 },
-        { name: "bf400", salonPrice: 195000 },
-        { name: "avarus", salonPrice: 190000 },
-        { name: "faggio2", salonPrice: 180000 },
-        { name: "bati", salonPrice: 210000 },
-        { name: "akuma", salonPrice: 236000 },
-        { name: "carbonrs", salonPrice: 197200 },
-        { name: "daemon", salonPrice: 188100 },
-        { name: "pcj", salonPrice: 230000 },
-        { name: "diablous2", salonPrice: 194000 },
-        { name: "cliffhanger", salonPrice: 190000 },
-        { name: "enduro", salonPrice: 250000 },
-        { name: "esskey", salonPrice: 250000 },
-        { name: "bagger", salonPrice: 250000 },
-        { name: "sanchez", salonPrice: 210000 },
-        { name: "sanchez2", salonPrice: 210000 },
-        { name: "wolfsbane", salonPrice: 230000 },
-        { name: "zombiea", salonPrice: 200000 },
-        { name: "zombieb", salonPrice: 210000 },
-        { name: "ratbike", salonPrice: 250000 },
-        { name: "nightblade", salonPrice: 270000 },
-        { name: "manchez", salonPrice: 190000 },
-        { name: "manchez2", salonPrice: 190000 },
-        { name: "gargoyle", salonPrice: 234000 },
-        { name: "hexer", salonPrice: 185500 },
-        { name: "innovation", salonPrice: 182000 },
-        { name: "hakuchou2", salonPrice: 252000 },
-        { name: "hakuchou", salonPrice: 242000 },
-        { name: "sanctus", salonPrice: 195000 },
-        { name: "vortex", salonPrice: 195000 },
-        { name: "stryder", salonPrice: 210000 },
-        { name: "thrust", salonPrice: 222000 },
-        { name: "nemesis", salonPrice: 197000 },
-        { name: "fcr2", salonPrice: 135000 },
-        { name: "faggion", salonPrice: 90000 },
-        { name: "double", salonPrice: 228000 },
-        { name: "ruffian", salonPrice: 195000 },
-        { name: "lectro", salonPrice: 188000 },
-        { name: "SLAYER", salonPrice: 150000 },
-        { name: "esducati2k22", salonPrice: 2000000 },
-        { name: "ULTRABEE", salonPrice: 1500000 },
-        { name: "SURRON", salonPrice: 1500000 },
-        { name: "bmx", salonPrice: 20000 },
-        { name: "cruiser", salonPrice: 14000 },
-        { name: "scorcher", salonPrice: 15000 },
-        { name: "tribike", salonPrice: 15000 },
-        { name: "tribike2", salonPrice: 15000 },
-        { name: "tribike3", salonPrice: 15000 },
-        { name: "fixter", salonPrice: 15000 },
-        { name: "TW_ELEC_SCOOTER", salonPrice: 10000000 },
-        { name: "MDRX8FD", salonPrice: 12000000 },
-        { name: "FD3Z0Z", salonPrice: 12000000 },
-        { name: "S15LBWK", salonPrice: 12000000 },
-        { name: "THEREALDEAL", salonPrice: 12000000 },
-        { name: "DRIFT300RACKS", salonPrice: 12000000 },
-        { name: "journey2", salonPrice: 150000 },
-        { name: "journey", salonPrice: 100000 },
-        { name: "camper", salonPrice: 250000 },
-        { name: "ADPGT1", salonPrice: 35500000 },
-        { name: "RMOD_TENF", salonPrice: 25000000 },
-        { name: "GSTNAZZARO1", salonPrice: 23500000 },
-        { name: "GSTRH61", salonPrice: 45000000 },
-        { name: "TROC", salonPrice: 50000000 },
-        { name: "GSTROWSE1", salonPrice: 17500000 },
-        { name: "GSTRH84", salonPrice: 2200000 },
-        { name: "ODRIDE", salonPrice: 5500000 },
-        { name: "ODRIDE2", salonPrice: 5750000 },
-        { name: "RMOD_CANIS", salonPrice: 3500000 },
-        { name: "GSTCORSITA1", salonPrice: 100000 },
-        { name: "ZIP2000", salonPrice: 350000 },
-        { name: "XADV", salonPrice: 900000 },
-        { name: "SKR1994", salonPrice: 175000 },
-        { name: "ALLNEWNMAX", salonPrice: 750000 },
-        { name: "TW_ELEC_SCOOTER2", salonPrice: 10000000 }
+        { name: "ISSI8", salonPrice: 100000 }
     ];
 
     toggleBtn.addEventListener('click', () => {
@@ -1302,6 +1404,43 @@
         updateAll();
         saveState();
     }
+
+    // Radio Cards & Quick Chips Logic
+    document.querySelectorAll('.radio-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            const val = card.getAttribute('data-value');
+            document.getElementById('rank-select').value = val;
+            if (parseFloat(val) > 0) {
+                document.getElementById('company-select').value = 'none';
+            }
+            updateAll();
+            showToast(`Zastosowano rangę: ${card.querySelector('.rc-label').innerText}`);
+        });
+    });
+
+    document.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const rank = chip.getAttribute('data-rank');
+            const comp = chip.getAttribute('data-comp');
+            
+            document.getElementById('rank-select').value = rank;
+            document.getElementById('company-select').value = comp;
+
+            // Sync radio cards
+            document.querySelectorAll('.radio-card').forEach(rc => {
+                if (rc.getAttribute('data-value') === rank) {
+                    rc.click();
+                }
+            });
+
+            updateAll();
+            showToast(`Aktywowano Quick Chip: ${chip.innerText}`);
+        });
+    });
 
     function setupAutocomplete() {
         const input = document.getElementById('car-model-input');
@@ -1353,6 +1492,7 @@
                 suggestionsBox.style.display = 'none';
                 updateAll();
                 saveState();
+                showToast(`Wbrano pojazd: ${found.name}`);
             }
         });
 
@@ -1394,7 +1534,15 @@
                 selectedVehicle = vehicleDatabase.find(v => v.name === state.selectedVehicleName) || null;
             }
             if (state.checkFt !== undefined) document.getElementById('check-ft').checked = state.checkFt;
-            if (state.rankSelect) document.getElementById('rank-select').value = state.rankSelect;
+            if (state.rankSelect) {
+                document.getElementById('rank-select').value = state.rankSelect;
+                document.querySelectorAll('.radio-card').forEach(rc => {
+                    if (rc.getAttribute('data-value') === state.rankSelect) {
+                        document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'));
+                        rc.classList.add('selected');
+                    }
+                });
+            }
             if (state.companySelect) document.getElementById('company-select').value = state.companySelect;
             if (state.ftCouponSelect) document.getElementById('ft-coupon-select').value = state.ftCouponSelect;
             if (state.qtys) {
@@ -1435,9 +1583,16 @@
 
         let history = getHistory();
         history.unshift(order);
-        if (history.length > 3) history = history.slice(0, 3);
+        if (history.length > 5) history = history.slice(0, 5);
         localStorage.setItem('lsc_history', JSON.stringify(history));
         renderHistory();
+        showToast('Zlecenie zostało zapisane do historii');
+    }
+
+    function clearHistory() {
+        localStorage.removeItem('lsc_history');
+        renderHistory();
+        showToast('Historia zleceń została wyczyszczona');
     }
 
     function renderHistory() {
@@ -1449,25 +1604,27 @@
         }
 
         container.innerHTML = history.map((item, idx) => `
-            <div class="item-row" style="background: var(--input-bg); margin-bottom: 0;">
+            <div class="item-row" style="background: #0b0d10;">
                 <div class="item-details">
                     <span class="item-name">Zlecenie #${idx + 1} (${item.date})</span>
                     <span class="tag-subtext">Pojazd: ${item.car}</span>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #ffaa33;">Faktura: ${item.invoice}</div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--neon-green);">Zarobek: ${item.profit}</div>
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; color: var(--amber-light);">Faktura: ${item.invoice}</div>
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--neon-green);">Zarobek: ${item.profit}</div>
                 </div>
             </div>
         `).join('');
     }
 
     document.getElementById('btn-save-history').addEventListener('click', saveCurrentOrder);
+    document.getElementById('btn-clear-history').addEventListener('click', clearHistory);
 
     document.getElementById('btn-copy-invoice').addEventListener('click', () => {
         navigator.clipboard.writeText(currentFinalNumeric).then(() => {
             const btn = document.getElementById('btn-copy-invoice');
             btn.innerText = '✅ Skopiowano!';
+            showToast('Skopiowano kwotę faktury do schowka');
             setTimeout(() => { btn.innerText = '📋 Kopiuj'; }, 1500);
         });
     });
@@ -1476,9 +1633,7 @@
         if (carType === 'limited' || carType === 'heli') {
             return 150000;
         }
-
         const price = Math.round(ftCost);
-
         if (price <= 100000) return 22000;
         if (price <= 200000) return 25500;
         if (price <= 400000) return 28000;
@@ -1519,12 +1674,7 @@
             carModelInput.classList.remove('input-error');
         }
 
-        let ftCost = 0;
-        if (carType === 'limited' || carType === 'heli') {
-            ftCost = 5500000;
-        } else {
-            ftCost = baseCarPrice * 0.55;
-        }
+        let ftCost = (carType === 'limited' || carType === 'heli') ? 5500000 : baseCarPrice * 0.55;
 
         const isFtChecked = document.getElementById('check-ft').checked;
         const activeFtCost = isFtChecked ? ftCost : 0;
@@ -1540,9 +1690,6 @@
         const rankSelect = document.getElementById('rank-select');
         const rankDisc = parseFloat(rankSelect.value) || 0;
         const isLscEmployee = rankSelect.selectedIndex > 0; 
-        const selectedRankOption = rankSelect.options[rankSelect.selectedIndex];
-        const lscEngineDisc = parseFloat(selectedRankOption.getAttribute('data-engine-disc')) || 0;
-
         const compKey = document.getElementById('company-select').value;
         const ftCouponDisc = parseFloat(document.getElementById('ft-coupon-select').value) || 0;
 
@@ -1562,39 +1709,23 @@
         else if (compKey === 'weed_p') { mainCompDisc = 0.10; }
 
         const activeMainDiscount = Math.max(rankDisc, mainCompDisc);
-        const activeEngineDiscount = Math.max(lscEngineDisc, companyEngineDisc);
+        const activeEngineDiscount = Math.max(rankDisc > 0 ? 0.15 : 0, companyEngineDisc);
 
         const hasFreeWashAndRepair = (isLscEmployee || compKey !== 'none');
-
         const washUnitPrice = hasFreeWashAndRepair ? 0 : 3000;
         const repInUnitPrice = hasFreeWashAndRepair ? 0 : 5000;
 
         if (hasFreeWashAndRepair) {
             document.getElementById('wash-price-display').innerText = '0 $';
-            document.getElementById('wash-free-tag').innerHTML = '<span class="badge-tag badge-free">DARMOWE (UMOWA/LSC)</span>';
+            document.getElementById('wash-free-tag').innerHTML = '<span class="badge-tag badge-free">DARMOWE</span>';
             document.getElementById('rep-price-display').innerText = '0 $';
-            document.getElementById('rep-free-tag').innerHTML = '<span class="badge-tag badge-free">DARMOWE (UMOWA/LSC)</span>';
+            document.getElementById('rep-free-tag').innerHTML = '<span class="badge-tag badge-free">DARMOWE</span>';
         } else {
             document.getElementById('wash-price-display').innerText = '3 000 $';
             document.getElementById('wash-free-tag').innerHTML = '';
             document.getElementById('rep-price-display').innerText = '5 000 $';
             document.getElementById('rep-free-tag').innerHTML = '';
         }
-
-        if (activeMainDiscount > 0) {
-            const generalDiscText = `ZNIŻKA -${Math.round(activeMainDiscount * 100)}%`;
-            document.getElementById('vis-badge-tag').innerHTML = `<span class="badge-tag badge-discount">${generalDiscText}</span>`;
-            document.getElementById('brakes-badge-tag').innerHTML = `<span class="badge-tag badge-discount">${generalDiscText}</span>`;
-            document.getElementById('drift-badge-tag').innerHTML = `<span class="badge-tag badge-discount">${generalDiscText}</span>`;
-        } else {
-            document.getElementById('vis-badge-tag').innerHTML = '';
-            document.getElementById('brakes-badge-tag').innerHTML = '';
-            document.getElementById('drift-badge-tag').innerHTML = '';
-        }
-
-        document.getElementById('rep-out-badge-tag').innerHTML = '';
-        document.getElementById('kit-badge-tag').innerHTML = '';
-        document.getElementById('pack-badge-tag').innerHTML = '';
 
         const baseV6 = 5000000;
         const baseV8 = 7500000;
@@ -1607,17 +1738,6 @@
         document.getElementById('v6-price-display').innerText = fmt(unitV6);
         document.getElementById('v8-price-display').innerText = fmt(unitV8);
         document.getElementById('v10-price-display').innerText = fmt(unitV10);
-
-        if (activeEngineDiscount > 0) {
-            const discPercentText = `ZNIŻKA -${Math.round(activeEngineDiscount * 100)}%`;
-            document.getElementById('v6-badge-tag').innerHTML = `<span class="badge-tag badge-discount">${discPercentText}</span>`;
-            document.getElementById('v8-badge-tag').innerHTML = `<span class="badge-tag badge-discount">${discPercentText}</span>`;
-            document.getElementById('v10-badge-tag').innerHTML = `<span class="badge-tag badge-discount">${discPercentText}</span>`;
-        } else {
-            document.getElementById('v6-badge-tag').innerHTML = '';
-            document.getElementById('v8-badge-tag').innerHTML = '';
-            document.getElementById('v10-badge-tag').innerHTML = '';
-        }
 
         const nitro = getVal('qty-nitro');
         const susp = getVal('qty-susp');
@@ -1647,17 +1767,10 @@
             + packCost;
 
         const enginesTotalCost = (v6 * unitV6) + (v8 * unitV8) + (v10 * unitV10);
-        
         const cashOnlyTotal = (nitro * 2875000) + (susp * 8000000);
 
         let ftDiscountVal = 0;
-        let ftEffectiveDiscountRate = 0;
-
-        if (ftCouponDisc > 0) {
-            ftEffectiveDiscountRate = ftCouponDisc; 
-        } else {
-            ftEffectiveDiscountRate = activeMainDiscount; 
-        }
+        let ftEffectiveDiscountRate = ftCouponDisc > 0 ? ftCouponDisc : activeMainDiscount;
         ftDiscountVal = activeFtCost * ftEffectiveDiscountRate;
         const finalFtCost = activeFtCost - ftDiscountVal;
 
@@ -1671,10 +1784,8 @@
         const totalDiscountSum = discountVal + ftDiscountVal + ((v6 * baseV6 + v8 * baseV8 + v10 * baseV10) - enginesTotalCost);
 
         const fixedNitroSuspProfit = (nitro * 475000) + (susp * 300000);
-        
         const otherProductsTotalInvoice = discountableBase + finalFtCost + enginesTotalCost;
         const percentageProfit = otherProductsTotalInvoice * 0.05;
-
         const totalProfit = fixedNitroSuspProfit + percentageProfit;
 
         document.getElementById('sb-gen-disc').innerText = `${Math.round(activeMainDiscount * 100)}%`;
@@ -1707,6 +1818,9 @@
     document.getElementById('company-select').addEventListener('change', (e) => {
         if (e.target.value !== 'none') {
             document.getElementById('rank-select').value = '0';
+            document.querySelectorAll('.radio-card').forEach(rc => {
+                if (rc.getAttribute('data-value') === '0') rc.click();
+            });
         }
         updateAll();
     });
@@ -1732,11 +1846,16 @@
         document.getElementById('check-ft').checked = false;
         document.querySelectorAll('.qty-input').forEach(i => i.value = 0);
         document.getElementById('rank-select').value = '0';
+        document.querySelectorAll('.radio-card').forEach((rc, i) => {
+            if(i === 0) rc.click();
+        });
         document.getElementById('company-select').value = 'none';
         document.getElementById('ft-coupon-select').value = '0';
         updateAll();
+        showToast('Zresetowano ustawienia kalkulatora');
     });
 
+    // Inicjalizacja
     setupAutocomplete();
     loadState();
     renderHistory();
