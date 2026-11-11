@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SYSTEM ZLECEŃ - LOS SANTOS CUSTOMS</title>
+
+    <!-- DISCORD / OPEN GRAPH EMBED -->
+    <meta name="theme-color" content="#7c3aed">
+    <meta property="og:site_name" content="LOS SANTOS CUSTOMS // OSLORP">
+    <meta property="og:title" content="🔧 System Zleceń & Kalkulator Faktur LSC">
+    <meta property="og:description" content="Oficjalny kalkulator wycen tuningu mechanicznego, wizualnego, serwisu oraz zniżek pracowniczych i frakcyjnych.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://vxnekxy.github.io/lsc.OSLORP.Faktury-botby.keshy/logo.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,700&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap" rel="stylesheet">
@@ -1825,12 +1834,11 @@
         }
 
         const radioCards = document.querySelectorAll('.radio-card');
-        radioCards.forEach(card => {
-            card.addEventListener('click', () => {
+        document.querySelectorAll('input[name="discount_profile"]').forEach(radio => {
+            radio.addEventListener('change', () => {
                 radioCards.forEach(c => c.classList.remove('selected'));
+                const card = radio.closest('.radio-card');
                 card.classList.add('selected');
-                const radio = card.querySelector('input[type="radio"]');
-                radio.checked = true;
                 updateAll();
                 saveState();
                 showToast(`Aktywowano zniżkę: ${card.querySelector('.radio-title').innerText}`);
