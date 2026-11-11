@@ -412,37 +412,10 @@
         box-shadow: 0 0 10px rgba(255, 51, 51, 0.4) !important;
     }
 
-    /* --- QUICK CHIPS --- */
-    .quick-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: 12px;
-    }
-
-    .chip {
-        background: #111318;
-        border: 1px solid var(--panel-border);
-        color: var(--text-dim);
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .chip:hover, .chip.active {
-        background: rgba(255, 107, 0, 0.2);
-        border-color: var(--amber-main);
-        color: var(--amber-light);
-        box-shadow: 0 0 8px rgba(255, 107, 0, 0.3);
-    }
-
     /* --- RADIO CARDS (KAFELKOWY WYBÓR Z IKONAMI) --- */
     .radio-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
         gap: 8px;
         margin-bottom: 14px;
     }
@@ -451,16 +424,16 @@
         background: #111318;
         border: 1px solid var(--panel-border);
         border-radius: 4px;
-        padding: 10px;
+        padding: 8px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 6px;
+        gap: 4px;
         cursor: pointer;
         transition: all 0.2s ease;
         text-align: center;
-        min-height: 75px;
+        min-height: 70px;
     }
 
     .radio-card:hover {
@@ -475,11 +448,11 @@
     }
 
     .radio-card .rc-icon {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .radio-card .rc-label {
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 700;
         text-transform: uppercase;
         color: var(--text-main);
@@ -928,72 +901,104 @@
             </div>
         </div>
 
-        <!-- 2. ZNIŻKI I RABATY -->
+        <!-- 2. ZNIŻKI I RABATY (DWIE KOLUMNY KAFELKOWE) -->
         <div class="card">
-            <div class="card-title">🛡️ 2. Zniżki i Rabaty</div>
+            <div class="card-title">🛡️ 2. Zniżki i Rabaty Partnerów</div>
 
-            <!-- QUICK CHIPS -->
-            <div class="quick-chips" id="quick-chips">
-                <div class="chip" data-rank="0" data-comp="none">Brak zniżki</div>
-                <div class="chip" data-rank="0.20" data-comp="none">Zarząd LSC (-20%)</div>
-                <div class="chip" data-rank="0.15" data-comp="none">Inżynier (-15%)</div>
-                <div class="chip" data-rank="0" data-comp="doj_z">DOJ Zarząd (-15%)</div>
-                <div class="chip" data-rank="0" data-comp="lspd_z">LSPD Zarząd (-15%)</div>
-            </div>
-
-            <!-- RADIO CARDS (Kafelkowy wybór z ikonami) -->
-            <div class="form-group">
-                <label>Profil / Ranga Mechanika</label>
-                <div class="radio-grid" id="rank-radio-grid">
-                    <div class="radio-card selected" data-value="0" data-engine="0.15">
-                        <span class="rc-icon">👤</span>
-                        <span class="rc-label">Brak zniżki</span>
-                        <span class="rc-sub">0%</span>
-                    </div>
-                    <div class="radio-card" data-value="0.20" data-engine="0.20">
-                        <span class="rc-icon">👑</span>
-                        <span class="rc-label">Zarząd</span>
-                        <span class="rc-sub">-20%</span>
-                    </div>
-                    <div class="radio-card" data-value="0.15" data-engine="0.15">
-                        <span class="rc-icon">⚙️</span>
-                        <span class="rc-label">Inżynier</span>
-                        <span class="rc-sub">-15%</span>
-                    </div>
-                    <div class="radio-card" data-value="0.10" data-engine="0.15">
-                        <span class="rc-icon">🔧</span>
-                        <span class="rc-label">Fachowiec</span>
-                        <span class="rc-sub">-10%</span>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 14px;">
+                <!-- LEWA STRONA: FRAKCJE I LSC -->
+                <div>
+                    <label style="font-size: 10px; font-weight: 700; color: var(--amber-light); text-transform: uppercase; margin-bottom: 6px; display: block;">🏛️ Frakcje & Rangi LSC</label>
+                    <div class="radio-grid" id="faction-radio-grid" style="grid-template-columns: 1fr;">
+                        <div class="radio-card selected" data-type="faction" data-val="none">
+                            <span class="rc-icon">👤</span>
+                            <span class="rc-label">Brak</span>
+                            <span class="rc-sub">0%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="lsc_z" data-rank="0.20" data-engine="0.20">
+                            <span class="rc-icon">👑</span>
+                            <span class="rc-label">Zarząd LSC</span>
+                            <span class="rc-sub">-20%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="lsc_i" data-rank="0.15" data-engine="0.15">
+                            <span class="rc-icon">⚙️</span>
+                            <span class="rc-label">Inżynier LSC</span>
+                            <span class="rc-sub">-15%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="lsc_f" data-rank="0.10" data-engine="0.15">
+                            <span class="rc-icon">🔧</span>
+                            <span class="rc-label">Fachowiec LSC</span>
+                            <span class="rc-sub">-10%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="doj_z" data-rank="0.15" data-engine="0.15">
+                            <span class="rc-icon">⚖️</span>
+                            <span class="rc-label">DOJ Zarząd</span>
+                            <span class="rc-sub">-15%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="doj_p" data-rank="0.10" data-engine="0.10">
+                            <span class="rc-icon">📜</span>
+                            <span class="rc-label">DOJ Pracownik</span>
+                            <span class="rc-sub">-10%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="ems_z" data-rank="0.15" data-engine="0.15">
+                            <span class="rc-icon">🏥</span>
+                            <span class="rc-label">EMS Zarząd</span>
+                            <span class="rc-sub">-15%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="ems_p" data-rank="0.10" data-engine="0.10">
+                            <span class="rc-icon">💊</span>
+                            <span class="rc-label">EMS Pracownik</span>
+                            <span class="rc-sub">-10%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="lspd_z" data-rank="0.15" data-engine="0.15">
+                            <span class="rc-icon">🛡️</span>
+                            <span class="rc-label">LSPD Zarząd</span>
+                            <span class="rc-sub">-15%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="lspd_p" data-rank="0.10" data-engine="0.10">
+                            <span class="rc-icon">👮</span>
+                            <span class="rc-label">LSPD Pracownik</span>
+                            <span class="rc-sub">-10%</span>
+                        </div>
+                        <div class="radio-card" data-type="faction" data-val="ssc" data-rank="0" data-engine="0">
+                            <span class="rc-icon">🚙</span>
+                            <span class="rc-label">SSC Sandy Shores</span>
+                            <span class="rc-sub">Free Mycie/Nap</span>
+                        </div>
                     </div>
                 </div>
-                <select id="rank-select" style="display: none;">
-                    <option value="0">Brak zniżki (0%)</option>
-                    <option value="0.20" data-engine-disc="0.20">Zarząd (-20% | Silniki -20%)</option>
-                    <option value="0.15" data-engine-disc="0.15">Inżynier (-15% | Silniki -15%)</option>
-                    <option value="0.10" data-engine-disc="0.15">Fachowiec (-10% | Silniki -15%)</option>
-                </select>
-            </div>
 
-            <div class="form-group">
-                <label for="company-select">Umowa Partnera</label>
-                <select id="company-select">
-                    <option value="none">Brak umowy</option>
-                    <optgroup label="Frakcje">
-                        <option value="doj_z">DOJ - Zarząd (-15% | Silniki -15%)</option>
-                        <option value="doj_p">DOJ - Pracownik (-10% | Silniki -10%)</option>
-                        <option value="ssc">SSC - Sandy Shores Customs (Naprawa/Mycie Free)</option>
-                        <option value="ems_z">EMS - Zarząd (-15% | Silniki -15%)</option>
-                        <option value="ems_p">EMS - Pracownik (-10% | Silniki -10%)</option>
-                        <option value="lspd_z">LSPD - Zarząd (-15% | Silniki -15%)</option>
-                        <option value="lspd_p">LSPD - Pracownik (-10% | Silniki -10%)</option>
-                    </optgroup>
-                    <optgroup label="Firmy">
-                        <option value="weed_z">Weed Shop Puff Puff - Zarząd (-15%)</option>
-                        <option value="weed_p">Weed Shop Puff Puff - Pracownik (-10%)</option>
-                        <option value="uwu_z">UwU Cafe - Zarząd (-15% | Silniki -10%)</option>
-                        <option value="uwu_p">UwU Cafe - Pracownik (-10% | Silniki -5%)</option>
-                    </optgroup>
-                </select>
+                <!-- PRAWA STRONA: FIRMY -->
+                <div>
+                    <label style="font-size: 10px; font-weight: 700; color: var(--amber-light); text-transform: uppercase; margin-bottom: 6px; display: block;">🏢 Firmy Partnerskie</label>
+                    <div class="radio-grid" id="company-radio-grid" style="grid-template-columns: 1fr;">
+                        <div class="radio-card selected" data-type="company" data-val="none">
+                            <span class="rc-icon">🚫</span>
+                            <span class="rc-label">Brak umowy</span>
+                            <span class="rc-sub">0%</span>
+                        </div>
+                        <div class="radio-card" data-type="company" data-val="weed_z" data-rank="0.15" data-engine="0">
+                            <span class="rc-icon">🌿</span>
+                            <span class="rc-label">Weed Shop Zarząd</span>
+                            <span class="rc-sub">-15%</span>
+                        </div>
+                        <div class="radio-card" data-type="company" data-val="weed_p" data-rank="0.10" data-engine="0">
+                            <span class="rc-icon">🍃</span>
+                            <span class="rc-label">Weed Shop Pracownik</span>
+                            <span class="rc-sub">-10%</span>
+                        </div>
+                        <div class="radio-card" data-type="company" data-val="uwu_z" data-rank="0.15" data-engine="0.10">
+                            <span class="rc-icon">🐱</span>
+                            <span class="rc-label">UwU Cafe Zarząd</span>
+                            <span class="rc-sub">-15% | Silniki -10%</span>
+                        </div>
+                        <div class="radio-card" data-type="company" data-val="uwu_p" data-rank="0.10" data-engine="0.05">
+                            <span class="rc-icon">🐾</span>
+                            <span class="rc-label">UwU Cafe Pracownik</span>
+                            <span class="rc-sub">-10% | Silniki -5%</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group" style="margin-top: 15px; border-top: 1px dashed var(--panel-border); padding-top: 12px;">
@@ -1405,40 +1410,30 @@
         saveState();
     }
 
-    // Radio Cards & Quick Chips Logic
+    // Dwu-kolumnowa obsługa kafelków (Frakcje vs Firmy z wykluczaniem)
     document.querySelectorAll('.radio-card').forEach(card => {
         card.addEventListener('click', () => {
-            document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            const val = card.getAttribute('data-value');
-            document.getElementById('rank-select').value = val;
-            if (parseFloat(val) > 0) {
-                document.getElementById('company-select').value = 'none';
-            }
-            updateAll();
-            showToast(`Zastosowano rangę: ${card.querySelector('.rc-label').innerText}`);
-        });
-    });
-
-    document.querySelectorAll('.chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            const rank = chip.getAttribute('data-rank');
-            const comp = chip.getAttribute('data-comp');
+            const type = card.getAttribute('data-type');
             
-            document.getElementById('rank-select').value = rank;
-            document.getElementById('company-select').value = comp;
+            // Odznacz karty w tej samej kolumnie
+            document.querySelectorAll(`.radio-card[data-type="${type}"]`).forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
 
-            // Sync radio cards
-            document.querySelectorAll('.radio-card').forEach(rc => {
-                if (rc.getAttribute('data-value') === rank) {
-                    rc.click();
-                }
-            });
+            // Jeśli wybrano coś innego niż "none" w jednej kolumnie, wyzeruj drugą
+            const val = card.getAttribute('data-val');
+            if (val !== 'none') {
+                const oppositeType = (type === 'faction') ? 'company' : 'faction';
+                document.querySelectorAll(`.radio-card[data-type="${oppositeType}"]`).forEach(c => {
+                    if (c.getAttribute('data-val') === 'none') {
+                        c.classList.add('selected');
+                    } else {
+                        c.classList.remove('selected');
+                    }
+                });
+            }
 
             updateAll();
-            showToast(`Aktywowano Quick Chip: ${chip.innerText}`);
+            showToast(`Zastosowano zniżkę: ${card.querySelector('.rc-label').innerText}`);
         });
     });
 
@@ -1504,13 +1499,16 @@
     }
 
     function saveState() {
+        const factionCard = document.querySelector('#faction-radio-grid .radio-card.selected');
+        const companyCard = document.querySelector('#company-radio-grid .radio-card.selected');
+
         const state = {
             carType: document.getElementById('car-type').value,
             carModelText: document.getElementById('car-model-input').value,
             selectedVehicleName: selectedVehicle ? selectedVehicle.name : null,
             checkFt: document.getElementById('check-ft').checked,
-            rankSelect: document.getElementById('rank-select').value,
-            companySelect: document.getElementById('company-select').value,
+            selectedFaction: factionCard ? factionCard.getAttribute('data-val') : 'none',
+            selectedCompany: companyCard ? companyCard.getAttribute('data-val') : 'none',
             ftCouponSelect: document.getElementById('ft-coupon-select').value,
         };
         const qtys = {};
@@ -1534,16 +1532,24 @@
                 selectedVehicle = vehicleDatabase.find(v => v.name === state.selectedVehicleName) || null;
             }
             if (state.checkFt !== undefined) document.getElementById('check-ft').checked = state.checkFt;
-            if (state.rankSelect) {
-                document.getElementById('rank-select').value = state.rankSelect;
-                document.querySelectorAll('.radio-card').forEach(rc => {
-                    if (rc.getAttribute('data-value') === state.rankSelect) {
-                        document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'));
+            
+            if (state.selectedFaction) {
+                document.querySelectorAll('#faction-radio-grid .radio-card').forEach(rc => {
+                    if (rc.getAttribute('data-val') === state.selectedFaction) {
+                        document.querySelectorAll('#faction-radio-grid .radio-card').forEach(c => c.classList.remove('selected'));
                         rc.classList.add('selected');
                     }
                 });
             }
-            if (state.companySelect) document.getElementById('company-select').value = state.companySelect;
+            if (state.selectedCompany) {
+                document.querySelectorAll('#company-radio-grid .radio-card').forEach(rc => {
+                    if (rc.getAttribute('data-val') === state.selectedCompany) {
+                        document.querySelectorAll('#company-radio-grid .radio-card').forEach(c => c.classList.remove('selected'));
+                        rc.classList.add('selected');
+                    }
+                });
+            }
+
             if (state.ftCouponSelect) document.getElementById('ft-coupon-select').value = state.ftCouponSelect;
             if (state.qtys) {
                 for (const [id, val] of Object.entries(state.qtys)) {
@@ -1687,35 +1693,40 @@
         document.getElementById('vis-single-info').innerText = `Stawka za 1 menu: ${fmt(singleVisPrice)}`;
         document.getElementById('vis-val').innerText = fmt(totalVisCost);
 
-        const rankSelect = document.getElementById('rank-select');
-        const rankDisc = parseFloat(rankSelect.value) || 0;
-        const isLscEmployee = rankSelect.selectedIndex > 0; 
-        const compKey = document.getElementById('company-select').value;
+        // Odczyt z kafelków
+        const factionCard = document.querySelector('#faction-radio-grid .radio-card.selected');
+        const companyCard = document.querySelector('#company-radio-grid .radio-card.selected');
+
+        const factionVal = factionCard ? factionCard.getAttribute('data-val') : 'none';
+        const companyVal = companyCard ? companyCard.getAttribute('data-val') : 'none';
+
+        let activeMainDiscount = 0;
+        let activeEngineDiscount = 0;
+        let isLscEmployee = false;
+
+        if (factionVal !== 'none') {
+            activeMainDiscount = parseFloat(factionCard.getAttribute('data-rank')) || 0;
+            activeEngineDiscount = parseFloat(factionCard.getAttribute('data-engine')) || 0;
+            if (factionVal.startsWith('lsc_')) {
+                isLscEmployee = true;
+            }
+        } else if (companyVal !== 'none') {
+            activeMainDiscount = parseFloat(companyCard.getAttribute('data-rank')) || 0;
+            activeEngineDiscount = parseFloat(companyCard.getAttribute('data-engine')) || 0;
+        }
+
         const ftCouponDisc = parseFloat(document.getElementById('ft-coupon-select').value) || 0;
-
-        let mainCompDisc = 0;
-        let companyEngineDisc = 0;
-
-        if (compKey === 'ssc') { mainCompDisc = 0; }
-        else if (compKey === 'ems_z') { mainCompDisc = 0.15; companyEngineDisc = 0.15; }
-        else if (compKey === 'ems_p') { mainCompDisc = 0.10; companyEngineDisc = 0.10; }
-        else if (compKey === 'lspd_z') { mainCompDisc = 0.15; companyEngineDisc = 0.15; }
-        else if (compKey === 'lspd_p') { mainCompDisc = 0.10; companyEngineDisc = 0.10; }
-        else if (compKey === 'doj_z') { mainCompDisc = 0.15; companyEngineDisc = 0.15; }
-        else if (compKey === 'doj_p') { mainCompDisc = 0.10; companyEngineDisc = 0.10; }
-        else if (compKey === 'uwu_z') { mainCompDisc = 0.15; companyEngineDisc = 0.10; }
-        else if (compKey === 'uwu_p') { mainCompDisc = 0.10; companyEngineDisc = 0.05; }
-        else if (compKey === 'weed_z') { mainCompDisc = 0.15; }
-        else if (compKey === 'weed_p') { mainCompDisc = 0.10; }
-
-        const activeMainDiscount = Math.max(rankDisc, mainCompDisc);
-        const activeEngineDiscount = Math.max(rankDisc > 0 ? 0.15 : 0, companyEngineDisc);
-
-        const hasFreeWashAndRepair = (isLscEmployee || compKey !== 'none');
+        const hasFreeWashAndRepair = (isLscEmployee || (companyVal !== 'none' && companyVal !== 'ssc'));
         const washUnitPrice = hasFreeWashAndRepair ? 0 : 3000;
         const repInUnitPrice = hasFreeWashAndRepair ? 0 : 5000;
 
-        if (hasFreeWashAndRepair) {
+        if (companyVal === 'ssc') {
+            // SSC Sandy Shores - darmowe mycie i naprawa
+            document.getElementById('wash-price-display').innerText = '0 $';
+            document.getElementById('wash-free-tag').innerHTML = '<span class="badge-tag badge-free">DARMOWE</span>';
+            document.getElementById('rep-price-display').innerText = '0 $';
+            document.getElementById('rep-free-tag').innerHTML = '<span class="badge-tag badge-free">DARMOWE</span>';
+        } else if (hasFreeWashAndRepair) {
             document.getElementById('wash-price-display').innerText = '0 $';
             document.getElementById('wash-free-tag').innerHTML = '<span class="badge-tag badge-free">DARMOWE</span>';
             document.getElementById('rep-price-display').innerText = '0 $';
@@ -1808,23 +1819,6 @@
         saveState();
     }
 
-    document.getElementById('rank-select').addEventListener('change', (e) => {
-        if (parseFloat(e.target.value) > 0 || e.target.selectedIndex > 0) {
-            document.getElementById('company-select').value = 'none';
-        }
-        updateAll();
-    });
-
-    document.getElementById('company-select').addEventListener('change', (e) => {
-        if (e.target.value !== 'none') {
-            document.getElementById('rank-select').value = '0';
-            document.querySelectorAll('.radio-card').forEach(rc => {
-                if (rc.getAttribute('data-value') === '0') rc.click();
-            });
-        }
-        updateAll();
-    });
-
     document.getElementById('car-type').addEventListener('change', () => {
         updateAll();
         saveState();
@@ -1845,11 +1839,15 @@
         document.getElementById('car-model-input').classList.remove('input-error');
         document.getElementById('check-ft').checked = false;
         document.querySelectorAll('.qty-input').forEach(i => i.value = 0);
-        document.getElementById('rank-select').value = '0';
-        document.querySelectorAll('.radio-card').forEach((rc, i) => {
-            if(i === 0) rc.click();
+        
+        // Reset kafelków na Brak
+        document.querySelectorAll('#faction-radio-grid .radio-card').forEach((rc, i) => {
+            if (i === 0) rc.click();
         });
-        document.getElementById('company-select').value = 'none';
+        document.querySelectorAll('#company-radio-grid .radio-card').forEach((rc, i) => {
+            if (i === 0) rc.click();
+        });
+
         document.getElementById('ft-coupon-select').value = '0';
         updateAll();
         showToast('Zresetowano ustawienia kalkulatora');
