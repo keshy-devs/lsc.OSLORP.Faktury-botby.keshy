@@ -9,38 +9,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,700&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0b0d12;
-            --panel-bg: rgba(18, 20, 28, 0.92);
+            --bg-dark: #0f1115;
+            --panel-bg: rgba(20, 23, 30, 0.88);
             --panel-border: rgba(168, 85, 247, 0.25);
             --amber-main: #a855f7;
             --amber-light: #c084fc;
             --neon-green: #00ff66;
             --neon-red: #ff3333;
-            --text-main: #f3f4f6;
-            --text-dim: #9ca3af;
-            --input-bg: #07090e;
+            --text-main: #e5e9f0;
+            --text-dim: #8892b0;
+            --input-bg: #0b0d10;
         }
 
-        /* Motywy kolorystyczne (Dark Neon / OLED Black switcher) */
+        /* Motywy kolorystyczne */
         body.theme-purple {
             --amber-main: #a855f7;
             --amber-light: #c084fc;
-            --panel-border: rgba(168, 85, 247, 0.3);
+            --panel-border: rgba(168, 85, 247, 0.25);
         }
         body.theme-amber {
             --amber-main: #ff6b00;
             --amber-light: #ffaa00;
-            --panel-border: rgba(255, 107, 0, 0.3);
+            --panel-border: rgba(255, 107, 0, 0.25);
         }
         body.theme-cyan {
             --amber-main: #00f0ff;
-            --amber-light: #80f8ff;
-            --panel-border: rgba(0, 240, 255, 0.3);
+            --amber-light: #70f5ff;
+            --panel-border: rgba(0, 240, 255, 0.25);
         }
         body.theme-rose {
-            --amber-main: #ff007f;
-            --amber-light: #ff66b2;
-            --panel-border: rgba(255, 0, 127, 0.3);
+            --amber-main: #f43f5e;
+            --amber-light: #fda4af;
+            --panel-border: rgba(244, 63, 94, 0.25);
         }
 
         * {
@@ -53,6 +53,11 @@
 
         body {
             background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.12) 0%, transparent 60%);
+            background-size: 30px 30px, 30px 30px, 100% 100%;
             color: var(--text-main);
             padding: 20px 20px 180px 20px;
             min-height: 100vh;
@@ -60,18 +65,17 @@
             overflow-x: hidden;
         }
 
-        /* --- DYNAMICZNE TŁO: NIGHT CITY SKYLINE Z LOGO VIBE --- */
+        /* --- DYNAMICZNE TŁO NIGHT CITY SKYLINE (SVG / CANVAS) --- */
         .skyline-bg {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
+            z-index: 0;
+            opacity: 0.45;
             overflow: hidden;
-            background: radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.08) 0%, rgba(11, 13, 18, 0.98) 70%),
-                        linear-gradient(180deg, #07090e 0%, #0b0d12 100%);
         }
 
         .skyline-svg {
@@ -79,49 +83,69 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 45vh;
-            opacity: 0.25;
-            color: var(--amber-main);
+            height: 350px;
         }
 
-        .neon-streak {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--amber-main), transparent);
-            animation: driveStreak 4s linear infinite;
-            opacity: 0.6;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
-        @keyframes driveStreak {
-            0% { transform: translateX(-100vw); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateX(100vw); opacity: 0; }
+        /* --- TOAST NOTIFICATIONS --- */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
         }
 
-        /* --- PRZEŁĄCZNIK MOTYWÓW W ROGU --- */
+        .toast {
+            background: rgba(15, 17, 21, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--amber-main);
+            border-left: 4px solid var(--amber-main);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(168, 85, 247, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: auto;
+            animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to { transform: translateY(-10px); opacity: 0; }
+        }
+
+        /* --- THEME SWITCHER --- */
         .theme-switcher {
             position: fixed;
-            top: 15px;
+            top: 20px;
             right: 20px;
-            display: flex;
-            gap: 8px;
-            background: rgba(18, 20, 28, 0.9);
-            padding: 6px 10px;
+            background: var(--panel-bg);
             border: 1px solid var(--panel-border);
-            border-radius: 6px;
-            backdrop-filter: blur(10px);
+            padding: 6px 10px;
+            border-radius: 4px;
             z-index: 300;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            align-items: center;
-        }
-
-        .theme-switcher span {
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-            margin-right: 4px;
-            text-transform: uppercase;
+            display: flex;
+            gap: 6px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
         .theme-dot {
@@ -130,69 +154,14 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid rgba(255,255,255,0.2);
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.2s;
         }
 
-        .theme-dot:hover {
-            transform: scale(1.2);
-            border-color: #fff;
-        }
-
-        .dot-purple { background: #a855f7; }
-        .dot-amber { background: #ff6b00; }
-        .dot-cyan { background: #00f0ff; }
-        .dot-rose { background: #ff007f; }
-
-        /* --- SYSTEM POWIADOMIEŃ TOAST (PRAWY GÓRNY RÓG) --- */
-        #toast-container {
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            pointer-events: none;
-        }
-
-        .toast-msg {
-            background: rgba(18, 20, 28, 0.95);
-            border-left: 4px solid var(--amber-main);
-            border: 1px solid var(--panel-border);
-            color: var(--text-main);
-            padding: 12px 18px;
-            border-radius: 4px;
-            font-size: 13px;
-            font-family: 'Share Tech Mono', monospace;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            backdrop-filter: blur(12px);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            pointer-events: auto;
-        }
-
-        .toast-msg.fadeOut {
-            animation: toastOut 0.3s ease forwards;
-        }
-
-        @keyframes toastIn {
-            0% { transform: translateX(120%); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes toastOut {
-            0% { transform: translateX(0); opacity: 1; }
-            100% { transform: translateX(120%); opacity: 0; }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
+        .theme-dot:hover { transform: scale(1.2); }
+        .theme-dot.purple { background: #a855f7; }
+        .theme-dot.amber { background: #ff6b00; }
+        .theme-dot.cyan { background: #00f0ff; }
+        .theme-dot.rose { background: #f43f5e; }
 
         /* --- SYGNATURA AUTORA --- */
         .author-watermark {
@@ -218,7 +187,7 @@
             font-weight: 700;
         }
 
-        /* --- PANEL BOCZNY (ANALIZA) --- */
+        /* --- PANEL BOCZNY --- */
         .sidebar-panel {
             position: fixed;
             left: 0;
@@ -226,6 +195,7 @@
             width: 290px;
             background: var(--panel-bg);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-top: 1px solid var(--panel-border);
             border-right: 1px solid var(--panel-border);
             border-bottom: 1px solid var(--panel-border);
@@ -303,7 +273,7 @@
 
         .sidebar-section {
             margin-bottom: 10px;
-            background: rgba(7, 9, 14, 0.6);
+            background: rgba(11, 13, 16, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.04);
             padding: 8px 10px;
             border-radius: 4px;
@@ -348,10 +318,10 @@
         }
 
         header {
-            background: linear-gradient(135deg, #181b25 0%, #0d0f15 100%);
+            background: linear-gradient(135deg, #1c2029 0%, #111318 100%);
             border: 2px solid var(--panel-border);
             border-left: 6px solid var(--amber-main);
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             border-radius: 4px;
             padding: 16px 24px;
             display: flex;
@@ -364,7 +334,7 @@
         }
 
         header::after {
-            content: 'HEAVY DUTY';
+            content: 'NIGHT CITY VIBE';
             position: absolute;
             right: -10px;
             bottom: -15px;
@@ -376,7 +346,7 @@
         }
 
         .header-side-box {
-            background: #07090e;
+            background: #0b0d10;
             border: 1px solid var(--panel-border);
             padding: 6px 12px;
             border-radius: 3px;
@@ -515,13 +485,96 @@
             box-shadow: 0 0 10px rgba(255, 51, 51, 0.4) !important;
         }
 
+        /* --- QUICK CHIPS & TILE SELECTORS --- */
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .chip {
+            background: #111318;
+            border: 1px solid var(--panel-border);
+            color: var(--text-dim);
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .chip:hover {
+            border-color: var(--amber-main);
+            color: #fff;
+        }
+
+        .chip.active {
+            background: rgba(168, 85, 247, 0.18);
+            border-color: var(--amber-main);
+            color: var(--amber-light);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+        }
+
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 8px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .tile-card {
+            background: #111318;
+            border: 1px solid var(--panel-border);
+            border-radius: 4px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: center;
+        }
+
+        .tile-card:hover {
+            border-color: var(--amber-main);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .tile-card.selected {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: var(--amber-main);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
+        }
+
+        .tile-icon {
+            font-size: 18px;
+        }
+
+        .tile-name {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .tile-desc {
+            font-size: 9px;
+            color: var(--amber-light);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
         /* --- AUTOCOMPLETE SUGGESTIONS BOX --- */
         .suggestions-box {
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
-            background: #07090e;
+            background: #0b0d10;
             border: 1px solid var(--panel-border);
             border-top: none;
             max-height: 200px;
@@ -558,7 +611,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #0d0f15;
+            background: #111318;
             border: 1px solid var(--panel-border);
             padding: 12px;
             border-radius: 4px;
@@ -592,7 +645,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 10px 12px;
-            background: #0d0f15;
+            background: #111318;
             border: 1px solid var(--panel-border);
             border-left: 3px solid var(--panel-border);
             border-radius: 4px;
@@ -642,7 +695,7 @@
         }
 
         .qty-btn {
-            background: #181b25;
+            background: #1c2029;
             border: 1px solid var(--panel-border);
             color: var(--text-main);
             width: 28px;
@@ -742,7 +795,7 @@
         .stat-box {
             display: flex;
             flex-direction: column;
-            background: #07090e;
+            background: #0b0d10;
             padding: 8px 16px;
             border: 1px solid var(--panel-border);
             border-radius: 4px;
@@ -813,31 +866,33 @@
 </head>
 <body class="theme-purple">
 
-    <!-- DYNAMICZNE TŁO: NIGHT CITY SKYLINE Z LOGO VIBE -->
+    <!-- TOAST NOTIFICATIONS CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- THEME SWITCHER -->
+    <div class="theme-switcher">
+        <div class="theme-dot purple" onclick="setTheme('purple')" title="Night City Purple"></div>
+        <div class="theme-dot amber" onclick="setTheme('amber')" title="LSC Amber"></div>
+        <div class="theme-dot cyan" onclick="setTheme('cyan')" title="Cyber Cyan"></div>
+        <div class="theme-dot rose" onclick="setTheme('rose')" title="Neon Rose"></div>
+    </div>
+
+    <!-- NIGHT CITY SKYLINE BACKGROUND -->
     <div class="skyline-bg">
-        <div class="neon-streak" style="top: 15%; animation-delay: 0s; width: 250px;"></div>
-        <div class="neon-streak" style="top: 35%; animation-delay: 1.5s; width: 180px;"></div>
-        <div class="neon-streak" style="top: 60%; animation-delay: 0.8s; width: 300px;"></div>
-        <svg class="skyline-svg" viewBox="0 0 1200 300" preserveAspectRatio="none">
-            <path d="M0,300 L0,220 L40,220 L40,180 L70,180 L70,300 L120,300 L120,130 L160,130 L160,300 L220,300 L220,90 L270,90 L270,300 L330,300 L330,160 L380,160 L380,300 L440,300 L440,60 L500,60 L500,300 L560,300 L560,140 L610,140 L610,300 L680,300 L680,100 L730,100 L730,300 L800,300 L800,170 L850,170 L850,300 L910,300 L910,80 L970,80 L970,300 L1040,300 L1040,120 L1090,120 L1090,300 L1200,300 Z" fill="currentColor" opacity="0.3"></path>
+        <svg class="skyline-svg" viewBox="0 0 1200 350" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#0f1115" stop-opacity="0"/>
+                </linearGradient>
+            </defs>
+            <path d="M0,350 L0,250 L50,220 L70,220 L90,180 L120,150 L140,150 L160,200 L200,120 L230,100 L250,100 L270,160 L310,130 L350,80 L380,80 L400,140 L450,190 L500,110 L530,90 L560,90 L580,150 L630,70 L670,120 L720,160 L760,100 L800,60 L830,60 L860,110 L910,170 L950,90 L980,120 L1020,180 L1070,130 L1120,80 L1160,140 L1200,110 L1200,350 Z" fill="url(#skyGrad)" stroke="rgba(168,85,247,0.3)" stroke-width="1.5"/>
         </svg>
     </div>
 
-    <!-- PRZEŁĄCZNIK MOTYWÓW KOLORYSTYCZNYCH -->
-    <div class="theme-switcher">
-        <span>Motyw:</span>
-        <div class="theme-dot dot-purple" onclick="setTheme('theme-purple')" title="Fiolet LSC (Logo)"></div>
-        <div class="theme-dot dot-amber" onclick="setTheme('theme-amber')" title="Klasyczny Bursztyn"></div>
-        <div class="theme-dot dot-cyan" onclick="setTheme('theme-cyan')" title="Neonowy Cyjan"></div>
-        <div class="theme-dot dot-rose" onclick="setTheme('theme-rose')" title="Różowy Neon"></div>
-    </div>
-
-    <!-- KONTENER POWIADOMIEŃ TOAST -->
-    <div id="toast-container"></div>
-
     <!-- SYGNATURA AUTORA -->
     <div class="author-watermark">
-        AUTHOR // <span>〆 𝑵𝒆𝒌𝒙𝒚 𝙙𝙚𝙫</span>
+        LSC OSLORP // <span>SYSTEM ZLECEŃ</span>
     </div>
 
     <!-- PANEL BOCZNY -->
@@ -917,7 +972,7 @@
             </div>
             <div class="brand-text">
                 <h1>SYSTEM ZLECEŃ - LOS SANTOS CUSTOMS</h1>
-                <p>HEAVY DUTY // AUTORYZOWANY WARSZTAT</p>
+                <p>NIGHT CITY EDITION // AUTORYZOWANY WARSZTAT</p>
             </div>
             <div class="header-side-box">
                 <span class="hs-label">Tryb Pracy</span>
@@ -969,45 +1024,105 @@
                 </div>
             </div>
 
-            <!-- 2. ZNIŻKI I RABATY -->
+            <!-- 2. ZNIŻKI I RABATY (Z KAFLAMI I QUICK CHIPS) -->
             <div class="card">
                 <div class="card-title">🛡️ 2. Zniżki i Rabaty</div>
 
+                <!-- UKRYTE SELECTY DLA LOGIKI -->
+                <select id="rank-select" style="display:none;">
+                    <option value="0" selected>Brak zniżki (0%)</option>
+                    <option value="0.20" data-engine-disc="0.20">Zarząd (-20% | Silniki -20%)</option>
+                    <option value="0.15" data-engine-disc="0.15">Inżynier (-15% | Silniki -15%)</option>
+                    <option value="0.15" data-engine-disc="0.15">Majster (-15% | Silniki -15%)</option>
+                    <option value="0.10" data-engine-disc="0.15">Fachowiec (-10% | Silniki -15%)</option>
+                    <option value="0.10" data-engine-disc="0.15">Starszy Mechanik (-10% | Silniki -15%)</option>
+                    <option value="0.05" data-engine-disc="0.15">Mechanik (-5% | Silniki -15%)</option>
+                    <option value="0.05" data-engine-disc="0.15">Młodszy Mechanik (-5% | Silniki -15%)</option>
+                    <option value="0.00" data-engine-disc="0.15">Praktykant (Brak | Silniki -15%)</option>
+                </select>
+
+                <select id="company-select" style="display:none;">
+                    <option value="none" selected>Brak umowy</option>
+                    <option value="doj_z">DOJ - Zarząd (-15% | Silniki -15%)</option>
+                    <option value="doj_p">DOJ - Pracownik (-10% | Silniki -10%)</option>
+                    <option value="ssc">SSC - Sandy Shores Customs (Naprawa/Mycie Free)</option>
+                    <option value="ems_z">EMS - Zarząd (-15% | Silniki -15%)</option>
+                    <option value="ems_p">EMS - Pracownik (-10% | Silniki -10%)</option>
+                    <option value="lspd_z">LSPD - Zarząd (-15% | Silniki -15%)</option>
+                    <option value="lspd_p">LSPD - Pracownik (-10% | Silniki -10%)</option>
+                    <option value="weed_z">Weed Shop Puff Puff - Zarząd (-15%)</option>
+                    <option value="weed_p">Weed Shop Puff Puff - Pracownik (-10%)</option>
+                    <option value="uwu_z">UwU Cafe - Zarząd (-15% | Silniki -10%)</option>
+                    <option value="uwu_p">UwU Cafe - Pracownik (-10% | Silniki -5%)</option>
+                </select>
+
+                <!-- QUICK CHIPS -->
                 <div class="form-group">
-                    <label for="rank-select">Ranga Mechanika (Zniżka LSC)</label>
-                    <select id="rank-select">
-                        <option value="0">Brak zniżki (0%)</option>
-                        <option value="0.20" data-engine-disc="0.20">Zarząd (-20% | Silniki -20%)</option>
-                        <option value="0.15" data-engine-disc="0.15">Inżynier (-15% | Silniki -15%)</option>
-                        <option value="0.15" data-engine-disc="0.15">Majster (-15% | Silniki -15%)</option>
-                        <option value="0.10" data-engine-disc="0.15">Fachowiec (-10% | Silniki -15%)</option>
-                        <option value="0.10" data-engine-disc="0.15">Starszy Mechanik (-10% | Silniki -15%)</option>
-                        <option value="0.05" data-engine-disc="0.15">Mechanik (-5% | Silniki -15%)</option>
-                        <option value="0.05" data-engine-disc="0.15">Młodszy Mechanik (-5% | Silniki -15%)</option>
-                        <option value="0.00" data-engine-disc="0.15">Praktykant (Brak | Silniki -15%)</option>
-                    </select>
+                    <label>Szybki Wybór (Quick Chips)</label>
+                    <div class="quick-chips">
+                        <div class="chip active" onclick="selectQuickChip('none', this)">Brak Zniżki</div>
+                        <div class="chip" onclick="selectQuickChip('zarzad', this)">👑 Zarząd LSC (-20%)</div>
+                        <div class="chip" onclick="selectQuickChip('inzynier', this)">🔧 Inżynier (-15%)</div>
+                        <div class="chip" onclick="selectQuickChip('doj', this)">⚖️ DOJ Zarząd</div>
+                        <div class="chip" onclick="selectQuickChip('lspd', this)">🚨 LSPD Zarząd</div>
+                    </div>
                 </div>
 
+                <!-- KAFELKI RANG I UMÓW -->
                 <div class="form-group">
-                    <label for="company-select">Umowa Partnera</label>
-                    <select id="company-select">
-                        <option value="none">Brak umowy</option>
-                        <optgroup label="Frakcje">
-                            <option value="doj_z">DOJ - Zarząd (-15% | Silniki -15%)</option>
-                            <option value="doj_p">DOJ - Pracownik (-10% | Silniki -10%)</option>
-                            <option value="ssc">SSC - Sandy Shores Customs (Naprawa/Mycie Free)</option>
-                            <option value="ems_z">EMS - Zarząd (-15% | Silniki -15%)</option>
-                            <option value="ems_p">EMS - Pracownik (-10% | Silniki -10%)</option>
-                            <option value="lspd_z">LSPD - Zarząd (-15% | Silniki -15%)</option>
-                            <option value="lspd_p">LSPD - Pracownik (-10% | Silniki -10%)</option>
-                        </optgroup>
-                        <optgroup label="Firmy">
-                            <option value="weed_z">Weed Shop Puff Puff - Zarząd (-15%)</option>
-                            <option value="weed_p">Weed Shop Puff Puff - Pracownik (-10%)</option>
-                            <option value="uwu_z">UwU Cafe - Zarząd (-15% | Silniki -10%)</option>
-                            <option value="uwu_p">UwU Cafe - Pracownik (-10% | Silniki -5%)</option>
-                        </optgroup>
-                    </select>
+                    <label>Wybór Rangi / Umowy Partnerskiej (Kafelki)</label>
+                    <div class="tiles-grid" id="discount-tiles">
+                        <div class="tile-card selected" onclick="setDiscountOption('rank', '0', this)">
+                            <div class="tile-icon">❌</div>
+                            <div class="tile-name">Brak</div>
+                            <div class="tile-desc">0% zniżki</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('rank', '0.20', this)">
+                            <div class="tile-icon">👑</div>
+                            <div class="tile-name">Zarząd</div>
+                            <div class="tile-desc">-20% / Silniki -20%</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('rank', '0.15', this)">
+                            <div class="tile-icon">🔧</div>
+                            <div class="tile-name">Inżynier</div>
+                            <div class="tile-desc">-15% / Silniki -15%</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('rank', '0.10', this)">
+                            <div class="tile-icon">⚙️</div>
+                            <div class="tile-name">Fachowiec</div>
+                            <div class="tile-desc">-10% / Silniki -15%</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('rank', '0.05', this)">
+                            <div class="tile-icon">🔩</div>
+                            <div class="tile-name">Mechanik</div>
+                            <div class="tile-desc">-5% / Silniki -15%</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('company', 'doj_z', this)">
+                            <div class="tile-icon">⚖️</div>
+                            <div class="tile-name">DOJ Zarząd</div>
+                            <div class="tile-desc">-15% / Silniki -15%</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('company', 'lspd_z', this)">
+                            <div class="tile-icon">🚨</div>
+                            <div class="tile-name">LSPD Zarząd</div>
+                            <div class="tile-desc">-15% / Silniki -15%</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('company', 'ems_z', this)">
+                            <div class="tile-icon">💉</div>
+                            <div class="tile-name">EMS Zarząd</div>
+                            <div class="tile-desc">-15% / Silniki -15%</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('company', 'ssc', this)">
+                            <div class="tile-icon">🛡️</div>
+                            <div class="tile-name">SSC</div>
+                            <div class="tile-desc">Free Mycie/Naprawa</div>
+                        </div>
+                        <div class="tile-card" onclick="setDiscountOption('company', 'uwu_z', this)">
+                            <div class="tile-icon">🐱</div>
+                            <div class="tile-name">UwU Cafe</div>
+                            <div class="tile-desc">-15% / Silniki -10%</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group" style="margin-top: 15px; border-top: 1px dashed var(--panel-border); padding-top: 12px;">
@@ -1195,7 +1310,7 @@
             <div class="card-title">
                 <span>📜 Historia Ostatnich Zleceń</span>
                 <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-action" style="padding: 4px 12px; font-size: 14px;" id="btn-save-history">💾 Zapisz zlecenie</button>
+                    <button class="btn btn-action" style="padding: 4px 12px; font-size: 14px;" id="btn-save-history">💾 Zapisz bieżące zlecenie</button>
                     <button class="btn btn-reset" style="padding: 4px 12px; font-size: 14px;" id="btn-clear-history">🗑️ Wyczyść historię</button>
                 </div>
             </div>
@@ -1232,7 +1347,7 @@
             </div>
 
             <div style="display: flex; gap: 10px;">
-                <button class="btn btn-reset" id="btn-reset">Resetuj formularz</button>
+                <button class="btn btn-reset" id="btn-reset">Resetuj</button>
             </div>
         </div>
     </div>
@@ -1243,38 +1358,34 @@
         let currentFinalNumeric = 0;
         let selectedVehicle = null;
 
-        // SYSTEM POWIADOMIEŃ TOAST
+        // Toast notification system
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = 'toast-msg';
-            
-            let icon = '⚡';
-            if (type === 'success') icon = '✅';
-            if (type === 'warn') icon = '⚠️';
-            if (type === 'danger') icon = '🗑️';
-
-            toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+            toast.className = 'toast';
+            if (type === 'error') {
+                toast.style.borderColor = 'var(--neon-red)';
+                toast.style.borderLeftColor = 'var(--neon-red)';
+                toast.innerHTML = `⚠️ ${message}`;
+            } else {
+                toast.innerHTML = `✅ ${message}`;
+            }
             container.appendChild(toast);
-
             setTimeout(() => {
-                toast.classList.add('fadeOut');
-                setTimeout(() => toast.remove(), 300);
+                toast.remove();
             }, 3000);
         }
 
-        // PRZEŁĄCZANIE MOTYWU KOLORYSTYCZNEGO
+        // Theme Switcher
         function setTheme(themeName) {
-            document.body.className = themeName;
+            document.body.className = 'theme-' + themeName;
             localStorage.setItem('lsc_theme', themeName);
-            showToast(`Zmieniono motyw wizualny na ${themeName.replace('theme-', '').toUpperCase()}`);
+            showToast(`Zmieniono motyw na: ${themeName.toUpperCase()}`);
         }
 
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('lsc_theme');
-            if (savedTheme) {
-                document.body.className = savedTheme;
-            }
+        const savedTheme = localStorage.getItem('lsc_theme');
+        if (savedTheme) {
+            document.body.className = 'theme-' + savedTheme;
         }
 
         // Baza pojazdów
@@ -1471,7 +1582,7 @@
             { name: "S15LBWK", salonPrice: 12000000 },
             { name: "THEREALDEAL", salonPrice: 12000000 },
             { name: "DRIFT300RACKS", salonPrice: 12000000 },
-            { name: "journey2", salonPrice: 150050 },
+            { name: "journey2", salonPrice: 150000 },
             { name: "journey", salonPrice: 100000 },
             { name: "camper", salonPrice: 250000 },
             { name: "ADPGT1", salonPrice: 35500000 },
@@ -1513,6 +1624,56 @@
             let val = parseInt(el.value) || 0;
             val = Math.max(0, val + delta);
             el.value = val;
+            updateAll();
+            saveState();
+        }
+
+        // Funkcje obsługi kafelków i Quick Chipsów
+        function setDiscountOption(type, val, tileElement) {
+            document.querySelectorAll('.tile-card').forEach(t => t.classList.remove('selected'));
+            tileElement.classList.add('selected');
+
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+
+            if (type === 'rank') {
+                document.getElementById('rank-select').value = val;
+                document.getElementById('company-select').value = 'none';
+            } else if (type === 'company') {
+                document.getElementById('company-select').value = val;
+                document.getElementById('rank-select').value = '0';
+            }
+            updateAll();
+            saveState();
+        }
+
+        function selectQuickChip(key, chipElement) {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chipElement.classList.add('active');
+
+            const tiles = document.querySelectorAll('.tile-card');
+            tiles.forEach(t => t.classList.remove('selected'));
+
+            if (key === 'none') {
+                document.getElementById('rank-select').value = '0';
+                document.getElementById('company-select').value = 'none';
+                tiles[0].classList.add('selected');
+            } else if (key === 'zarzad') {
+                document.getElementById('rank-select').value = '0.20';
+                document.getElementById('company-select').value = 'none';
+                tiles[1].classList.add('selected');
+            } else if (key === 'inzynier') {
+                document.getElementById('rank-select').value = '0.15';
+                document.getElementById('company-select').value = 'none';
+                tiles[2].classList.add('selected');
+            } else if (key === 'doj') {
+                document.getElementById('company-select').value = 'doj_z';
+                document.getElementById('rank-select').value = '0';
+                tiles[5].classList.add('selected');
+            } else if (key === 'lspd') {
+                document.getElementById('company-select').value = 'lspd_z';
+                document.getElementById('rank-select').value = '0';
+                tiles[6].classList.add('selected');
+            }
             updateAll();
             saveState();
         }
@@ -1567,7 +1728,6 @@
                     suggestionsBox.style.display = 'none';
                     updateAll();
                     saveState();
-                    showToast(`Wybrano pojazd: ${found.name}`);
                 }
             });
 
@@ -1587,6 +1747,7 @@
                 rankSelect: document.getElementById('rank-select').value,
                 companySelect: document.getElementById('company-select').value,
                 ftCouponSelect: document.getElementById('ft-coupon-select').value,
+                theme: document.body.className
             };
             const qtys = {};
             document.querySelectorAll('.qty-input').forEach(input => {
@@ -1612,6 +1773,7 @@
                 if (state.rankSelect) document.getElementById('rank-select').value = state.rankSelect;
                 if (state.companySelect) document.getElementById('company-select').value = state.companySelect;
                 if (state.ftCouponSelect) document.getElementById('ft-coupon-select').value = state.ftCouponSelect;
+                if (state.theme) document.body.className = state.theme;
                 if (state.qtys) {
                     for (const [id, val] of Object.entries(state.qtys)) {
                         const el = document.getElementById(id);
@@ -1653,17 +1815,14 @@
             if (history.length > 5) history = history.slice(0, 5);
             localStorage.setItem('lsc_history', JSON.stringify(history));
             renderHistory();
-            showToast('Zlecenie zostało pomyślnie zapisane w historii!');
+            showToast('Zlecenie zostało pomyślnie zapisane!');
         }
 
-        // PRZYCISK CZYSZCZENIA HISTORII (NOWY)
-        function clearHistoryAndCounter() {
+        function clearHistory() {
             localStorage.removeItem('lsc_history');
             renderHistory();
-            showToast('Wyczyszczono historię zleceń i zresetowano dzienny licznik.', 'danger');
+            showToast('Historia zleceń została wyczyszczona.');
         }
-
-        document.getElementById('btn-clear-history').addEventListener('click', clearHistoryAndCounter);
 
         function renderHistory() {
             const container = document.getElementById('history-container');
@@ -1674,7 +1833,7 @@
             }
 
             container.innerHTML = history.map((item, idx) => `
-                <div class="item-row" style="background: #07090e;">
+                <div class="item-row" style="background: #0b0d10;">
                     <div class="item-details">
                         <span class="item-name">Zlecenie #${idx + 1} (${item.date})</span>
                         <span class="tag-subtext">Pojazd: ${item.car}</span>
@@ -1688,13 +1847,11 @@
         }
 
         document.getElementById('btn-save-history').addEventListener('click', saveCurrentOrder);
+        document.getElementById('btn-clear-history').addEventListener('click', clearHistory);
 
         document.getElementById('btn-copy-invoice').addEventListener('click', () => {
             navigator.clipboard.writeText(currentFinalNumeric).then(() => {
-                showToast(`Skopiowano kwotę faktury do schowka: ${fmt(currentFinalNumeric)}`);
-                const btn = document.getElementById('btn-copy-invoice');
-                btn.innerText = '✅ Skopiowano!';
-                setTimeout(() => { btn.innerText = '📋 Kopiuj'; }, 1500);
+                showToast(`Skopiowano kwotę faktury: ${fmt(currentFinalNumeric)}`);
             });
         });
 
@@ -1865,7 +2022,7 @@
 
             const discountableBase = (totalVisCost * (1 - activeMainDiscount))
                 + (brakes * 1500000 * (1 - activeMainDiscount))
-                + (drift * 150000 * (1 - activeMainDiscount))
+                + (drift * 150050 * (1 - activeMainDiscount))
                 + (wash * washUnitPrice)
                 + (repIn * repInUnitPrice)
                 + (repOut * 7500)
@@ -1887,12 +2044,12 @@
             ftDiscountVal = activeFtCost * ftEffectiveDiscountRate;
             const finalFtCost = activeFtCost - ftDiscountVal;
 
-            const discountVal = (totalVisCost + (brakes * 1500000) + (drift * 150000)) * activeMainDiscount;
+            const discountVal = (totalVisCost + (brakes * 1500000) + (drift * 150050)) * activeMainDiscount;
 
             const finalInvoice = discountableBase + finalFtCost + enginesTotalCost + cashOnlyTotal;
             currentFinalNumeric = Math.round(finalInvoice);
 
-            const rawTotal = totalVisCost + activeFtCost + (brakes * 1500000) + (drift * 150000) + (v6 * baseV6) + (v8 * baseV8) + (v10 * baseV10) + (wash * 3000) + (repIn * 5000) + (repOut * 7500) + (kit * 2000) + packCost + cashOnlyTotal;
+            const rawTotal = totalVisCost + activeFtCost + (brakes * 1500000) + (drift * 150050) + (v6 * baseV6) + (v8 * baseV8) + (v10 * baseV10) + (wash * 3000) + (repIn * 5000) + (repOut * 7500) + (kit * 2000) + packCost + cashOnlyTotal;
 
             const totalDiscountSum = discountVal + ftDiscountVal + ((v6 * baseV6 + v8 * baseV8 + v10 * baseV10) - enginesTotalCost);
 
@@ -1909,7 +2066,7 @@
             
             document.getElementById('sb-ft-val').innerText = fmt(activeFtCost);
             document.getElementById('sb-vis-val').innerText = fmt(totalVisCost);
-            document.getElementById('sb-tech-val').innerText = fmt(enginesTotalCost + (brakes * 1500000) + (drift * 150000) + cashOnlyTotal);
+            document.getElementById('sb-tech-val').innerText = fmt(enginesTotalCost + (brakes * 1500000) + (drift * 150050) + cashOnlyTotal);
             document.getElementById('sb-serv-val').innerText = fmt((wash * washUnitPrice) + (repIn * repInUnitPrice) + (repOut * 7500) + (kit * 2000) + packCost);
 
             document.getElementById('sb-p-tablet').innerText = fmt(fixedNitroSuspProfit);
@@ -1922,20 +2079,6 @@
 
             saveState();
         }
-
-        document.getElementById('rank-select').addEventListener('change', (e) => {
-            if (parseFloat(e.target.value) > 0 || e.target.selectedIndex > 0) {
-                document.getElementById('company-select').value = 'none';
-            }
-            updateAll();
-        });
-
-        document.getElementById('company-select').addEventListener('change', (e) => {
-            if (e.target.value !== 'none') {
-                document.getElementById('rank-select').value = '0';
-            }
-            updateAll();
-        });
 
         document.getElementById('car-type').addEventListener('change', () => {
             updateAll();
@@ -1960,13 +2103,23 @@
             document.getElementById('rank-select').value = '0';
             document.getElementById('company-select').value = 'none';
             document.getElementById('ft-coupon-select').value = '0';
+            
+            // reset tiles & chips
+            document.querySelectorAll('.tile-card').forEach((t, i) => {
+                if(i === 0) t.classList.add('selected');
+                else t.classList.remove('selected');
+            });
+            document.querySelectorAll('.chip').forEach((c, i) => {
+                if(i === 0) c.classList.add('active');
+                else c.classList.remove('active');
+            });
+
             updateAll();
-            showToast('Zresetowano formularz zleceń.', 'warn');
+            showToast('Zresetowano ustawienia kalkulatora.');
         });
 
         // Inicjalizacja
         setupAutocomplete();
-        loadTheme();
         loadState();
         renderHistory();
         updateAll();
