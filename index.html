@@ -20,7 +20,7 @@
         --panel-border: rgba(244, 63, 94, 0.25);
     }
 
-    * {a
+    * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -42,7 +42,7 @@
         overflow-x: hidden;
     }
 
-    /* --- DYNAMICZNE TŁO NIGHT CITY SKYLINE (SVG / CANVAS) --- */
+    /* --- DYNAMICZNE TŁO NIGHT CITY SKYLINE --- */
     .skyline-bg {
         position: fixed;
         top: 0;
@@ -495,12 +495,23 @@
         box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
     }
 
-    /* POPRAWIONY GRID KAFELKÓW - bez brzydkich pasków przewijania, idealny układ responsywny */
+    .tiles-category-title {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--amber-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 10px 0 6px 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
     .tiles-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
-        margin-top: 4px;
+        margin-bottom: 10px;
     }
 
     @media (max-width: 900px) {
@@ -1005,7 +1016,7 @@
             </div>
         </div>
 
-        <!-- 2. ZNIŻKI I RABATY (Z KAFLAMI I QUICK CHIPS) -->
+        <!-- 2. ZNIŻKI I RABATY -->
         <div class="card">
             <div class="card-title">🛡️ 2. Zniżki i Rabaty</div>
 
@@ -1049,10 +1060,13 @@
                 </div>
             </div>
 
-            <!-- KAFELKI RANG I UMÓW (Czysty grid bez scrollbarów) -->
+            <!-- KAFELKI - PODZIAŁ NA RANGI LSC ORAZ FIRMY I FRAKCJE -->
             <div class="form-group">
-                <label>Wybór Rangi / Umowy Partnerskiej (Kafelki)</label>
-                <div class="tiles-grid" id="discount-tiles">
+                <label>Wybór Rangi lub Umowy Partnerskiej</label>
+
+                <!-- SEKCJA 1: RANGI LSC -->
+                <div class="tiles-category-title">⭐ Rangi Pracownicze LSC</div>
+                <div class="tiles-grid">
                     <div class="tile-card selected" data-type="rank" data-val="0" onclick="setDiscountOption('rank', '0', this)">
                         <div class="tile-icon">❌</div>
                         <div class="tile-name">Brak</div>
@@ -1065,19 +1079,29 @@
                     </div>
                     <div class="tile-card" data-type="rank" data-val="0.15" onclick="setDiscountOption('rank', '0.15', this)">
                         <div class="tile-icon">🔧</div>
-                        <div class="tile-name">Inżynier</div>
+                        <div class="tile-name">Inżynier / Majster</div>
                         <div class="tile-desc">-15% / Silniki -15%</div>
                     </div>
                     <div class="tile-card" data-type="rank" data-val="0.10" onclick="setDiscountOption('rank', '0.10', this)">
                         <div class="tile-icon">⚙️</div>
-                        <div class="tile-name">Fachowiec</div>
+                        <div class="tile-name">Fachowiec / Starszy</div>
                         <div class="tile-desc">-10% / Silniki -15%</div>
                     </div>
                     <div class="tile-card" data-type="rank" data-val="0.05" onclick="setDiscountOption('rank', '0.05', this)">
                         <div class="tile-icon">🔩</div>
-                        <div class="tile-name">Mechanik</div>
+                        <div class="tile-name">Mechanik / Młodszy</div>
                         <div class="tile-desc">-5% / Silniki -15%</div>
                     </div>
+                    <div class="tile-card" data-type="rank" data-val="0.00" onclick="setDiscountOption('rank', '0.00', this)">
+                        <div class="tile-icon">🛠️</div>
+                        <div class="tile-name">Praktykant</div>
+                        <div class="tile-desc">Brak / Silniki -15%</div>
+                    </div>
+                </div>
+
+                <!-- SEKCJA 2: FIRMY I FRAKCJE -->
+                <div class="tiles-category-title">🏢 Firmy i Frakcje (Umowy Partnerskie)</div>
+                <div class="tiles-grid">
                     <div class="tile-card" data-type="company" data-val="doj_z" onclick="setDiscountOption('company', 'doj_z', this)">
                         <div class="tile-icon">⚖️</div>
                         <div class="tile-name">DOJ Zarząd</div>
@@ -1609,7 +1633,6 @@
         saveState();
     }
 
-    // Poprawiona obsługa kafelków i Quick Chipsów (dynamiczne dopasowanie po data-type i data-val)
     function setDiscountOption(type, val, tileElement) {
         document.querySelectorAll('.tile-card').forEach(t => t.classList.remove('selected'));
         tileElement.classList.add('selected');
@@ -1631,7 +1654,6 @@
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
         chipElement.classList.add('active');
 
-        // Znajdź odpowiedni kafel i zaznacz go automatycznie
         const tiles = document.querySelectorAll('.tile-card');
         let matchingTile = null;
 
@@ -1765,7 +1787,6 @@
                 }
             }
             
-            // Synchronizuj kafelki z wczytanym stanem selectów
             const rVal = document.getElementById('rank-select').value;
             const cVal = document.getElementById('company-select').value;
             document.querySelectorAll('.tile-card').forEach(t => {
@@ -2100,7 +2121,6 @@
         document.getElementById('company-select').value = 'none';
         document.getElementById('ft-coupon-select').value = '0';
         
-        // reset tiles & chips
         document.querySelectorAll('.tile-card').forEach((t, i) => {
             if(i === 0) t.classList.add('selected');
             else t.classList.remove('selected');
@@ -2114,7 +2134,6 @@
         showToast('Zresetowano ustawienia kalkulatora.');
     });
 
-    // Inicjalizacja
     setupAutocomplete();
     loadState();
     renderHistory();
