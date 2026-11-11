@@ -46,6 +46,12 @@
             --accent-light: #ff66b2;
         }
 
+        [data-theme="purple"] {
+            --panel-border: rgba(189, 0, 255, 0.3);
+            --accent-main: #bd00ff;
+            --accent-light: #d666ff;
+        }
+
         body.light-theme {
             --bg-dark: #e4e7eb;
             --panel-bg: rgba(255, 255, 255, 0.92);
@@ -65,12 +71,13 @@
         body {
             background-color: var(--bg-dark);
             background-image: 
-                linear-gradient(rgba(255, 107, 0, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 107, 0, 0.02) 1px, transparent 1px),
-                radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.08) 0%, transparent 50%),
+                linear-gradient(rgba(15, 17, 21, 0.55) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 17, 21, 0.55) 1px, transparent 1px),
+                radial-gradient(circle at 50% 0%, rgba(189, 0, 255, 0.12) 0%, transparent 60%),
                 url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920&auto=format&fit=crop');
             background-size: 30px 30px, 30px 30px, 100% 100%, cover;
-            background-blend-mode: overlay;
+            background-blend-mode: normal;
+            background-attachment: fixed;
             color: var(--text-main);
             padding: 20px 20px 180px 20px;
             min-height: 100vh;
@@ -867,6 +874,7 @@
             <option value="blue">🔵 Baby Blue (Cyber Cyan)</option>
             <option value="green">🟢 Neon Green (Matrix)</option>
             <option value="pink">🩷 Neon Pink (Synthwave)</option>
+            <option value="purple">🟣 Magic Purple (Neon)</option>
         </select>
         <button class="theme-select" id="light-mode-toggle" title="Przełącz tryb jasny/ciemny">🌓 Tryb</button>
     </div>
