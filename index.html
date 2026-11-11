@@ -1077,17 +1077,71 @@
                                 <input type="radio" name="discount_profile" value="rank_zarzad">
                                 <span class="radio-icon">👑</span>
                                 <div class="radio-info">
-                                    <span class="radio-title">Zarząd LSC</span>
+                                    <span class="radio-title">Zarząd</span>
                                     <span class="radio-desc">-20% | Silniki -20%</span>
                                 </div>
                             </label>
 
                             <label class="radio-card" data-value="rank_inzynier">
                                 <input type="radio" name="discount_profile" value="rank_inzynier">
+                                <span class="radio-icon">⚙️</span>
+                                <div class="radio-info">
+                                    <span class="radio-title">Inżynier</span>
+                                    <span class="radio-desc">-15% | Silniki -15%</span>
+                                </div>
+                            </label>
+
+                            <label class="radio-card" data-value="rank_majster">
+                                <input type="radio" name="discount_profile" value="rank_majster">
+                                <span class="radio-icon">🛠️</span>
+                                <div class="radio-info">
+                                    <span class="radio-title">Majster</span>
+                                    <span class="radio-desc">-15% | Silniki -15%</span>
+                                </div>
+                            </label>
+
+                            <label class="radio-card" data-value="rank_fachowiec">
+                                <input type="radio" name="discount_profile" value="rank_fachowiec">
+                                <span class="radio-icon">🔩</span>
+                                <div class="radio-info">
+                                    <span class="radio-title">Fachowiec</span>
+                                    <span class="radio-desc">-10% | Silniki -15%</span>
+                                </div>
+                            </label>
+
+                            <label class="radio-card" data-value="rank_starszy_mechanik">
+                                <input type="radio" name="discount_profile" value="rank_starszy_mechanik">
+                                <span class="radio-icon">🧰</span>
+                                <div class="radio-info">
+                                    <span class="radio-title">Starszy Mechanik</span>
+                                    <span class="radio-desc">-10% | Silniki -15%</span>
+                                </div>
+                            </label>
+
+                            <label class="radio-card" data-value="rank_mechanik">
+                                <input type="radio" name="discount_profile" value="rank_mechanik">
                                 <span class="radio-icon">🔧</span>
                                 <div class="radio-info">
-                                    <span class="radio-title">Inżynier / Majster</span>
-                                    <span class="radio-desc">-15% | Silniki -15%</span>
+                                    <span class="radio-title">Mechanik</span>
+                                    <span class="radio-desc">-5% | Silniki -15%</span>
+                                </div>
+                            </label>
+
+                            <label class="radio-card" data-value="rank_mlodszy_mechanik">
+                                <input type="radio" name="discount_profile" value="rank_mlodszy_mechanik">
+                                <span class="radio-icon">🔨</span>
+                                <div class="radio-info">
+                                    <span class="radio-title">Młodszy Mechanik</span>
+                                    <span class="radio-desc">-5% | Silniki -15%</span>
+                                </div>
+                            </label>
+
+                            <label class="radio-card" data-value="rank_praktykant">
+                                <input type="radio" name="discount_profile" value="rank_praktykant">
+                                <span class="radio-icon">🎓</span>
+                                <div class="radio-info">
+                                    <span class="radio-title">Praktykant</span>
+                                    <span class="radio-desc">0% | Silniki -15%</span>
                                 </div>
                             </label>
                         </div>
@@ -1992,6 +2046,30 @@
                 isLscEmployee = true;
             } else if (profile === 'rank_inzynier') {
                 rankDisc = 0.15;
+                lscEngineDisc = 0.15;
+                isLscEmployee = true;
+            } else if (profile === 'rank_majster') {
+                rankDisc = 0.15;
+                lscEngineDisc = 0.15;
+                isLscEmployee = true;
+            } else if (profile === 'rank_fachowiec') {
+                rankDisc = 0.10;
+                lscEngineDisc = 0.15;
+                isLscEmployee = true;
+            } else if (profile === 'rank_starszy_mechanik') {
+                rankDisc = 0.10;
+                lscEngineDisc = 0.15;
+                isLscEmployee = true;
+            } else if (profile === 'rank_mechanik') {
+                rankDisc = 0.05;
+                lscEngineDisc = 0.15;
+                isLscEmployee = true;
+            } else if (profile === 'rank_mlodszy_mechanik') {
+                rankDisc = 0.05;
+                lscEngineDisc = 0.15;
+                isLscEmployee = true;
+            } else if (profile === 'rank_praktykant') {
+                rankDisc = 0.00;
                 lscEngineDisc = 0.15;
                 isLscEmployee = true;
             } else if (profile === 'doj_z') {
