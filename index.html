@@ -24,6 +24,7 @@
             --panel-border: rgba(255, 107, 0, 0.25);
             --accent-main: #ff6b00;
             --accent-light: #ffaa00;
+            --accent-rgb: 255, 107, 0;
             --neon-green: #00ff66;
             --neon-red: #ff3333;
             --text-main: #e2e8f0;
@@ -32,39 +33,44 @@
         }
 
         [data-theme="amber"] {
-            --panel-border: rgba(255, 107, 0, 0.3);
+            --panel-border: rgba(255, 107, 0, 0.35);
             --accent-main: #ff6b00;
             --accent-light: #ffaa00;
+            --accent-rgb: 255, 107, 0;
         }
 
         [data-theme="blue"] {
-            --panel-border: rgba(0, 229, 255, 0.3);
+            --panel-border: rgba(0, 229, 255, 0.35);
             --accent-main: #00e5ff;
             --accent-light: #70f3ff;
+            --accent-rgb: 0, 229, 255;
         }
 
         [data-theme="green"] {
-            --panel-border: rgba(0, 255, 102, 0.3);
+            --panel-border: rgba(0, 255, 102, 0.35);
             --accent-main: #00ff66;
             --accent-light: #73ffab;
+            --accent-rgb: 0, 255, 102;
         }
 
         [data-theme="pink"] {
-            --panel-border: rgba(255, 0, 127, 0.3);
+            --panel-border: rgba(255, 0, 127, 0.35);
             --accent-main: #ff007f;
             --accent-light: #ff66b2;
+            --accent-rgb: 255, 0, 127;
         }
 
         [data-theme="purple"] {
-            --panel-border: rgba(189, 0, 255, 0.35);
+            --panel-border: rgba(189, 0, 255, 0.4);
             --accent-main: #bd00ff;
             --accent-light: #d666ff;
+            --accent-rgb: 189, 0, 255;
         }
 
         body.light-theme {
             --bg-dark: #cbd5e1;
-            --panel-bg: rgba(248, 250, 252, 0.95);
-            --panel-border: rgba(15, 23, 42, 0.15);
+            --panel-bg: rgba(248, 250, 252, 0.92);
+            --panel-border: rgba(15, 23, 42, 0.18);
             --text-main: #0f172a;
             --text-dim: #475569;
             --input-bg: #e2e8f0;
@@ -168,6 +174,7 @@
             outline: none;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: all 0.2s;
+            backdrop-filter: blur(8px);
         }
         .theme-select:hover {
             border-color: var(--accent-main);
@@ -284,7 +291,7 @@
         .sidebar-toggle-btn:hover {
             background: var(--accent-main);
             color: #fff;
-            box-shadow: 5px 0 20px rgba(189, 0, 255, 0.4);
+            box-shadow: 5px 0 20px rgba(var(--accent-rgb), 0.4);
         }
 
         .sidebar-header-box {
@@ -378,6 +385,7 @@
             position: relative;
             overflow: hidden;
             gap: 15px;
+            transition: all 0.35s ease;
         }
 
         header::after {
@@ -402,6 +410,7 @@
             flex-direction: column;
             align-items: center;
             min-width: 130px;
+            transition: all 0.35s ease;
         }
 
         .header-side-box .hs-label {
@@ -466,7 +475,7 @@
             border-radius: 4px;
             padding: 20px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-            transition: all 0.2s ease;
+            transition: all 0.35s ease;
             position: relative;
         }
 
@@ -521,7 +530,7 @@
             font-size: 15px;
             font-weight: 700;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, border-radius 0.3s;
         }
 
         input[type="text"]:focus, input[type="number"]:focus, select:focus {
@@ -620,7 +629,7 @@
 
         .radio-card.selected {
             border-color: var(--accent-main);
-            background: rgba(189, 0, 255, 0.08);
+            background: rgba(var(--accent-rgb), 0.12);
             box-shadow: 0 0 15px var(--panel-border), inset 0 0 10px var(--panel-border);
         }
 
@@ -702,6 +711,7 @@
             border-radius: 4px;
             margin-bottom: 12px;
             cursor: pointer;
+            transition: all 0.25s ease;
         }
 
         .checkbox-card input[type="checkbox"] {
@@ -737,7 +747,7 @@
             border-radius: 4px;
             margin-bottom: 8px;
             gap: 10px;
-            transition: border-color 0.2s;
+            transition: all 0.25s ease;
             position: relative;
             overflow: hidden;
         }
@@ -868,6 +878,7 @@
             padding: 15px 25px;
             z-index: 100;
             box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+            transition: all 0.35s ease;
         }
 
         .summary-wrapper {
@@ -888,6 +899,7 @@
             border: 1px solid var(--panel-border);
             border-radius: 4px;
             min-width: 160px;
+            transition: all 0.35s ease;
         }
 
         .stat-box .label {
@@ -951,15 +963,197 @@
             color: #000;
             box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
         }
+
+        /* =====================================================================
+           3 STYLE KART I INTERFEJSU (KOMPATYBILNE Z KAŻDYM KOLOREM I TŁEM)
+           ===================================================================== */
+
+        /* --- STYL 2: GLASSMORPHISM (SZKLANE KARTY + ZAOKRĄGLENIA) --- */
+        body[data-style="glass"] header {
+            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.14) 0%, rgba(16, 19, 28, 0.45) 100%);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border: 1px solid rgba(var(--accent-rgb), 0.35);
+            border-left: 1px solid rgba(255, 255, 255, 0.22);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
+
+        body[data-style="glass"] .header-side-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+        }
+
+        body[data-style="glass"] .card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(14, 17, 26, 0.48) 100%);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid rgba(var(--accent-rgb), 0.28);
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        body[data-style="glass"] .card:hover {
+            border-color: var(--accent-main);
+            box-shadow: 0 12px 45px rgba(var(--accent-rgb), 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        body[data-style="glass"] .item-row,
+        body[data-style="glass"] .checkbox-card,
+        body[data-style="glass"] .radio-card,
+        body[data-style="glass"] .stat-box,
+        body[data-style="glass"] .sidebar-section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 11px;
+        }
+
+        body[data-style="glass"] .item-row:hover,
+        body[data-style="glass"] .radio-card:hover {
+            background: rgba(var(--accent-rgb), 0.10);
+            border-color: rgba(var(--accent-rgb), 0.5);
+        }
+
+        body[data-style="glass"] .radio-card.selected {
+            background: rgba(var(--accent-rgb), 0.18);
+            border-color: var(--accent-main);
+        }
+
+        body[data-style="glass"] .radio-column {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+        }
+
+        body[data-style="glass"] input[type="text"],
+        body[data-style="glass"] input[type="number"],
+        body[data-style="glass"] select {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 10px;
+        }
+
+        body[data-style="glass"] .qty-btn {
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        body[data-style="glass"] .btn,
+        body[data-style="glass"] .theme-select {
+            border-radius: 10px;
+        }
+
+        body[data-style="glass"] .footer-summary {
+            background: rgba(12, 15, 24, 0.72);
+            backdrop-filter: blur(20px) saturate(150%);
+            border-top: 1px solid rgba(var(--accent-rgb), 0.45);
+        }
+
+        body[data-style="glass"].light-theme .card,
+        body[data-style="glass"].light-theme header {
+            background: rgba(255, 255, 255, 0.68);
+            border-color: rgba(var(--accent-rgb), 0.35);
+        }
+
+        body[data-style="glass"].light-theme .item-row,
+        body[data-style="glass"].light-theme .checkbox-card,
+        body[data-style="glass"].light-theme .radio-card,
+        body[data-style="glass"].light-theme .stat-box {
+            background: rgba(255, 255, 255, 0.55);
+            border-color: rgba(15, 23, 42, 0.12);
+        }
+
+        /* --- STYL 3: CYBERPUNK HUD (ŚCIĘTE KRAWĘDZIE + NEON GRID) --- */
+        body[data-style="cyber"] header {
+            background: 
+                linear-gradient(90deg, rgba(var(--accent-rgb), 0.14) 0%, transparent 45%, rgba(var(--accent-rgb), 0.08) 100%),
+                var(--panel-bg);
+            border: 1px solid var(--accent-main);
+            border-left: 6px solid var(--accent-main);
+            border-right: 6px solid var(--accent-main);
+            border-radius: 0;
+            clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.25);
+        }
+
+        body[data-style="cyber"] .card {
+            background:
+                linear-gradient(rgba(var(--accent-rgb), 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(var(--accent-rgb), 0.04) 1px, transparent 1px),
+                var(--panel-bg);
+            background-size: 20px 20px, 20px 20px, 100% 100%;
+            border: 1px solid rgba(var(--accent-rgb), 0.55);
+            border-top: 3px solid var(--accent-main);
+            border-radius: 0;
+            clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+            box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.14);
+        }
+
+        body[data-style="cyber"] .card:hover {
+            border-color: var(--accent-light);
+            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.3);
+        }
+
+        body[data-style="cyber"] .card-title {
+            border-bottom: 1px solid var(--accent-main);
+            text-shadow: 0 0 8px rgba(var(--accent-rgb), 0.5);
+        }
+
+        body[data-style="cyber"] .card-title::after {
+            content: '[SYS_HUD]';
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        body[data-style="cyber"] .item-row,
+        body[data-style="cyber"] .checkbox-card,
+        body[data-style="cyber"] .radio-card,
+        body[data-style="cyber"] .stat-box,
+        body[data-style="cyber"] .header-side-box {
+            border-radius: 0;
+            border: 1px solid rgba(var(--accent-rgb), 0.35);
+            border-left: 3px solid var(--accent-main);
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+        }
+
+        body[data-style="cyber"] .item-row:hover,
+        body[data-style="cyber"] .radio-card:hover {
+            border-color: var(--accent-light);
+            background: rgba(var(--accent-rgb), 0.12);
+        }
+
+        body[data-style="cyber"] input[type="text"],
+        body[data-style="cyber"] input[type="number"],
+        body[data-style="cyber"] select,
+        body[data-style="cyber"] .qty-btn,
+        body[data-style="cyber"] .btn,
+        body[data-style="cyber"] .theme-select {
+            border-radius: 0;
+            border-color: rgba(var(--accent-rgb), 0.45);
+        }
+
+        body[data-style="cyber"] .footer-summary {
+            border-top: 2px solid var(--accent-main);
+            box-shadow: 0 -5px 30px rgba(var(--accent-rgb), 0.25);
+        }
     </style>
 </head>
-<body data-theme="purple" data-bg="default">
+<body data-theme="purple" data-bg="default" data-style="default">
 
     <!-- TOAST NOTIFICATIONS CONTAINER -->
     <div id="toast-container"></div>
 
-    <!-- TOP CONTROLS (BG & THEME SELECTORS) -->
+    <!-- TOP CONTROLS (STYLE, BG & THEME SELECTORS) -->
     <div class="top-controls">
+        <select class="theme-select" id="style-switcher" title="Wybierz styl kart i interfejsu">
+            <option value="default">🛠️ Styl: Heavy Duty</option>
+            <option value="glass">💎 Styl: Glassmorphism</option>
+            <option value="cyber">⚡ Styl: Cyberpunk HUD</option>
+        </select>
         <select class="theme-select" id="bg-switcher" title="Wybierz tło i klimat strony">
             <option value="default">🌌 Default Night City (Violet)</option>
             <option value="nightcity">🌃 Night City (Bursztyn)</option>
@@ -1557,8 +1751,23 @@
             }, 3000);
         }
 
+        const styleSwitcher = document.getElementById('style-switcher');
         const bgSwitcher = document.getElementById('bg-switcher');
         const themeSwitcher = document.getElementById('theme-switcher');
+
+        // Obsługa zmiany stylu kart
+        styleSwitcher.addEventListener('change', (e) => {
+            const style = e.target.value;
+            document.body.setAttribute('data-style', style);
+            localStorage.setItem('lsc_card_style', style);
+            showToast(`Zmieniono ${e.target.options[e.target.selectedIndex].text}`);
+        });
+
+        const savedStyle = localStorage.getItem('lsc_card_style');
+        if (savedStyle) {
+            document.body.setAttribute('data-style', savedStyle);
+            styleSwitcher.value = savedStyle;
+        }
 
         // Mapa rekomendowanego koloru akcentów dla każdego z 5 teł
         const bgToThemeMap = {
@@ -1581,7 +1790,7 @@
                 localStorage.setItem('lsc_color_theme', matchedTheme);
             }
 
-            showToast(`Zmieniono klimat na: ${e.target.options[e.target.selectedIndex].text.replace('Tło: ', '')}`);
+            showToast(`Zmieniono klimat na: ${e.target.options[e.target.selectedIndex].text}`);
         });
 
         const savedBg = localStorage.getItem('lsc_bg_theme');
@@ -2035,7 +2244,7 @@
             }
 
             container.innerHTML = history.map((item, idx) => `
-                <div class="item-row" style="background: var(--input-bg);">
+                <div class="item-row">
                     <div class="item-details">
                         <span class="item-name">Zlecenie #${idx + 1} (${item.date})</span>
                         <span class="tag-subtext">Pojazd: ${item.car}</span>
@@ -2351,7 +2560,7 @@
         });
 
         document.querySelectorAll('input, select').forEach(element => {
-            if (element.id !== 'car-type' && element.id !== 'car-model-input' && element.name !== 'discount_profile' && element.id !== 'theme-switcher' && element.id !== 'bg-switcher') {
+            if (element.id !== 'car-type' && element.id !== 'car-model-input' && element.name !== 'discount_profile' && element.id !== 'theme-switcher' && element.id !== 'bg-switcher' && element.id !== 'style-switcher') {
                 element.addEventListener('input', updateAll);
                 element.addEventListener('change', updateAll);
             }
