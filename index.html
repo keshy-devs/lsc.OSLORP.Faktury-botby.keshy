@@ -90,9 +90,18 @@
             transition: background 0.4s ease, color 0.3s ease;
         }
 
-        /* --- 4 MOTYWY TŁA DOPASOWANE DO VIBE'U KOLORÓW --- */
+        /* --- 5 MOTYWÓW TŁA DOPASOWANE DO VIBE'U KOLORÓW --- */
         
-        /* 1. Oryginalne tło (Bursztynowy / Night City) */
+        /* 0. Domyślne tło z pierwszego kodu (Default) */
+        body[data-bg="default"] {
+            background-image: 
+                linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(11, 13, 18, 0.65) 1px, transparent 1px),
+                radial-gradient(circle at 50% 0%, rgba(189, 0, 255, 0.15) 0%, transparent 70%),
+                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920&auto=format&fit=crop');
+        }
+
+        /* 1. Night City (Bursztynowy) */
         body[data-bg="nightcity"] {
             background-image: 
                 linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
@@ -944,7 +953,7 @@
         }
     </style>
 </head>
-<body data-theme="amber" data-bg="nightcity">
+<body data-theme="amber" data-bg="default">
 
     <!-- TOAST NOTIFICATIONS CONTAINER -->
     <div id="toast-container"></div>
@@ -952,6 +961,7 @@
     <!-- TOP CONTROLS (BG & THEME SELECTORS) -->
     <div class="top-controls">
         <select class="theme-select" id="bg-switcher" title="Wybierz tło i klimat strony">
+            <option value="default">🌌 Tło: Default (Klasyczne)</option>
             <option value="nightcity">🌃 Tło: Night City (Bursztyn)</option>
             <option value="vicecity">🌴 Tło: Vice City (Neon Pink)</option>
             <option value="cybertokyo">💠 Tło: Cyber Tokyo (Baby Blue)</option>
@@ -1550,8 +1560,9 @@
         const bgSwitcher = document.getElementById('bg-switcher');
         const themeSwitcher = document.getElementById('theme-switcher');
 
-        // Mapa rekomendowanego koloru akcentów dla każdego z 4 teł
+        // Mapa rekomendowanego koloru akcentów dla każdego z 5 teł
         const bgToThemeMap = {
+            default: 'amber',
             nightcity: 'amber',
             vicecity: 'pink',
             cybertokyo: 'blue',
