@@ -101,7 +101,7 @@
                 url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920&auto=format&fit=crop');
         }
 
-        /* 1. Night City (Bursztynowy) */
+        /* 1. Night City */
         body[data-bg="nightcity"] {
             background-image: 
                 linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
@@ -284,7 +284,7 @@
         .sidebar-toggle-btn:hover {
             background: var(--accent-main);
             color: #fff;
-            box-shadow: 5px 0 20px rgba(255, 107, 0, 0.4);
+            box-shadow: 5px 0 20px rgba(189, 0, 255, 0.4);
         }
 
         .sidebar-header-box {
@@ -620,7 +620,7 @@
 
         .radio-card.selected {
             border-color: var(--accent-main);
-            background: rgba(255, 107, 0, 0.08);
+            background: rgba(189, 0, 255, 0.08);
             box-shadow: 0 0 15px var(--panel-border), inset 0 0 10px var(--panel-border);
         }
 
@@ -953,7 +953,7 @@
         }
     </style>
 </head>
-<body data-theme="amber" data-bg="default">
+<body data-theme="purple" data-bg="default">
 
     <!-- TOAST NOTIFICATIONS CONTAINER -->
     <div id="toast-container"></div>
@@ -961,18 +961,18 @@
     <!-- TOP CONTROLS (BG & THEME SELECTORS) -->
     <div class="top-controls">
         <select class="theme-select" id="bg-switcher" title="Wybierz tło i klimat strony">
-            <option value="default">🌌 Tło: Default (Klasyczne)</option>
-            <option value="nightcity">🌃 Tło: Night City (Bursztyn)</option>
-            <option value="vicecity">🌴 Tło: Vice City (Neon Pink)</option>
-            <option value="cybertokyo">💠 Tło: Cyber Tokyo (Baby Blue)</option>
-            <option value="magicviolet">🔮 Tło: Magic Violet (Fiolet)</option>
+            <option value="default">🌌 Defualt Night City (Bursztyn)</option>
+            <option value="nightcity">🌃 Night City (Violet)</option>
+            <option value="vicecity">🌴 Vice City (Neon Pink)</option>
+            <option value="cybertokyo">💠 Cyber Tokyo (Baby Blue)</option>
+            <option value="magicviolet">🔮 Magic Violet (Fiolet)</option>
         </select>
         <select class="theme-select" id="theme-switcher" title="Wybierz kolor akcentów">
+            <option value="purple">🟣 Magic Purple (Neon)</option>
             <option value="amber">🟠 Bursztynowy (Night City)</option>
             <option value="blue">🔵 Baby Blue (Cyber Cyan)</option>
             <option value="green">🟢 Neon Green (Matrix)</option>
             <option value="pink">🩷 Neon Pink (Synthwave)</option>
-            <option value="purple">🟣 Magic Purple (Neon)</option>
         </select>
         <button class="theme-select" id="light-mode-toggle" title="Przełącz tryb jasny/ciemny">🌓 Tryb</button>
     </div>
@@ -1562,7 +1562,7 @@
 
         // Mapa rekomendowanego koloru akcentów dla każdego z 5 teł
         const bgToThemeMap = {
-            default: 'amber',
+            default: 'purple',
             nightcity: 'amber',
             vicecity: 'pink',
             cybertokyo: 'blue',
@@ -1601,6 +1601,9 @@
         if (savedTheme) {
             document.body.setAttribute('data-theme', savedTheme);
             themeSwitcher.value = savedTheme;
+        } else {
+            document.body.setAttribute('data-theme', 'purple');
+            themeSwitcher.value = 'purple';
         }
 
         const lightModeToggle = document.getElementById('light-mode-toggle');
