@@ -104,7 +104,7 @@
                 linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(11, 13, 18, 0.65) 1px, transparent 1px),
                 radial-gradient(circle at 50% 0%, rgba(189, 0, 255, 0.15) 0%, transparent 70%),
-                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920&auto=format&fit=crop');
+                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2560&auto=format&fit=crop');
         }
 
         /* 1. Night City (Bursztyn) */
@@ -113,7 +113,7 @@
                 linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(11, 13, 18, 0.65) 1px, transparent 1px),
                 radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.16) 0%, transparent 70%),
-                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920&auto=format&fit=crop');
+                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2560&auto=format&fit=crop');
         }
 
         /* 2. Vice City (Neon Pink / Synthwave) */
@@ -122,7 +122,7 @@
                 linear-gradient(rgba(255, 0, 127, 0.14) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 229, 255, 0.12) 1px, transparent 1px),
                 linear-gradient(180deg, rgba(38, 6, 46, 0.65) 0%, rgba(11, 13, 24, 0.85) 100%),
-                url('https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1920&auto=format&fit=crop');
+                url('https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=2560&auto=format&fit=crop');
         }
 
         /* 3. Cyber Tokyo (Baby Blue / Cyber Cyan) */
@@ -131,7 +131,7 @@
                 linear-gradient(rgba(0, 229, 255, 0.10) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 229, 255, 0.10) 1px, transparent 1px),
                 radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.18) 0%, rgba(7, 13, 24, 0.85) 85%),
-                url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1920&auto=format&fit=crop');
+                url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=2560&auto=format&fit=crop');
         }
 
         /* 4. Magic Violet (Magic Purple / Midnight Street) */
@@ -140,7 +140,7 @@
                 linear-gradient(rgba(189, 0, 255, 0.12) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(189, 0, 255, 0.12) 1px, transparent 1px),
                 radial-gradient(circle at 50% 0%, rgba(189, 0, 255, 0.22) 0%, rgba(11, 9, 20, 0.85) 85%),
-                url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1920&auto=format&fit=crop');
+                url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop');
         }
 
         .container {
@@ -149,41 +149,10 @@
             position: relative;
         }
 
-        /* --- TOPBAR CONTROLS --- */
-        .top-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-
-        .theme-select {
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            color: var(--accent-main);
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: 'Teko', sans-serif;
-            font-size: 16px;
-            outline: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            transition: all 0.2s;
-            backdrop-filter: blur(8px);
-        }
-        .theme-select:hover {
-            border-color: var(--accent-main);
-        }
-
         /* --- TOAST NOTIFICATIONS --- */
         #toast-container {
             position: fixed;
-            top: 75px;
+            top: 20px;
             right: 20px;
             z-index: 9999;
             display: flex;
@@ -241,21 +210,21 @@
             font-weight: 700;
         }
 
-        /* --- PANEL BOCZNY --- */
+        /* --- PANELE BOCZNE (ANALIZA & WYGLĄD) --- */
         .sidebar-panel {
             position: fixed;
             left: 0;
-            top: 280px;
+            top: 230px;
             width: 290px;
             background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-top: 1px solid var(--panel-border);
             border-right: 1px solid var(--panel-border);
             border-bottom: 1px solid var(--panel-border);
             border-radius: 0 6px 6px 0;
             padding: 14px;
-            box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.7);
+            box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.75);
             z-index: 200;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -264,10 +233,15 @@
             transform: translateX(-290px);
         }
 
+        .sidebar-panel:not(.collapsed) {
+            z-index: 210;
+        }
+
         .sidebar-toggle-btn {
             position: absolute;
             right: -42px;
             top: 15px;
+            width: 42px;
             background: linear-gradient(135deg, #181b22, #0f1115);
             border: 1px solid var(--panel-border);
             border-left: none;
@@ -288,10 +262,15 @@
             gap: 6px;
         }
 
+        /* Druga zakładka WYGLĄD ustawiona tuż pod przyciskiem ANALIZA */
+        .sidebar-toggle-btn.appearance-btn {
+            top: 125px;
+        }
+
         .sidebar-toggle-btn:hover {
             background: var(--accent-main);
             color: #fff;
-            box-shadow: 5px 0 20px rgba(var(--accent-rgb), 0.4);
+            box-shadow: 5px 0 20px rgba(var(--accent-rgb), 0.45);
         }
 
         .sidebar-header-box {
@@ -369,6 +348,52 @@
             font-family: 'Share Tech Mono', monospace;
             font-weight: 700;
             color: var(--text-main);
+        }
+
+        .sidebar-select {
+            width: 100%;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--accent-main);
+            padding: 7px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Teko', sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .sidebar-select:hover,
+        .sidebar-select:focus {
+            border-color: var(--accent-main);
+            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.25);
+        }
+
+        .sidebar-mode-btn {
+            width: 100%;
+            background: rgba(var(--accent-rgb), 0.14);
+            border: 1px solid var(--accent-main);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Teko', sans-serif;
+            font-size: 17px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .sidebar-mode-btn:hover {
+            background: var(--accent-main);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.4);
         }
 
         header {
@@ -1042,7 +1067,7 @@
         }
 
         body[data-style="glass"] .btn,
-        body[data-style="glass"] .theme-select {
+        body[data-style="glass"] .sidebar-mode-btn {
             border-radius: 10px;
         }
 
@@ -1131,7 +1156,7 @@
         body[data-style="cyber"] select,
         body[data-style="cyber"] .qty-btn,
         body[data-style="cyber"] .btn,
-        body[data-style="cyber"] .theme-select {
+        body[data-style="cyber"] .sidebar-mode-btn {
             border-radius: 0;
             border-color: rgba(var(--accent-rgb), 0.45);
         }
@@ -1147,36 +1172,12 @@
     <!-- TOAST NOTIFICATIONS CONTAINER -->
     <div id="toast-container"></div>
 
-    <!-- TOP CONTROLS (STYLE, BG & THEME SELECTORS) -->
-    <div class="top-controls">
-        <select class="theme-select" id="style-switcher" title="Wybierz styl kart i interfejsu">
-            <option value="default">🛠️ Styl: Heavy Duty</option>
-            <option value="glass">💎 Styl: Glassmorphism</option>
-            <option value="cyber">⚡ Styl: Cyberpunk HUD</option>
-        </select>
-        <select class="theme-select" id="bg-switcher" title="Wybierz tło i klimat strony">
-            <option value="default">🌌 Default Night City (Violet)</option>
-            <option value="nightcity">🌃 Night City (Bursztyn)</option>
-            <option value="vicecity">🌴 Vice City (Neon Pink)</option>
-            <option value="cybertokyo">💠 Cyber Tokyo (Baby Blue)</option>
-            <option value="magicviolet">🔮 Magic Violet (Fiolet)</option>
-        </select>
-        <select class="theme-select" id="theme-switcher" title="Wybierz kolor akcentów">
-            <option value="purple">🟣 Magic Purple (Neon)</option>
-            <option value="amber">🟠 Bursztynowy (Night City)</option>
-            <option value="blue">🔵 Baby Blue (Cyber Cyan)</option>
-            <option value="green">🟢 Neon Green (Matrix)</option>
-            <option value="pink">🩷 Neon Pink (Synthwave)</option>
-        </select>
-        <button class="theme-select" id="light-mode-toggle" title="Przełącz tryb jasny/ciemny">🌓 Tryb</button>
-    </div>
-
     <!-- SYGNATURA AUTORA -->
     <div class="author-watermark">
         LSC OSLORP // <span>SYSTEM ZLECEŃ</span>
     </div>
 
-    <!-- PANEL BOCZNY -->
+    <!-- PANEL BOCZNY 1: ANALIZA -->
     <div class="sidebar-panel collapsed" id="analysis-sidebar">
         <button class="sidebar-toggle-btn" id="sidebar-toggle">
             <span>ANALIZA</span>
@@ -1242,6 +1243,68 @@
                 <span>Prowizja 5% z Reszty:</span>
                 <span id="sb-p-five" style="color: var(--neon-green);">0 $</span>
             </div>
+        </div>
+    </div>
+
+    <!-- PANEL BOCZNY 2: WYGLĄD (ZAKŁADKA POD ANALIZĄ) -->
+    <div class="sidebar-panel collapsed" id="appearance-sidebar">
+        <button class="sidebar-toggle-btn appearance-btn" id="appearance-toggle">
+            <span>WYGLĄD</span>
+        </button>
+
+        <div class="sidebar-header-box">
+            <div class="sidebar-title">🎨 Personalizacja</div>
+            <div class="sidebar-badge">MOTYWY</div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                <span>Styl Kart & Interfejsu</span>
+                <span>🛠️</span>
+            </div>
+            <select class="sidebar-select" id="style-switcher" title="Wybierz styl kart i interfejsu">
+                <option value="default">🛠️ Heavy Duty (Warsztat)</option>
+                <option value="glass">💎 Glassmorphism (Szkło)</option>
+                <option value="cyber">⚡ Cyberpunk HUD (Neon)</option>
+            </select>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                <span>Tło & Klimat</span>
+                <span>🌌</span>
+            </div>
+            <select class="sidebar-select" id="bg-switcher" title="Wybierz tło i klimat strony">
+                <option value="default">🌌 Default Night City (Violet)</option>
+                <option value="nightcity">🌃 Night City (Bursztyn)</option>
+                <option value="vicecity">🌴 Vice City (Neon Pink)</option>
+                <option value="cybertokyo">💠 Cyber Tokyo (Baby Blue)</option>
+                <option value="magicviolet">🔮 Magic Violet (Fiolet)</option>
+            </select>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                <span>Kolor Akcentów</span>
+                <span>🟣</span>
+            </div>
+            <select class="sidebar-select" id="theme-switcher" title="Wybierz kolor akcentów">
+                <option value="purple">🟣 Magic Purple (Neon)</option>
+                <option value="amber">🟠 Bursztynowy (Night City)</option>
+                <option value="blue">🔵 Baby Blue (Cyber Cyan)</option>
+                <option value="green">🟢 Neon Green (Matrix)</option>
+                <option value="pink">🩷 Neon Pink (Synthwave)</option>
+            </select>
+        </div>
+
+        <div class="sidebar-section" style="margin-bottom: 0;">
+            <div class="sidebar-section-title">
+                <span>Jasność Ekranu</span>
+                <span>🌓</span>
+            </div>
+            <button type="button" class="sidebar-mode-btn" id="light-mode-toggle">
+                🌓 Przełącz Tryb Jasny / Ciemny
+            </button>
         </div>
     </div>
 
@@ -1737,6 +1800,9 @@
     <script>
         const sidebar = document.getElementById('analysis-sidebar');
         const toggleBtn = document.getElementById('sidebar-toggle');
+        const appearanceSidebar = document.getElementById('appearance-sidebar');
+        const appearanceToggleBtn = document.getElementById('appearance-toggle');
+
         let currentFinalNumeric = 0;
         let selectedVehicle = null;
 
@@ -1760,7 +1826,7 @@
             const style = e.target.value;
             document.body.setAttribute('data-style', style);
             localStorage.setItem('lsc_card_style', style);
-            showToast(`Zmieniono ${e.target.options[e.target.selectedIndex].text}`);
+            showToast(`Styl kart: ${e.target.options[e.target.selectedIndex].text}`);
         });
 
         const savedStyle = localStorage.getItem('lsc_card_style');
@@ -2041,8 +2107,19 @@
             { name: "TW_ELEC_SCOOTER2", salonPrice: 10000000 }
         ];
 
+        // Przełączanie paneli bocznych (wzajemne chowanie)
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
+            if (!sidebar.classList.contains('collapsed')) {
+                appearanceSidebar.classList.add('collapsed');
+            }
+        });
+
+        appearanceToggleBtn.addEventListener('click', () => {
+            appearanceSidebar.classList.toggle('collapsed');
+            if (!appearanceSidebar.classList.contains('collapsed')) {
+                sidebar.classList.add('collapsed');
+            }
         });
 
         function fmt(num) {
