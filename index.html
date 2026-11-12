@@ -20,7 +20,7 @@
         /* --- MOTYWY / PALETY KOLORÓW --- */
         :root {
             --bg-dark: #0b0d12;
-            --panel-bg: rgba(16, 19, 26, 0.90);
+            --panel-bg: rgba(16, 19, 26, 0.92);
             --panel-border: rgba(255, 107, 0, 0.25);
             --accent-main: #ff6b00;
             --accent-light: #ffaa00;
@@ -69,7 +69,7 @@
 
         body.light-theme {
             --bg-dark: #cbd5e1;
-            --panel-bg: rgba(248, 250, 252, 0.92);
+            --panel-bg: rgba(248, 250, 252, 0.94);
             --panel-border: rgba(15, 23, 42, 0.18);
             --text-main: #0f172a;
             --text-dim: #475569;
@@ -96,9 +96,7 @@
             transition: background 0.4s ease, color 0.3s ease;
         }
 
-        /* --- 5 MOTYWÓW TŁA DOPASOWANE DO VIBE'U KOLORÓW --- */
-        
-        /* 0. Default Night City (Violet) */
+        /* --- 5 MOTYWÓW TŁA --- */
         body[data-bg="default"] {
             background-image: 
                 linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
@@ -107,7 +105,6 @@
                 url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2560&auto=format&fit=crop');
         }
 
-        /* 1. Night City (Bursztyn) */
         body[data-bg="nightcity"] {
             background-image: 
                 linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
@@ -116,7 +113,6 @@
                 url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2560&auto=format&fit=crop');
         }
 
-        /* 2. Vice City (Neon Pink / Synthwave) */
         body[data-bg="vicecity"] {
             background-image: 
                 linear-gradient(rgba(255, 0, 127, 0.14) 1px, transparent 1px),
@@ -125,7 +121,6 @@
                 url('https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=2560&auto=format&fit=crop');
         }
 
-        /* 3. Cyber Tokyo (Baby Blue / Cyber Cyan) */
         body[data-bg="cybertokyo"] {
             background-image: 
                 linear-gradient(rgba(0, 229, 255, 0.10) 1px, transparent 1px),
@@ -134,7 +129,6 @@
                 url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=2560&auto=format&fit=crop');
         }
 
-        /* 4. Magic Violet (Magic Purple / Midnight Street) */
         body[data-bg="magicviolet"] {
             background-image: 
                 linear-gradient(rgba(189, 0, 255, 0.12) 1px, transparent 1px),
@@ -210,51 +204,53 @@
             font-weight: 700;
         }
 
-        /* --- PANELE BOCZNE (ANALIZA & WYGLĄD) --- */
+        /* =====================================================================
+           PANELE BOCZNE: LEWA STRONA (ANALIZA & NOWY STYL WYGLĄDU)
+           ===================================================================== */
         .sidebar-panel {
             position: fixed;
             left: 0;
-            top: 230px;
-            width: 290px;
+            top: 210px;
+            width: 315px;
             background: var(--panel-bg);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid var(--panel-border);
             border-right: 1px solid var(--panel-border);
             border-bottom: 1px solid var(--panel-border);
-            border-radius: 0 6px 6px 0;
-            padding: 14px;
-            box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.75);
+            border-radius: 0 10px 10px 0;
+            padding: 16px;
+            box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.8);
             z-index: 200;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .sidebar-panel.collapsed {
-            transform: translateX(-290px);
+            transform: translateX(-315px);
         }
 
         .sidebar-panel:not(.collapsed) {
-            z-index: 210;
+            z-index: 215;
         }
 
         .sidebar-toggle-btn {
             position: absolute;
-            right: -42px;
-            top: 15px;
-            width: 42px;
-            background: linear-gradient(135deg, #181b22, #0f1115);
+            right: -44px;
+            top: 12px;
+            width: 44px;
+            background: linear-gradient(160deg, #161922, #0b0d12);
             border: 1px solid var(--panel-border);
             border-left: none;
             color: var(--accent-main);
-            padding: 12px 8px;
-            border-radius: 0 6px 6px 0;
+            padding: 13px 8px;
+            border-radius: 0 8px 8px 0;
             cursor: pointer;
             font-family: 'Teko', sans-serif;
             font-size: 16px;
             letter-spacing: 2px;
             writing-mode: vertical-lr;
             text-orientation: mixed;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 5px 4px 16px rgba(0, 0, 0, 0.6);
             transition: all 0.25s ease;
             display: flex;
             align-items: center;
@@ -262,15 +258,268 @@
             gap: 6px;
         }
 
-        /* Druga zakładka WYGLĄD ustawiona tuż pod przyciskiem ANALIZA */
-        .sidebar-toggle-btn.appearance-btn {
-            top: 125px;
-        }
-
         .sidebar-toggle-btn:hover {
             background: var(--accent-main);
             color: #fff;
-            box-shadow: 5px 0 20px rgba(var(--accent-rgb), 0.45);
+            box-shadow: 5px 0 22px rgba(var(--accent-rgb), 0.5);
+        }
+
+        /* Nowoczesny, wyróżniony uchwyt dla zakładki WYGLĄD */
+        .sidebar-toggle-btn.appearance-btn {
+            top: 132px;
+            background: linear-gradient(160deg, rgba(var(--accent-rgb), 0.22) 0%, #0d1017 100%);
+            border-color: var(--accent-main);
+            border-left: none;
+            color: var(--text-main);
+            box-shadow: 4px 4px 20px rgba(var(--accent-rgb), 0.28);
+        }
+
+        .sidebar-toggle-btn.appearance-btn .tab-icon {
+            writing-mode: horizontal-tb;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-toggle-btn.appearance-btn:hover {
+            background: var(--accent-main);
+            color: #fff;
+            transform: translateX(3px);
+        }
+
+        /* --- NOWY DESIGN WNĘTRZA PANELU WYGLĄD --- */
+        #appearance-sidebar {
+            border-right: 2px solid var(--accent-main);
+            background: linear-gradient(165deg, rgba(var(--accent-rgb), 0.10) 0%, var(--panel-bg) 35%);
+        }
+
+        .style-tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .style-tile {
+            background: var(--input-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 6px;
+            padding: 8px 4px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+            color: var(--text-dim);
+        }
+
+        .style-tile .tile-ico {
+            font-size: 17px;
+        }
+
+        .style-tile .tile-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .style-tile:hover {
+            border-color: var(--accent-light);
+            color: var(--text-main);
+        }
+
+        .style-tile.active {
+            background: rgba(var(--accent-rgb), 0.2);
+            border-color: var(--accent-main);
+            color: var(--text-main);
+            box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.35);
+        }
+
+        .bg-pills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .bg-pill {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--input-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-dim);
+            transition: all 0.2s ease;
+        }
+
+        .bg-pill:hover {
+            border-color: var(--accent-light);
+            color: var(--text-main);
+            transform: translateX(2px);
+        }
+
+        .bg-pill.active {
+            background: rgba(var(--accent-rgb), 0.18);
+            border-color: var(--accent-main);
+            color: var(--text-main);
+        }
+
+        .bg-pill .bg-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .color-swatches-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 4px 2px;
+        }
+
+        .color-swatch {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.18);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.12);
+        }
+
+        .color-swatch.active {
+            border-color: #fff;
+            transform: scale(1.15);
+            box-shadow: 0 0 14px currentColor;
+        }
+
+        /* =====================================================================
+           PANEL BOCZNY: PRAWA STRONA (ROZWIJANY PORADNIK)
+           ===================================================================== */
+        .guide-panel {
+            position: fixed;
+            right: 0;
+            top: 230px;
+            width: 340px;
+            max-height: calc(100vh - 330px);
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid var(--panel-border);
+            border-left: 2px solid var(--accent-main);
+            border-bottom: 1px solid var(--panel-border);
+            border-radius: 10px 0 0 10px;
+            padding: 16px;
+            box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.8);
+            z-index: 205;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .guide-panel.collapsed {
+            transform: translateX(340px);
+        }
+
+        .guide-toggle-btn {
+            position: absolute;
+            left: -44px;
+            top: 20px;
+            width: 44px;
+            background: linear-gradient(200deg, rgba(var(--accent-rgb), 0.22) 0%, #0d1017 100%);
+            border: 1px solid var(--accent-main);
+            border-right: none;
+            color: var(--text-main);
+            padding: 14px 8px;
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            font-family: 'Teko', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            box-shadow: -5px 4px 18px rgba(0, 0, 0, 0.65);
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .guide-toggle-btn .tab-icon {
+            writing-mode: horizontal-tb;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .guide-toggle-btn:hover {
+            background: var(--accent-main);
+            color: #fff;
+            box-shadow: -5px 0 22px rgba(var(--accent-rgb), 0.5);
+        }
+
+        .guide-scroll-content {
+            overflow-y: auto;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .guide-scroll-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .guide-scroll-content::-webkit-scrollbar-thumb {
+            background: var(--accent-main);
+            border-radius: 4px;
+        }
+
+        .guide-intro {
+            font-size: 12px;
+            line-height: 1.45;
+            color: var(--text-dim);
+            background: rgba(var(--accent-rgb), 0.08);
+            border: 1px solid rgba(var(--accent-rgb), 0.28);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .guide-intro strong {
+            color: var(--text-main);
+        }
+
+        .guide-step {
+            background: var(--input-bg);
+            border: 1px solid var(--panel-border);
+            border-left: 3px solid var(--accent-main);
+            padding: 9px 11px;
+            border-radius: 5px;
+        }
+
+        .guide-step-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 3px;
+        }
+
+        .guide-step-desc {
+            font-size: 11.5px;
+            line-height: 1.4;
+            color: var(--text-main);
         }
 
         .sidebar-header-box {
@@ -309,7 +558,7 @@
             background: var(--input-bg);
             border: 1px solid var(--panel-border);
             padding: 8px 10px;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: border-color 0.2s;
         }
 
@@ -350,34 +599,13 @@
             color: var(--text-main);
         }
 
-        .sidebar-select {
-            width: 100%;
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            color: var(--accent-main);
-            padding: 7px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: 'Teko', sans-serif;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        .sidebar-select:hover,
-        .sidebar-select:focus {
-            border-color: var(--accent-main);
-            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.25);
-        }
-
         .sidebar-mode-btn {
             width: 100%;
             background: rgba(var(--accent-rgb), 0.14);
             border: 1px solid var(--accent-main);
             color: var(--text-main);
             padding: 8px 12px;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-family: 'Teko', sans-serif;
             font-size: 17px;
@@ -990,10 +1218,10 @@
         }
 
         /* =====================================================================
-           3 STYLE KART I INTERFEJSU (KOMPATYBILNE Z KAŻDYM KOLOREM I TŁEM)
+           3 STYLE KART I INTERFEJSU
            ===================================================================== */
 
-        /* --- STYL 2: GLASSMORPHISM (SZKLANE KARTY + ZAOKRĄGLENIA) --- */
+        /* --- STYL 2: GLASSMORPHISM --- */
         body[data-style="glass"] header {
             background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.14) 0%, rgba(16, 19, 28, 0.45) 100%);
             backdrop-filter: blur(20px) saturate(150%);
@@ -1031,10 +1259,19 @@
         body[data-style="glass"] .checkbox-card,
         body[data-style="glass"] .radio-card,
         body[data-style="glass"] .stat-box,
-        body[data-style="glass"] .sidebar-section {
+        body[data-style="glass"] .sidebar-section,
+        body[data-style="glass"] .guide-step {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.09);
             border-radius: 11px;
+        }
+
+        body[data-style="glass"] .sidebar-toggle-btn {
+            border-radius: 0 14px 14px 0;
+        }
+
+        body[data-style="glass"] .guide-toggle-btn {
+            border-radius: 14px 0 0 14px;
         }
 
         body[data-style="glass"] .item-row:hover,
@@ -1091,7 +1328,7 @@
             border-color: rgba(15, 23, 42, 0.12);
         }
 
-        /* --- STYL 3: CYBERPUNK HUD (ŚCIĘTE KRAWĘDZIE + NEON GRID) --- */
+        /* --- STYL 3: CYBERPUNK HUD --- */
         body[data-style="cyber"] header {
             background: 
                 linear-gradient(90deg, rgba(var(--accent-rgb), 0.14) 0%, transparent 45%, rgba(var(--accent-rgb), 0.08) 100%),
@@ -1138,11 +1375,22 @@
         body[data-style="cyber"] .checkbox-card,
         body[data-style="cyber"] .radio-card,
         body[data-style="cyber"] .stat-box,
-        body[data-style="cyber"] .header-side-box {
+        body[data-style="cyber"] .header-side-box,
+        body[data-style="cyber"] .guide-step {
             border-radius: 0;
             border: 1px solid rgba(var(--accent-rgb), 0.35);
             border-left: 3px solid var(--accent-main);
             clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+        }
+
+        body[data-style="cyber"] .sidebar-toggle-btn {
+            border-radius: 0;
+            clip-path: polygon(0 0, 100% 10px, 100% calc(100% - 10px), 0 100%);
+        }
+
+        body[data-style="cyber"] .guide-toggle-btn {
+            border-radius: 0;
+            clip-path: polygon(0 10px, 100% 0, 100% 100%, 0 calc(100% - 10px));
         }
 
         body[data-style="cyber"] .item-row:hover,
@@ -1177,7 +1425,7 @@
         LSC OSLORP // <span>SYSTEM ZLECEŃ</span>
     </div>
 
-    <!-- PANEL BOCZNY 1: ANALIZA -->
+    <!-- PANEL BOCZNY 1 (LEWY): ANALIZA -->
     <div class="sidebar-panel collapsed" id="analysis-sidebar">
         <button class="sidebar-toggle-btn" id="sidebar-toggle">
             <span>ANALIZA</span>
@@ -1246,15 +1494,16 @@
         </div>
     </div>
 
-    <!-- PANEL BOCZNY 2: WYGLĄD (ZAKŁADKA POD ANALIZĄ) -->
+    <!-- PANEL BOCZNY 2 (LEWY - NOWY STYL): WYGLĄD -->
     <div class="sidebar-panel collapsed" id="appearance-sidebar">
         <button class="sidebar-toggle-btn appearance-btn" id="appearance-toggle">
+            <span class="tab-icon">🎨</span>
             <span>WYGLĄD</span>
         </button>
 
         <div class="sidebar-header-box">
             <div class="sidebar-title">🎨 Personalizacja</div>
-            <div class="sidebar-badge">MOTYWY</div>
+            <div class="sidebar-badge">CUSTOM HUD</div>
         </div>
 
         <div class="sidebar-section">
@@ -1262,11 +1511,20 @@
                 <span>Styl Kart & Interfejsu</span>
                 <span>🛠️</span>
             </div>
-            <select class="sidebar-select" id="style-switcher" title="Wybierz styl kart i interfejsu">
-                <option value="default">🛠️ Heavy Duty (Warsztat)</option>
-                <option value="glass">💎 Glassmorphism (Szkło)</option>
-                <option value="cyber">⚡ Cyberpunk HUD (Neon)</option>
-            </select>
+            <div class="style-tiles-grid" id="style-tiles">
+                <button type="button" class="style-tile active" data-style-val="default">
+                    <span class="tile-ico">🛠️</span>
+                    <span class="tile-lbl">Heavy</span>
+                </button>
+                <button type="button" class="style-tile" data-style-val="glass">
+                    <span class="tile-ico">💎</span>
+                    <span class="tile-lbl">Glass</span>
+                </button>
+                <button type="button" class="style-tile" data-style-val="cyber">
+                    <span class="tile-ico">⚡</span>
+                    <span class="tile-lbl">Cyber</span>
+                </button>
+            </div>
         </div>
 
         <div class="sidebar-section">
@@ -1274,37 +1532,87 @@
                 <span>Tło & Klimat</span>
                 <span>🌌</span>
             </div>
-            <select class="sidebar-select" id="bg-switcher" title="Wybierz tło i klimat strony">
-                <option value="default">🌌 Default Night City (Violet)</option>
-                <option value="nightcity">🌃 Night City (Bursztyn)</option>
-                <option value="vicecity">🌴 Vice City (Neon Pink)</option>
-                <option value="cybertokyo">💠 Cyber Tokyo (Baby Blue)</option>
-                <option value="magicviolet">🔮 Magic Violet (Fiolet)</option>
-            </select>
+            <div class="bg-pills-list" id="bg-pills">
+                <button type="button" class="bg-pill active" data-bg-val="default">
+                    <span>🌌 Default Night City</span>
+                    <span class="bg-dot" style="background: #bd00ff;"></span>
+                </button>
+                <button type="button" class="bg-pill" data-bg-val="nightcity">
+                    <span>🌃 Night City (Bursztyn)</span>
+                    <span class="bg-dot" style="background: #ff6b00;"></span>
+                </button>
+                <button type="button" class="bg-pill" data-bg-val="vicecity">
+                    <span>🌴 Vice City (Synthwave)</span>
+                    <span class="bg-dot" style="background: #ff007f;"></span>
+                </button>
+                <button type="button" class="bg-pill" data-bg-val="cybertokyo">
+                    <span>💠 Cyber Tokyo (Cyan)</span>
+                    <span class="bg-dot" style="background: #00e5ff;"></span>
+                </button>
+                <button type="button" class="bg-pill" data-bg-val="magicviolet">
+                    <span>🔮 Magic Violet</span>
+                    <span class="bg-dot" style="background: #d666ff;"></span>
+                </button>
+            </div>
         </div>
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">
                 <span>Kolor Akcentów</span>
-                <span>🟣</span>
+                <span>✨</span>
             </div>
-            <select class="sidebar-select" id="theme-switcher" title="Wybierz kolor akcentów">
-                <option value="purple">🟣 Magic Purple (Neon)</option>
-                <option value="amber">🟠 Bursztynowy (Night City)</option>
-                <option value="blue">🔵 Baby Blue (Cyber Cyan)</option>
-                <option value="green">🟢 Neon Green (Matrix)</option>
-                <option value="pink">🩷 Neon Pink (Synthwave)</option>
-            </select>
+            <div class="color-swatches-row" id="color-swatches">
+                <button type="button" class="color-swatch active" data-theme-val="purple" style="background: #bd00ff; color: #bd00ff;" title="Magic Purple"></button>
+                <button type="button" class="color-swatch" data-theme-val="amber" style="background: #ff6b00; color: #ff6b00;" title="Bursztynowy"></button>
+                <button type="button" class="color-swatch" data-theme-val="blue" style="background: #00e5ff; color: #00e5ff;" title="Baby Blue"></button>
+                <button type="button" class="color-swatch" data-theme-val="green" style="background: #00ff66; color: #00ff66;" title="Neon Green"></button>
+                <button type="button" class="color-swatch" data-theme-val="pink" style="background: #ff007f; color: #ff007f;" title="Neon Pink"></button>
+            </div>
         </div>
 
         <div class="sidebar-section" style="margin-bottom: 0;">
-            <div class="sidebar-section-title">
-                <span>Jasność Ekranu</span>
-                <span>🌓</span>
-            </div>
             <button type="button" class="sidebar-mode-btn" id="light-mode-toggle">
-                🌓 Przełącz Tryb Jasny / Ciemny
+                🌓 Tryb Jasny / Ciemny
             </button>
+        </div>
+    </div>
+
+    <!-- PANEL BOCZNY 3 (PRAWY): ROZWIJANY PORADNIK -->
+    <div class="guide-panel collapsed" id="guide-sidebar">
+        <button class="guide-toggle-btn" id="guide-toggle">
+            <span class="tab-icon">📖</span>
+            <span>PORADNIK</span>
+        </button>
+
+        <div class="sidebar-header-box">
+            <div class="sidebar-title">📖 Opis & Poradnik</div>
+            <div class="sidebar-badge">LSC INFO</div>
+        </div>
+
+        <div class="guide-scroll-content">
+            <div class="guide-intro">
+                <strong>System Zleceń LSC</strong> to oficjalny kalkulator warsztatu Los Santos Customs. Automatycznie przelicza ceny tuningu z bazy salonowej, rabaty pracownicze i frakcyjne oraz Twoją prowizję.
+            </div>
+
+            <div class="guide-step">
+                <div class="guide-step-title">1. Pojazd i Modyfikacje Wizualne</div>
+                <div class="guide-step-desc">Wybierz kategorię i wpisz model pojazdu z CarDealera (lub wybierz Auto Limitowane / Heli). Cena <strong>Full Tune (55%)</strong> oraz stawka za 1 menu wizualne dobiorą się automatycznie.</div>
+            </div>
+
+            <div class="guide-step">
+                <div class="guide-step-title">2. Zniżki, Frakcje i Bony</div>
+                <div class="guide-step-desc">Zaznacz odpowiedni profil w sekcji Zniżek (pracownik LSC, firma lub frakcja LSPD/EMS/DOJ/SSC). Masz też osobne pole na <strong>Bon Full Tune (-50% / -100%)</strong>.</div>
+            </div>
+
+            <div class="guide-step">
+                <div class="guide-step-title">3. Wydajność i Stacja Serwisowa</div>
+                <div class="guide-step-desc">Dodaj części przyciskami <strong>+ / -</strong>. Pakiety naprawcze automatycznie naliczają promocję <strong>10+1 gratis</strong> (co 11 sztuka jest darmowa).</div>
+            </div>
+
+            <div class="guide-step">
+                <div class="guide-step-title">4. Faktura i Zarobek Mechanika</div>
+                <div class="guide-step-desc">Na dolnym pasku kliknij <strong>📋 Kopiuj</strong>, aby skopiować gotową kwotę faktury do wklejenia w grze. Twoja prowizja (5% + stałe premie za Nitro i Zawieszenie) liczy się na żywo.</div>
+            </div>
         </div>
     </div>
 
@@ -1802,6 +2110,8 @@
         const toggleBtn = document.getElementById('sidebar-toggle');
         const appearanceSidebar = document.getElementById('appearance-sidebar');
         const appearanceToggleBtn = document.getElementById('appearance-toggle');
+        const guideSidebar = document.getElementById('guide-sidebar');
+        const guideToggleBtn = document.getElementById('guide-toggle');
 
         let currentFinalNumeric = 0;
         let selectedVehicle = null;
@@ -1817,25 +2127,28 @@
             }, 3000);
         }
 
-        const styleSwitcher = document.getElementById('style-switcher');
-        const bgSwitcher = document.getElementById('bg-switcher');
-        const themeSwitcher = document.getElementById('theme-switcher');
+        // --- OBSŁUGA NOWEGO INTERFEJSU WYGLĄDU (KAFELKI, PILLE, KÓŁKA) ---
+        const styleTiles = document.querySelectorAll('.style-tile');
+        const bgPills = document.querySelectorAll('.bg-pill');
+        const colorSwatches = document.querySelectorAll('.color-swatch');
 
-        // Obsługa zmiany stylu kart
-        styleSwitcher.addEventListener('change', (e) => {
-            const style = e.target.value;
+        function applyStyle(style, silent = false) {
             document.body.setAttribute('data-style', style);
             localStorage.setItem('lsc_card_style', style);
-            showToast(`Styl kart: ${e.target.options[e.target.selectedIndex].text}`);
+            styleTiles.forEach(t => t.classList.toggle('active', t.dataset.styleVal === style));
+            if (!silent) {
+                const activeTile = document.querySelector(`.style-tile[data-style-val="${style}"]`);
+                if (activeTile) showToast(`Styl interfejsu: ${activeTile.querySelector('.tile-lbl').innerText}`);
+            }
+        }
+
+        styleTiles.forEach(tile => {
+            tile.addEventListener('click', () => applyStyle(tile.dataset.styleVal));
         });
 
         const savedStyle = localStorage.getItem('lsc_card_style');
-        if (savedStyle) {
-            document.body.setAttribute('data-style', savedStyle);
-            styleSwitcher.value = savedStyle;
-        }
+        if (savedStyle) applyStyle(savedStyle, true);
 
-        // Mapa rekomendowanego koloru akcentów dla każdego z 5 teł
         const bgToThemeMap = {
             default: 'purple',
             nightcity: 'amber',
@@ -1844,41 +2157,50 @@
             magicviolet: 'purple'
         };
 
-        bgSwitcher.addEventListener('change', (e) => {
-            const bg = e.target.value;
+        function applyTheme(theme, silent = false) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('lsc_color_theme', theme);
+            colorSwatches.forEach(s => s.classList.toggle('active', s.dataset.themeVal === theme));
+            if (!silent) {
+                const activeSwatch = document.querySelector(`.color-swatch[data-theme-val="${theme}"]`);
+                if (activeSwatch) showToast(`Kolor akcentów: ${activeSwatch.title}`);
+            }
+        }
+
+        function applyBg(bg, silent = false) {
             document.body.setAttribute('data-bg', bg);
             localStorage.setItem('lsc_bg_theme', bg);
+            bgPills.forEach(p => p.classList.toggle('active', p.dataset.bgVal === bg));
 
             const matchedTheme = bgToThemeMap[bg];
             if (matchedTheme) {
-                document.body.setAttribute('data-theme', matchedTheme);
-                themeSwitcher.value = matchedTheme;
-                localStorage.setItem('lsc_color_theme', matchedTheme);
+                applyTheme(matchedTheme, true);
             }
 
-            showToast(`Zmieniono klimat na: ${e.target.options[e.target.selectedIndex].text}`);
+            if (!silent) {
+                const activePill = document.querySelector(`.bg-pill[data-bg-val="${bg}"]`);
+                if (activePill) showToast(`Klimat: ${activePill.innerText.trim()}`);
+            }
+        }
+
+        bgPills.forEach(pill => {
+            pill.addEventListener('click', () => applyBg(pill.dataset.bgVal));
+        });
+
+        colorSwatches.forEach(swatch => {
+            swatch.addEventListener('click', () => applyTheme(swatch.dataset.themeVal));
         });
 
         const savedBg = localStorage.getItem('lsc_bg_theme');
         if (savedBg && bgToThemeMap[savedBg]) {
-            document.body.setAttribute('data-bg', savedBg);
-            bgSwitcher.value = savedBg;
+            applyBg(savedBg, true);
         }
-
-        themeSwitcher.addEventListener('change', (e) => {
-            const theme = e.target.value;
-            document.body.setAttribute('data-theme', theme);
-            localStorage.setItem('lsc_color_theme', theme);
-            showToast(`Zmieniono kolor akcentów: ${e.target.options[e.target.selectedIndex].text}`);
-        });
 
         const savedTheme = localStorage.getItem('lsc_color_theme');
         if (savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
-            themeSwitcher.value = savedTheme;
+            applyTheme(savedTheme, true);
         } else {
-            document.body.setAttribute('data-theme', 'purple');
-            themeSwitcher.value = 'purple';
+            applyTheme('purple', true);
         }
 
         const lightModeToggle = document.getElementById('light-mode-toggle');
@@ -2107,7 +2429,7 @@
             { name: "TW_ELEC_SCOOTER2", salonPrice: 10000000 }
         ];
 
-        // Przełączanie paneli bocznych (wzajemne chowanie)
+        // Przełączanie paneli bocznych (lewa i prawa strona)
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
             if (!sidebar.classList.contains('collapsed')) {
@@ -2120,6 +2442,10 @@
             if (!appearanceSidebar.classList.contains('collapsed')) {
                 sidebar.classList.add('collapsed');
             }
+        });
+
+        guideToggleBtn.addEventListener('click', () => {
+            guideSidebar.classList.toggle('collapsed');
         });
 
         function fmt(num) {
@@ -2637,7 +2963,7 @@
         });
 
         document.querySelectorAll('input, select').forEach(element => {
-            if (element.id !== 'car-type' && element.id !== 'car-model-input' && element.name !== 'discount_profile' && element.id !== 'theme-switcher' && element.id !== 'bg-switcher' && element.id !== 'style-switcher') {
+            if (element.id !== 'car-type' && element.id !== 'car-model-input' && element.name !== 'discount_profile') {
                 element.addEventListener('input', updateAll);
                 element.addEventListener('change', updateAll);
             }
