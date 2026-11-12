@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,700&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- MOTYWY / PALETY KOLORÓW NIGHT CITY --- */
+        /* --- MOTYWY / PALETY KOLORÓW --- */
         :root {
             --bg-dark: #0b0d12;
             --panel-bg: rgba(16, 19, 26, 0.90);
@@ -80,18 +80,39 @@
 
         body {
             background-color: var(--bg-dark);
-            background-image: 
-                linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(11, 13, 18, 0.65) 1px, transparent 1px),
-                radial-gradient(circle at 50% 0%, rgba(189, 0, 255, 0.15) 0%, transparent 70%),
-                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920&auto=format&fit=crop');
             background-size: 30px 30px, 30px 30px, 100% 100%, cover;
+            background-position: center;
             background-blend-mode: normal;
             background-attachment: fixed;
             color: var(--text-main);
             padding: 20px 20px 180px 20px;
             min-height: 100vh;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.4s ease, color 0.3s ease;
+        }
+
+        /* --- 3 MOTYWY TŁA --- */
+        body[data-bg="nightcity"] {
+            background-image: 
+                linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(11, 13, 18, 0.65) 1px, transparent 1px),
+                radial-gradient(circle at 50% 0%, rgba(189, 0, 255, 0.15) 0%, transparent 70%),
+                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920&auto=format&fit=crop');
+        }
+
+        body[data-bg="vicecity"] {
+            background-image: 
+                linear-gradient(rgba(255, 0, 127, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.12) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(25, 6, 48, 0.68) 0%, rgba(11, 13, 24, 0.85) 100%),
+                url('https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1920&auto=format&fit=crop');
+        }
+
+        body[data-bg="garage"] {
+            background-image: 
+                linear-gradient(rgba(11, 13, 18, 0.72) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(11, 13, 18, 0.72) 1px, transparent 1px),
+                radial-gradient(circle at 50% 20%, rgba(255, 107, 0, 0.14) 0%, rgba(8, 10, 14, 0.88) 80%),
+                url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1920&auto=format&fit=crop');
         }
 
         .container {
@@ -109,6 +130,8 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .theme-select {
@@ -519,7 +542,6 @@
             position: relative;
         }
 
-        /* Efekt subtelnej neonowej poświaty ramki kolumn */
         .radio-column::before {
             content: '';
             position: absolute;
@@ -544,7 +566,6 @@
             justify-content: space-between;
         }
 
-        /* Podsekcja Frakcji pod firmami w prawym panelu */
         .sub-column-title {
             font-size: 10px;
             font-weight: 700;
@@ -910,14 +931,19 @@
         }
     </style>
 </head>
-<body data-theme="amber">
+<body data-theme="amber" data-bg="nightcity">
 
     <!-- TOAST NOTIFICATIONS CONTAINER -->
     <div id="toast-container"></div>
 
-    <!-- TOP CONTROLS (THEME SELECTOR) -->
+    <!-- TOP CONTROLS (BG & THEME SELECTORS) -->
     <div class="top-controls">
-        <select class="theme-select" id="theme-switcher">
+        <select class="theme-select" id="bg-switcher" title="Wybierz tło strony">
+            <option value="nightcity">🌃 Tło: Night City</option>
+            <option value="vicecity">🌴 Tło: Vice City (80s)</option>
+            <option value="garage">🔧 Tło: Warsztat LSC</option>
+        </select>
+        <select class="theme-select" id="theme-switcher" title="Wybierz kolor akcentów">
             <option value="amber">🟠 Bursztynowy (Night City)</option>
             <option value="blue">🔵 Baby Blue (Cyber Cyan)</option>
             <option value="green">🟢 Neon Green (Matrix)</option>
@@ -1061,7 +1087,7 @@
                 </div>
             </div>
 
-            <!-- 2. ZNIŻKI I RABATY (LEWA: PRACOWNICY / PRAWA: GLASS MENU FIRMY I FRAKCJE) -->
+            <!-- 2. ZNIŻKI I RABATY -->
             <div class="card">
                 <div class="card-title">🛡️ 2. Zniżki i Rabaty</div>
 
@@ -1155,7 +1181,7 @@
                             </label>
                         </div>
 
-                        <!-- PRAWA STRONA: PIĘKNE GLASS MENU Z NEONEM (FIRMY I FRAKCJE) -->
+                        <!-- PRAWA STRONA: FIRMY I FRAKCJE -->
                         <div class="radio-column">
                             <div class="radio-column-title">Zniżki Firmowe <span style="font-size: 13px;">✨</span></div>
 
@@ -1505,6 +1531,20 @@
             setTimeout(() => {
                 toast.remove();
             }, 3000);
+        }
+
+        const bgSwitcher = document.getElementById('bg-switcher');
+        bgSwitcher.addEventListener('change', (e) => {
+            const bg = e.target.value;
+            document.body.setAttribute('data-bg', bg);
+            localStorage.setItem('lsc_bg_theme', bg);
+            showToast(`Zmieniono tło na: ${e.target.options[e.target.selectedIndex].text.replace('Tło: ', '')}`);
+        });
+
+        const savedBg = localStorage.getItem('lsc_bg_theme');
+        if (savedBg) {
+            document.body.setAttribute('data-bg', savedBg);
+            bgSwitcher.value = savedBg;
         }
 
         const themeSwitcher = document.getElementById('theme-switcher');
@@ -2266,7 +2306,7 @@
         });
 
         document.querySelectorAll('input, select').forEach(element => {
-            if (element.id !== 'car-type' && element.id !== 'car-model-input' && element.name !== 'discount_profile' && element.id !== 'theme-switcher') {
+            if (element.id !== 'car-type' && element.id !== 'car-model-input' && element.name !== 'discount_profile' && element.id !== 'theme-switcher' && element.id !== 'bg-switcher') {
                 element.addEventListener('input', updateAll);
                 element.addEventListener('change', updateAll);
             }
