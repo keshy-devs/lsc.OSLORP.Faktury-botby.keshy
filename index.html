@@ -90,29 +90,42 @@
             transition: background 0.4s ease, color 0.3s ease;
         }
 
-        /* --- 3 MOTYWY TŁA --- */
+        /* --- 4 MOTYWY TŁA DOPASOWANE DO VIBE'U KOLORÓW --- */
+        
+        /* 1. Oryginalne tło (Bursztynowy / Night City) */
         body[data-bg="nightcity"] {
             background-image: 
                 linear-gradient(rgba(11, 13, 18, 0.65) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(11, 13, 18, 0.65) 1px, transparent 1px),
-                radial-gradient(circle at 50% 0%, rgba(189, 0, 255, 0.15) 0%, transparent 70%),
+                radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.16) 0%, transparent 70%),
                 url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920&auto=format&fit=crop');
         }
 
+        /* 2. Vice City (Neon Pink / Synthwave) */
         body[data-bg="vicecity"] {
             background-image: 
-                linear-gradient(rgba(255, 0, 127, 0.12) 1px, transparent 1px),
+                linear-gradient(rgba(255, 0, 127, 0.14) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 229, 255, 0.12) 1px, transparent 1px),
-                linear-gradient(180deg, rgba(25, 6, 48, 0.68) 0%, rgba(11, 13, 24, 0.85) 100%),
+                linear-gradient(180deg, rgba(38, 6, 46, 0.65) 0%, rgba(11, 13, 24, 0.85) 100%),
                 url('https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1920&auto=format&fit=crop');
         }
 
-        body[data-bg="garage"] {
+        /* 3. Cyber Tokyo (Baby Blue / Cyber Cyan) */
+        body[data-bg="cybertokyo"] {
             background-image: 
-                linear-gradient(rgba(11, 13, 18, 0.72) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(11, 13, 18, 0.72) 1px, transparent 1px),
-                radial-gradient(circle at 50% 20%, rgba(255, 107, 0, 0.14) 0%, rgba(8, 10, 14, 0.88) 80%),
-                url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1920&auto=format&fit=crop');
+                linear-gradient(rgba(0, 229, 255, 0.10) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.10) 1px, transparent 1px),
+                radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.18) 0%, rgba(7, 13, 24, 0.85) 85%),
+                url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1920&auto=format&fit=crop');
+        }
+
+        /* 4. Magic Violet (Magic Purple / Midnight Street) */
+        body[data-bg="magicviolet"] {
+            background-image: 
+                linear-gradient(rgba(189, 0, 255, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(189, 0, 255, 0.12) 1px, transparent 1px),
+                radial-gradient(circle at 50% 0%, rgba(189, 0, 255, 0.22) 0%, rgba(11, 9, 20, 0.85) 85%),
+                url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1920&auto=format&fit=crop');
         }
 
         .container {
@@ -938,10 +951,11 @@
 
     <!-- TOP CONTROLS (BG & THEME SELECTORS) -->
     <div class="top-controls">
-        <select class="theme-select" id="bg-switcher" title="Wybierz tło strony">
-            <option value="nightcity">🌃 Tło: Night City</option>
-            <option value="vicecity">🌴 Tło: Vice City (80s)</option>
-            <option value="garage">🔧 Tło: Warsztat LSC</option>
+        <select class="theme-select" id="bg-switcher" title="Wybierz tło i klimat strony">
+            <option value="nightcity">🌃 Tło: Night City (Bursztyn)</option>
+            <option value="vicecity">🌴 Tło: Vice City (Neon Pink)</option>
+            <option value="cybertokyo">💠 Tło: Cyber Tokyo (Baby Blue)</option>
+            <option value="magicviolet">🔮 Tło: Magic Violet (Fiolet)</option>
         </select>
         <select class="theme-select" id="theme-switcher" title="Wybierz kolor akcentów">
             <option value="amber">🟠 Bursztynowy (Night City)</option>
@@ -1534,25 +1548,42 @@
         }
 
         const bgSwitcher = document.getElementById('bg-switcher');
+        const themeSwitcher = document.getElementById('theme-switcher');
+
+        // Mapa rekomendowanego koloru akcentów dla każdego z 4 teł
+        const bgToThemeMap = {
+            nightcity: 'amber',
+            vicecity: 'pink',
+            cybertokyo: 'blue',
+            magicviolet: 'purple'
+        };
+
         bgSwitcher.addEventListener('change', (e) => {
             const bg = e.target.value;
             document.body.setAttribute('data-bg', bg);
             localStorage.setItem('lsc_bg_theme', bg);
-            showToast(`Zmieniono tło na: ${e.target.options[e.target.selectedIndex].text.replace('Tło: ', '')}`);
+
+            const matchedTheme = bgToThemeMap[bg];
+            if (matchedTheme) {
+                document.body.setAttribute('data-theme', matchedTheme);
+                themeSwitcher.value = matchedTheme;
+                localStorage.setItem('lsc_color_theme', matchedTheme);
+            }
+
+            showToast(`Zmieniono klimat na: ${e.target.options[e.target.selectedIndex].text.replace('Tło: ', '')}`);
         });
 
         const savedBg = localStorage.getItem('lsc_bg_theme');
-        if (savedBg) {
+        if (savedBg && bgToThemeMap[savedBg]) {
             document.body.setAttribute('data-bg', savedBg);
             bgSwitcher.value = savedBg;
         }
 
-        const themeSwitcher = document.getElementById('theme-switcher');
         themeSwitcher.addEventListener('change', (e) => {
             const theme = e.target.value;
             document.body.setAttribute('data-theme', theme);
             localStorage.setItem('lsc_color_theme', theme);
-            showToast(`Zmieniono motyw na: ${e.target.options[e.target.selectedIndex].text}`);
+            showToast(`Zmieniono kolor akcentów: ${e.target.options[e.target.selectedIndex].text}`);
         });
 
         const savedTheme = localStorage.getItem('lsc_color_theme');
