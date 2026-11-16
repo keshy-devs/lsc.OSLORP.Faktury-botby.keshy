@@ -1606,7 +1606,7 @@
 
             <div class="guide-step">
                 <div class="guide-step-title">3. Wydajność i Stacja Serwisowa</div>
-                <div class="guide-step-desc">Dodaj części przyciskami <strong>+ / -</strong>. Pakiety naprawcze automatycznie naliczają promocję <strong>10+1 gratis</strong> (co 11 sztuka jest darmowa).</div>
+                <div class="guide-step-desc">Dodaj części przyciskami <strong>+ / -</strong>. Za każde <strong>10 zestawów naprawczych</strong> klient otrzymuje <strong>1 zestaw reperacyjny gratis</strong>.</div>
             </div>
 
             <div class="guide-step">
@@ -2031,6 +2031,20 @@
 
                 <div class="item-row">
                     <div class="item-details">
+                        <span class="item-name">Zestaw Naprawczy</span>
+                        <span class="tag-subtext">Co 10 zestawów naprawczych + 1 zestaw reperacyjny gratis</span>
+                        <span id="pack-badge-tag"></span>
+                    </div>
+                    <span class="item-price">5 000 $</span>
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-pack', -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-pack" value="0" min="0">
+                        <button type="button" class="qty-btn" onclick="adjustQty('qty-pack', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="item-details">
                         <span class="item-name">Zestaw Reperacyjny (Sztuka)</span>
                         <span id="kit-badge-tag"></span>
                     </div>
@@ -2039,20 +2053,6 @@
                         <button type="button" class="qty-btn" onclick="adjustQty('qty-kit', -1)">-</button>
                         <input type="number" class="qty-input" id="qty-kit" value="0" min="0">
                         <button type="button" class="qty-btn" onclick="adjustQty('qty-kit', 1)">+</button>
-                    </div>
-                </div>
-
-                <div class="item-row">
-                    <div class="item-details">
-                        <span class="item-name">Pakiet Naprawczy (10+1 Gratis)</span>
-                        <span class="tag-subtext">Co 11 sztuka gratis</span>
-                        <span id="pack-badge-tag"></span>
-                    </div>
-                    <span class="item-price">5 000 $</span>
-                    <div class="qty-control">
-                        <button type="button" class="qty-btn" onclick="adjustQty('qty-pack', -1)">-</button>
-                        <input type="number" class="qty-input" id="qty-pack" value="0" min="0">
-                        <button type="button" class="qty-btn" onclick="adjustQty('qty-pack', 1)">+</button>
                     </div>
                 </div>
             </div>
@@ -2854,7 +2854,6 @@
 
             document.getElementById('rep-out-badge-tag').innerHTML = '';
             document.getElementById('kit-badge-tag').innerHTML = '';
-            document.getElementById('pack-badge-tag').innerHTML = '';
 
             const baseV6 = 5000000;
             const baseV8 = 7500000;
@@ -2893,9 +2892,15 @@
             const kit = getVal('qty-kit');
             const pack = getVal('qty-pack');
 
-            const freePacks = Math.floor(pack / 11);
-            const paidPacks = pack - freePacks;
-            const packCost = paidPacks * 5000;
+            // Co 10 zestawów naprawczych -> 1 zestaw reperacyjny gratis
+            const freeRepKits = Math.floor(pack / 10);
+            const packCost = pack * 5000;
+
+            if (freeRepKits > 0) {
+                document.getElementById('pack-badge-tag').innerHTML = `<span class="badge-tag badge-free">🎁 GRATIS DO WYDANIA: +${freeRepKits} ZESTAW(ÓW) REPERACYJNYCH</span>`;
+            } else {
+                document.getElementById('pack-badge-tag').innerHTML = '';
+            }
 
             const discountableBase = (totalVisCost * (1 - activeMainDiscount))
                 + (brakes * 1500000 * (1 - activeMainDiscount))
